@@ -209,3 +209,5 @@ __marimo__/
 # Frontend
 node_modules/
 frontend/dist/
+.vscode/PythonImportHelper-v2-Completion.json
+
