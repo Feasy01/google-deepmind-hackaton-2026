@@ -147,7 +147,11 @@ export function usePodcastVapi({
             content: `You are an interactive podcast assistant. You should respond in a way a real podcaster would respond, in this case Andrew Huberman The user is listening to a podcast and may ask questions about what they're hearing.
 
 IMPORTANT RULES:
-1. When the user asks ANY question or sbased on the search results, and if you don't have enough information, give a generic but helpful answer. For example, if the user asks "what's HRV?" and you don't have good search results, you  ays something that sounds like a question (e.g., "hey andrew, what is HRV?", "what did he mean by that?"), IMMEDIATELY call the stop_player tool to pause the podcast, then call search_knowledge or search_previous_episodes with their question and the timestamp_seconds from the stop_player tool result.
+1. When the user asks ANY question or says something that sounds like a question (e.g., "hey andrew, what is HRV?", "what did he mean by that?"), you MUST follow this exact sequence:
+   a) FIRST call stop_player and WAIT for its result (it returns timestamp_seconds).
+   b) THEN call search_knowledge or search_previous_episodes, passing the timestamp_seconds value from the stop_player result.
+   c) NEVER call stop_player and search tools at the same time — stop_player must complete first so you have the timestamp.
+   If search results are insufficient, give a generic but helpful answer based on your knowledge.
 2. Don't answer if the user is just making a comment or saying something that doesn't sound like a question. For example, if the user says "wow, that's interesting", you should not call stop_player or search_knowledge. You should only call stop_player and search_knowledge if the user is asking a question or explicitly asking for more information about something they heard in the podcast.
 2. Don't start talking until you get the answer back from the stop_player call, which will include the current timestamp_seconds. This is crucial so that your voice and the podcast don't talk over each other. If you start talking before the podcast is paused, it will create a bad user experience.
 3. Use search_knowledge for factual questions about topics. Use search_previous_episodes for questions about what was discussed in the podcast.
@@ -194,7 +198,7 @@ IMPORTANT RULES:
             function: {
               name: 'search_knowledge',
               description:
-                'Search articles for factual knowledge about a topic. Use when the caller asks a factual question.',
+                'Search articles for factual knowledge about a topic. Use when the caller asks a factual question. IMPORTANT: You MUST call stop_player FIRST and wait for its result before calling this tool, then pass the timestamp_seconds value from the stop_player result.',
               parameters: {
                 type: 'object',
                 properties: {
@@ -211,10 +215,10 @@ IMPORTANT RULES:
                   timestamp_seconds: {
                     type: 'integer',
                     description:
-                      'The podcast playback position in seconds when the user asked. Get this from the stop_player tool result.',
+                      'REQUIRED. The podcast playback position in seconds from the stop_player tool result. Extract the number after timestamp_seconds= from the stop_player response.',
                   },
                 },
-                required: ['query'],
+                required: ['query', 'timestamp_seconds'],
               },
             },
             server: {
@@ -226,7 +230,7 @@ IMPORTANT RULES:
             function: {
               name: 'search_previous_episodes',
               description:
-                'Search previous podcast episodes. Use when the caller asks about something discussed in a past episode.',
+                'Search previous podcast episodes. Use when the caller asks about something discussed in a past episode. IMPORTANT: You MUST call stop_player FIRST and wait for its result before calling this tool, then pass the timestamp_seconds value from the stop_player result.',
               parameters: {
                 type: 'object',
                 properties: {
@@ -243,10 +247,10 @@ IMPORTANT RULES:
                   timestamp_seconds: {
                     type: 'integer',
                     description:
-                      'The podcast playback position in seconds when the user asked. Get this from the stop_player tool result.',
+                      'REQUIRED. The podcast playback position in seconds from the stop_player tool result. Extract the number after timestamp_seconds= from the stop_player response.',
                   },
                 },
-                required: ['query'],
+                required: ['query', 'timestamp_seconds'],
               },
             },
             server: {
