@@ -1,7 +1,6 @@
 import httpx
 
 from app.core.config import settings
-from app.services.deepmind import deepmind_service
 
 VAPI_BASE_URL = "https://api.vapi.ai"
 
@@ -28,23 +27,60 @@ class VapiService:
                     "model": "nova-2",
                     "language": "en",
                 },
+                "tools": [
+                    {
+                        "type": "function",
+                        "function": {
+                            "name": "search_knowledge",
+                            "description": "Search articles for factual knowledge about a topic. Use when the caller asks a factual question.",
+                            "parameters": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "type": "string",
+                                        "description": "The search query based on what the user is asking",
+                                    },
+                                    "conversation_context": {
+                                        "type": "string",
+                                        "description": "Last 30 seconds of conversation for additional context",
+                                    },
+                                },
+                                "required": ["query"],
+                            },
+                        },
+                        "server": {
+                            "url": "",  # Set to your deployed server URL + /api/vapi/webhook
+                        },
+                    },
+                    {
+                        "type": "function",
+                        "function": {
+                            "name": "search_previous_episodes",
+                            "description": "Search previous podcast episodes. Use when the caller asks about something discussed in a past episode or wants to hear a previous discussion.",
+                            "parameters": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "type": "string",
+                                        "description": "The search query based on what the user is asking",
+                                    },
+                                    "conversation_context": {
+                                        "type": "string",
+                                        "description": "Last 30 seconds of conversation for additional context",
+                                    },
+                                },
+                                "required": ["query"],
+                            },
+                        },
+                        "server": {
+                            "url": "",  # Set to your deployed server URL + /api/vapi/webhook
+                        },
+                    },
+                ],
                 "endCallFunctionEnabled": True,
                 "endCallMessage": "Goodbye! Have a great day.",
             }
         }
-
-    async def handle_function_call(self, payload: dict) -> dict:
-        """Process function calls from Vapi."""
-        function_call = payload.get("message", {}).get("functionCall", {})
-        name = function_call.get("name")
-        parameters = function_call.get("parameters", {})
-
-        if name == "ask_deepmind":
-            question = parameters.get("question", "")
-            answer = await deepmind_service.generate_response(message=question)
-            return {"result": answer}
-
-        return {"result": f"Unknown function: {name}"}
 
     async def create_web_call(self) -> dict:
         """Create a Vapi web call and return the call object for frontend to connect."""
