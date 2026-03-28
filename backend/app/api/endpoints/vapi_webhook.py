@@ -18,18 +18,6 @@ async def vapi_webhook(request: Request):
     logger.info("Webhook received: type=%s", message_type)
     logger.debug("Webhook payload: %s", json.dumps(payload, indent=2, default=str))
 
-    if message_type == "assistant-request":
-        # Check if this is a podcast-mode call
-        call = payload.get("message", {}).get("call", {})
-        metadata = call.get("metadata", {})
-        logger.info("assistant-request metadata: %s", metadata)
-        if metadata.get("mode") == "podcast":
-            podcast_id = metadata.get("podcast_id", "unknown")
-            config = vapi_service.get_podcast_assistant_config(podcast_id)
-            logger.info("Returning podcast assistant config for: %s", podcast_id)
-            return config
-        return vapi_service.get_assistant_config()
-
     if message_type == "function-call":
         function_call = payload.get("message", {}).get("functionCall", {})
         logger.info("function-call: name=%s params=%s", function_call.get("name"), function_call.get("parameters"))

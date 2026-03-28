@@ -6,16 +6,10 @@ class Settings(BaseSettings):
     CORS_ORIGINS: list[str] = ["http://localhost:5173"]
 
     GOOGLE_API_KEY: str = ""
-    VAPI_API_KEY: str = ""
-    VAPI_PHONE_NUMBER_ID: str = ""
-
     HOST_IP: str = "192.168.10.191"
     QDRANT_URL: str = "http://192.168.10.191:6333"
 
-    ELEVENLABS_VOICE_ID: str = "gX5nzZE6xg9miAm84vPU"
-
     MEDIA_DIR: str = "./assets"
-    VAPI_WEBHOOK_URL: str = ""  # Public URL for Vapi to reach backend (ngrok in dev)
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 
