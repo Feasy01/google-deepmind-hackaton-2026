@@ -130,14 +130,15 @@ def clean_article_content(md: str) -> str:
     # Remove Google Scholar links with any anchor text
     md = re.sub(r"\[[^\]]*\]\(https?://scholar\.google\.com[^)]*\)", "", md)
 
-    # Remove inline reference citation blocks like:
-    #   Author1  A,  Author2  B.  2020..   Title. .  Journal  182::270–96
-    # These have double-dots (..) and double-colons (::) as formatting artifacts
-    md = re.sub(
-        r"(?m)^ *[A-Z][a-z]+ +[A-Z]{1,3}(?:, +[A-Z][a-z]+ +[A-Z]{1,3})*(?:, +et al\.?)?\s+\d{4}\.\.\s+.*?(?:\n|$)",
-        "",
-        md,
-    )
+    # Remove inline reference citation blocks — various formats:
+    #   Author  A,  Author  B.  2020..   Title. .  Journal  182::270–96
+    #   Absinta  M,  Ha  S-K,  Nair  G,  ...  2017..   Title. .  eLife  6::e29738
+    # Key signal: line contains a year followed by ".." (double dot) or "::" (double colon)
+    md = re.sub(r"(?m)^.*\d{4}\.\.\s+.*$", "", md)
+    md = re.sub(r"(?m)^.*\d+::[^\n]*$", "", md)
+
+    # Remove search/keyword links like [central nervous system](/search?...)
+    md = re.sub(r"\[[^\]]+\]\(/search\?[^)]*\)", "", md)
 
     # Remove lines that are just crossref/doi links on their own
     md = re.sub(r"(?m)^\s*https?://doi\.org/\S+\s*$", "", md)

@@ -292,7 +292,7 @@ Original Article
                                         
                                             [
                                             Save article
-                                            ](/article/10.1007/s10103-023-03959-z/save-research?_csrf=c-znIP3Por2zfOGmXGKEwpWuMwQVbJbB)
+                                            ](/article/10.1007/s10103-023-03959-z/save-research?_csrf=WdBhLpLM2AhjrK1EiorFen04Ritd6HDi)
                                         
                                     
 
@@ -961,31 +961,21 @@ Authors
 
 Shao-Tang Chiu
 
-[View author publications](/search?sortBy=newestFirst&contributor=Shao-Tang%20Chiu)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Shao-Tang%20Chiu) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Shao-Tang%20Chiu%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 U-Hin Lai
-
-[View author publications](/search?sortBy=newestFirst&contributor=U-Hin%20Lai)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=U-Hin%20Lai) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22U-Hin%20Lai%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Yu-Chi Huang
 
-[View author publications](/search?sortBy=newestFirst&contributor=Yu-Chi%20Huang)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Yu-Chi%20Huang) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Yu-Chi%20Huang%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Chau-Peng Leong
 
-[View author publications](/search?sortBy=newestFirst&contributor=Chau-Peng%20Leong)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Chau-Peng%20Leong) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Chau-Peng%20Leong%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Po-Cheng Chen
-
-[View author publications](/search?sortBy=newestFirst&contributor=Po-Cheng%20Chen)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Po-Cheng%20Chen) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Po-Cheng%20Chen%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
@@ -1064,18 +1054,6 @@ Sorry, a shareable link is not currently available for this article.
                         
 
 ### Keywords
-
-[Photobiomodulation](/search?query=Photobiomodulation&facet-discipline="Medicine%20%26%20Public%20Health")
-
-[Low intensity laser](/search?query=Low%20intensity%20laser&facet-discipline="Medicine%20%26%20Public%20Health")
-
-[Low power laser](/search?query=Low%20power%20laser&facet-discipline="Medicine%20%26%20Public%20Health")
-
-[Mammary neoplasm](/search?query=Mammary%20neoplasm&facet-discipline="Medicine%20%26%20Public%20Health")
-
-[Postmastectomy](/search?query=Postmastectomy&facet-discipline="Medicine%20%26%20Public%20Health")
-
-[Lymphoedema](/search?query=Lymphoedema&facet-discipline="Medicine%20%26%20Public%20Health")
 
                     
 

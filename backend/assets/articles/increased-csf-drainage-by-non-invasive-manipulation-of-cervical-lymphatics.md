@@ -1527,121 +1527,81 @@ Authors
 
 Hokyung Jin
 
-[View author publications](/search?author=Hokyung%20Jin)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Hokyung%20Jin) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Hokyung%20Jin%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Jin-Hui Yoon
-
-[View author publications](/search?author=Jin-Hui%20Yoon)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Jin-Hui%20Yoon) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Jin-Hui%20Yoon%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Seon Pyo Hong
 
-[View author publications](/search?author=Seon%20Pyo%20Hong)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Seon%20Pyo%20Hong) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Seon%20Pyo%20Hong%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Yu Seok Hwang
-
-[View author publications](/search?author=Yu%20Seok%20Hwang)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Yu%20Seok%20Hwang) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Yu%20Seok%20Hwang%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Myung Jin Yang
 
-[View author publications](/search?author=Myung%20Jin%20Yang)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Myung%20Jin%20Yang) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Myung%20Jin%20Yang%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Jieun Choi
-
-[View author publications](/search?author=Jieun%20Choi)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Jieun%20Choi) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Jieun%20Choi%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Hae Jin Kang
 
-[View author publications](/search?author=Hae%20Jin%20Kang)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Hae%20Jin%20Kang) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Hae%20Jin%20Kang%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Seung Eun Baek
-
-[View author publications](/search?author=Seung%20Eun%20Baek)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Seung%20Eun%20Baek) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Seung%20Eun%20Baek%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Cheolhwa Jin
 
-[View author publications](/search?author=Cheolhwa%20Jin)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Cheolhwa%20Jin) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Cheolhwa%20Jin%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Junho Jung
-
-[View author publications](/search?author=Junho%20Jung)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Junho%20Jung) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Junho%20Jung%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Hae Jin Kim
 
-[View author publications](/search?author=Hae%20Jin%20Kim)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Hae%20Jin%20Kim) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Hae%20Jin%20Kim%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Jincheol Seo
-
-[View author publications](/search?author=Jincheol%20Seo)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Jincheol%20Seo) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Jincheol%20Seo%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Jinyoung Won
 
-[View author publications](/search?author=Jinyoung%20Won)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Jinyoung%20Won) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Jinyoung%20Won%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Kyung Seob Lim
-
-[View author publications](/search?author=Kyung%20Seob%20Lim)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Kyung%20Seob%20Lim) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Kyung%20Seob%20Lim%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Chang-Yeop Jeon
 
-[View author publications](/search?author=Chang-Yeop%20Jeon)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Chang-Yeop%20Jeon) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Chang-Yeop%20Jeon%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Youngjeon Lee
-
-[View author publications](/search?author=Youngjeon%20Lee)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Youngjeon%20Lee) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Youngjeon%20Lee%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Michael J. Davis
 
-[View author publications](/search?author=Michael%20J.%20Davis)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Michael%20J.%20Davis) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Michael%20J.%20Davis%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Hyung-Soon Park
-
-[View author publications](/search?author=Hyung-Soon%20Park)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Hyung-Soon%20Park) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Hyung-Soon%20Park%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Donald M. McDonald
 
-[View author publications](/search?author=Donald%20M.%20McDonald)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Donald%20M.%20McDonald) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Donald%20M.%20McDonald%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Gou Young Koh
-
-[View author publications](/search?author=Gou%20Young%20Koh)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Gou%20Young%20Koh) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Gou%20Young%20Koh%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 

@@ -2774,8 +2774,6 @@ Calvo, C. F. et al. Vascular endothelial growth factor receptor 3 directly regul
      
                 
 
-Zhu, J. et al. Simultaneous in vivo imaging of blood and lymphatic vessel growth in Prox1-GFP/Flk1::myr-mCherry mice. *FEBS J.* **282**, 1458–1467 (2015).
-
 [Article](https://doi.org/10.1111%2Ffebs.13234) 
     [CAS](/articles/cas-redirect/1:CAS:528:DC%2BC2MXmsFSntrk%3D) 
     [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=25688651) 
@@ -5457,43 +5455,29 @@ Authors
 
 Qiang Zhang
 
-[View author publications](/search?author=Qiang%20Zhang)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Qiang%20Zhang) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Qiang%20Zhang%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Yin Niu
-
-[View author publications](/search?author=Yin%20Niu)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Yin%20Niu) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Yin%20Niu%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Yingpei Li
 
-[View author publications](/search?author=Yingpei%20Li)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Yingpei%20Li) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Yingpei%20Li%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Chenyang Xia
-
-[View author publications](/search?author=Chenyang%20Xia)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Chenyang%20Xia) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Chenyang%20Xia%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Zhi Chen
 
-[View author publications](/search?author=Zhi%20Chen)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Zhi%20Chen) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Zhi%20Chen%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Yujie Chen
 
-[View author publications](/search?author=Yujie%20Chen)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Yujie%20Chen) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Yujie%20Chen%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Hua Feng
-
-[View author publications](/search?author=Hua%20Feng)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Hua%20Feng) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Hua%20Feng%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 

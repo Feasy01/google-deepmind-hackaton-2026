@@ -1412,19 +1412,13 @@ Authors
 
 Kari Alitalo
 
-[View author publications](/search?author=Kari%20Alitalo)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Kari%20Alitalo) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Kari%20Alitalo%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Tuomas Tammela
 
-[View author publications](/search?author=Tuomas%20Tammela)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Tuomas%20Tammela) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Tuomas%20Tammela%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Tatiana V. Petrova
-
-[View author publications](/search?author=Tatiana%20V.%20Petrova)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Tatiana%20V.%20Petrova) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Tatiana%20V.%20Petrova%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 

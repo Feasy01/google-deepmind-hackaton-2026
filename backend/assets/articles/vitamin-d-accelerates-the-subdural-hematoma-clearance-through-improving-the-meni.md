@@ -341,7 +341,7 @@ Vitamin D accelerates the subdural hematoma clearance through improving the meni
                                         
                                             [
                                             Save article
-                                            ](/article/10.1007/s11010-023-04918-6/save-research?_csrf=QfYkWk8DSCSCjcCSoVWPYxQfbmmKMjts)
+                                            ](/article/10.1007/s11010-023-04918-6/save-research?_csrf=ZtluY8ZSG5WBGGLWohtqoTpQMXYaVIxt)
                                         
                                     
 
@@ -1178,79 +1178,53 @@ Authors
 
 Yupeng Chen
 
-[View author publications](/search?sortBy=newestFirst&contributor=Yupeng%20Chen)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Yupeng%20Chen) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Yupeng%20Chen%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Xuanhui Liu
-
-[View author publications](/search?sortBy=newestFirst&contributor=Xuanhui%20Liu)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Xuanhui%20Liu) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Xuanhui%20Liu%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Jiangyuan Yuan
 
-[View author publications](/search?sortBy=newestFirst&contributor=Jiangyuan%20Yuan)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Jiangyuan%20Yuan) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Jiangyuan%20Yuan%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Shiying Dong
-
-[View author publications](/search?sortBy=newestFirst&contributor=Shiying%20Dong)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Shiying%20Dong) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Shiying%20Dong%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Meng Nie
 
-[View author publications](/search?sortBy=newestFirst&contributor=Meng%20Nie)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Meng%20Nie) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Meng%20Nie%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Weiwei Jiang
-
-[View author publications](/search?sortBy=newestFirst&contributor=Weiwei%20Jiang)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Weiwei%20Jiang) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Weiwei%20Jiang%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Di Wu
 
-[View author publications](/search?sortBy=newestFirst&contributor=Di%20Wu)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Di%20Wu) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Di%20Wu%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Mingqi Liu
-
-[View author publications](/search?sortBy=newestFirst&contributor=Mingqi%20Liu)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Mingqi%20Liu) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Mingqi%20Liu%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Tao Liu
 
-[View author publications](/search?sortBy=newestFirst&contributor=Tao%20Liu)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Tao%20Liu) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Tao%20Liu%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Chenrui Wu
-
-[View author publications](/search?sortBy=newestFirst&contributor=Chenrui%20Wu)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Chenrui%20Wu) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Chenrui%20Wu%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Chuang Gao
 
-[View author publications](/search?sortBy=newestFirst&contributor=Chuang%20Gao)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Chuang%20Gao) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Chuang%20Gao%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Jianning Zhang
 
-[View author publications](/search?sortBy=newestFirst&contributor=Jianning%20Zhang)
-
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Jianning%20Zhang) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Jianning%20Zhang%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
 Rongcai Jiang
-
-[View author publications](/search?sortBy=newestFirst&contributor=Rongcai%20Jiang)
 
 Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Rongcai%20Jiang) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Rongcai%20Jiang%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
 
@@ -1321,16 +1295,6 @@ Sorry, a shareable link is not currently available for this article.
                         
 
 ### Keywords
-
-[Subdural hematoma](/search?query=Subdural%20hematoma&facet-discipline="Life%20Sciences")
-
-[Vitamin D](/search?query=Vitamin%20D&facet-discipline="Life%20Sciences")
-
-[Meningeal lymphatic vessel](/search?query=Meningeal%20lymphatic%20vessel&facet-discipline="Life%20Sciences")
-
-[Drainage](/search?query=Drainage&facet-discipline="Life%20Sciences")
-
-[Inflammation](/search?query=Inflammation&facet-discipline="Life%20Sciences")
 
                     
 
