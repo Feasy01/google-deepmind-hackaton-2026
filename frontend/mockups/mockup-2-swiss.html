@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo — Mockup 2: Swiss Minimal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fafaf8;
+    --surface: #f0efeb;
+    --ink: #18181b;
+    --ink-2: #52525b;
+    --ink-3: #a1a1aa;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --border: #e4e4e0;
+    --col-gap: 1.5rem;
+  }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- TOP BAR --- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
+    border-bottom: 2px solid var(--ink);
+  }
+  .wordmark {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .topbar-right a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s;
+  }
+  .topbar-right a:hover { color: var(--ink); }
+  .listening-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--red);
+    border-radius: 3px;
+    color: var(--red);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .listening-badge::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: blink 1.2s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* --- LAYOUT --- */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+  }
+
+  /* --- PAGE TITLE --- */
+  .page-title {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 2rem;
+    align-items: baseline;
+    margin-bottom: 3rem;
+  }
+  .page-title h1 {
+    font-family: 'Newsreader', serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .page-title .subtitle {
+    font-size: 0.82rem;
+    color: var(--ink-3);
+    align-self: end;
+    padding-bottom: 0.4rem;
+  }
+
+  /* --- PODCASTER ROW --- */
+  .podcaster-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0 var(--col-gap);
+    border-top: 2px solid var(--ink);
+    padding-top: 1.5rem;
+  }
+  .podcaster-left {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+  }
+  .podcaster-img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Newsreader', serif;
+    font-size: 3rem;
+    font-style: italic;
+    color: var(--ink-3);
+  }
+  .podcaster-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .podcaster-tag {
+    font-size: 0.72rem;
+    color: var(--ink-3);
+    margin-top: 0.15rem;
+  }
+
+  /* --- EPISODE LIST --- */
+  .episodes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  .episode {
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .episode:hover { transform: translateY(-3px); }
+  .episode-cover {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.75rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .episode:hover .episode-cover { border-color: var(--ink-3); }
+  .episode.active .episode-cover { border-color: var(--red); border-width: 2px; }
+
+  .episode-num {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .episode-cover-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .episode-duration {
+    font-size: 0.72rem;
+    color: var(--ink-3);
+    margin-top: 0.4rem;
+  }
+
+  /* --- NOW PLAYING --- */
+  .now-playing {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(600px, calc(100% - 3rem));
+    background: var(--ink);
+    color: #fafaf9;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 200;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+  .np-info { flex: 1; min-width: 0; }
+  .np-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .np-artist {
+    font-size: 0.7rem;
+    color: #a1a1aa;
+    margin-top: 0.1rem;
+  }
+  .np-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .np-btn {
+    background: none;
+    border: none;
+    color: #a1a1aa;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: color 0.15s;
+  }
+  .np-btn:hover { color: #fafaf9; }
+  .np-play {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.12s;
+  }
+  .np-play:hover { transform: scale(1.1); }
+  .np-play svg { fill: #fff; width: 14px; height: 14px; margin-left: 2px; }
+
+  .np-progress {
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background: #3f3f46;
+    border-radius: 1px;
+  }
+  .np-progress-fill {
+    height: 100%;
+    width: 35%;
+    background: var(--red);
+    border-radius: 1px;
+  }
+
+  .np-time {
+    font-size: 0.65rem;
+    color: #71717a;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .np-ai {
+    padding: 0.35rem 0.6rem;
+    border: 1px solid #3f3f46;
+    border-radius: 4px;
+    background: transparent;
+    color: #a1a1aa;
+    font-size: 0.68rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .np-ai:hover { border-color: #71717a; color: #fafaf9; }
+  .np-ai.active { border-color: var(--red); color: var(--red); }
+
+  /* --- FOOTER SPACE --- */
+  .spacer { height: 120px; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 700px) {
+    .podcaster-row {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .podcaster-left {
+      position: static;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .podcaster-img { width: 64px; }
+    .episodes { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wordmark">Echo</div>
+  <div class="topbar-right">
+    <a href="#">Browse</a>
+    <a href="#">Library</a>
+    <span class="listening-badge">AI Listening</span>
+  </div>
+</header>
+
+<main class="main">
+  <div class="page-title">
+    <h1>Podcasts</h1>
+    <span class="subtitle">Curated educational conversations</span>
+  </div>
+
+  <section class="podcaster-row">
+    <div class="podcaster-left">
+      <div class="podcaster-img">AH</div>
+      <div class="podcaster-name">Andrew Huberman</div>
+      <div class="podcaster-tag">Neuroscience &middot; Health</div>
+    </div>
+    <div class="episodes">
+      <div class="episode active" onclick="pickEp(this)">
+        <div class="episode-cover">
+          <span class="episode-num">Ep. 01</span>
+          <div>
+            <div class="episode-cover-title">The Science of Sleep</div>
+          </div>
+        </div>
+        <div class="episode-duration">42 min</div>
+      </div>
+      <div class="episode" onclick="pickEp(this)">
+        <div class="episode-cover">
+          <span class="episode-num">Ep. 02</span>
+          <div>
+            <div class="episode-cover-title">Dopamine & Motivation</div>
+          </div>
+        </div>
+        <div class="episode-duration">38 min</div>
+      </div>
+      <div class="episode" onclick="pickEp(this)">
+        <div class="episode-cover">
+          <span class="episode-num">Ep. 03</span>
+          <div>
+            <div class="episode-cover-title">Focus & Deep Work</div>
+          </div>
+        </div>
+        <div class="episode-duration">51 min</div>
+      </div>
+      <div class="episode" onclick="pickEp(this)">
+        <div class="episode-cover">
+          <span class="episode-num">Ep. 04</span>
+          <div>
+            <div class="episode-cover-title">Stress Resilience</div>
+          </div>
+        </div>
+        <div class="episode-duration">45 min</div>
+      </div>
+      <div class="episode" onclick="pickEp(this)">
+        <div class="episode-cover">
+          <span class="episode-num">Ep. 05</span>
+          <div>
+            <div class="episode-cover-title">Exercise & the Brain</div>
+          </div>
+        </div>
+        <div class="episode-duration">36 min</div>
+      </div>
+      <div class="episode" onclick="pickEp(this)">
+        <div class="episode-cover">
+          <span class="episode-num">Ep. 06</span>
+          <div>
+            <div class="episode-cover-title">Cold Exposure</div>
+          </div>
+        </div>
+        <div class="episode-duration">29 min</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="spacer"></div>
+
+<!-- FLOATING PLAYER -->
+<div class="now-playing">
+  <div class="np-info">
+    <div class="np-title">The Science of Sleep</div>
+    <div class="np-artist">Andrew Huberman</div>
+  </div>
+  <span class="np-time">14:32 / 42:10</span>
+  <div class="np-controls">
+    <button class="np-btn" title="Back 15s">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+    </button>
+    <button class="np-play" title="Play">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <button class="np-btn" title="Forward 15s">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+    </button>
+  </div>
+  <button class="np-ai active" onclick="this.classList.toggle('active')">Ask AI</button>
+  <div class="np-progress"><div class="np-progress-fill"></div></div>
+</div>
+
+<script>
+function pickEp(el) {
+  document.querySelectorAll('.episode').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

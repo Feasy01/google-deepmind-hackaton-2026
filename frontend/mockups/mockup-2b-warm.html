@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo — Warm Theme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #faf7f2;
+    --surface: #f0ebe3;
+    --ink: #2c2418;
+    --ink-2: #6b5d4d;
+    --ink-3: #a89882;
+    --accent: #b45309;
+    --accent-bg: #fef3c7;
+    --border: #e2d9cc;
+    --border-heavy: #2c2418;
+    --player-bg: #2c2418;
+    --player-surface: #3d3226;
+  }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ========== TOP BAR ========== */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
+    border-bottom: 2px solid var(--border-heavy);
+    position: sticky; top: 0; background: var(--bg); z-index: 100;
+  }
+  .wordmark { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.03em; text-transform: uppercase; }
+  .wordmark span { font-weight: 400; color: var(--ink-2); margin-left: 0.15rem; }
+  .topbar-right { display: flex; align-items: center; gap: 1.5rem; font-size: 0.8rem; font-weight: 500; color: var(--ink-2); }
+  .topbar-right a { text-decoration: none; color: inherit; transition: color 0.15s; }
+  .topbar-right a:hover { color: var(--ink); }
+
+  /* ========== MAIN ========== */
+  .main { max-width: 1200px; margin: 0 auto; padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 5vw, 4rem); }
+
+  /* ========== TWO PANEL ========== */
+  .two-panel {
+    display: grid; grid-template-columns: 280px 1fr;
+    border-top: 2px solid var(--border-heavy);
+    min-height: calc(100vh - 200px);
+  }
+
+  .panel-left {
+    border-right: 1px solid var(--border);
+    padding: 1.5rem 1.5rem 1.5rem 0;
+    position: sticky; top: 70px; align-self: start;
+  }
+  .podcaster-img {
+    width: 100%; aspect-ratio: 1; border-radius: 6px;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Newsreader', serif; font-size: 3.5rem; font-style: italic; color: var(--ink-3);
+    margin-bottom: 1rem;
+  }
+  .podcaster-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; }
+  .podcaster-tag { font-size: 0.75rem; color: var(--ink-3); margin-top: 0.2rem; }
+  .podcaster-bio { font-size: 0.78rem; color: var(--ink-2); margin-top: 0.75rem; line-height: 1.5; }
+  .ep-count { margin-top: 1.25rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+
+  .panel-right { padding: 0; }
+  .ep-header {
+    display: grid; grid-template-columns: 48px 1fr 60px 48px;
+    gap: 1rem; padding: 0.6rem 1rem 0.6rem 1.5rem;
+    border-bottom: 1px solid var(--ink);
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .ep-header span:nth-child(3) { text-align: right; }
+
+  .ep-row {
+    display: grid; grid-template-columns: 48px 1fr 60px 48px;
+    align-items: center; gap: 1rem;
+    padding: 1rem 1rem 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .ep-row:hover { background: var(--surface); }
+  .ep-row.active { background: var(--accent-bg); }
+  .ep-row.active .ep-row-num { color: var(--accent); }
+  .ep-row-num { font-size: 0.75rem; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .ep-row-title { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em; }
+  .ep-row-desc { font-size: 0.72rem; color: var(--ink-3); margin-top: 0.15rem; line-height: 1.4; }
+  .ep-row-dur { font-size: 0.72rem; color: var(--ink-3); font-variant-numeric: tabular-nums; text-align: right; }
+  .ep-row-play {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1.5px solid var(--border); background: transparent;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .ep-row-play:hover { border-color: var(--ink); }
+  .ep-row.active .ep-row-play { border-color: var(--accent); background: var(--accent); }
+  .ep-row-play svg { width: 12px; height: 12px; fill: var(--ink-3); margin-left: 1.5px; }
+  .ep-row.active .ep-row-play svg { fill: #fff; }
+
+  /* ========== FLOATING PLAYER ========== */
+  .now-playing {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    width: min(600px, calc(100% - 3rem));
+    background: var(--player-bg); color: #f0ebe3; border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: 1rem;
+    z-index: 200; box-shadow: 0 8px 32px rgba(44,36,24,0.22);
+  }
+  .np-info { flex: 1; min-width: 0; }
+  .np-title { font-size: 0.82rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .np-artist { font-size: 0.7rem; color: #a89882; margin-top: 0.1rem; }
+  .np-controls { display: flex; align-items: center; gap: 1rem; }
+  .np-btn { background: none; border: none; color: #a89882; cursor: pointer; display: flex; align-items: center; transition: color 0.15s; }
+  .np-btn:hover { color: #f0ebe3; }
+  .np-play {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--accent);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.12s;
+  }
+  .np-play:hover { transform: scale(1.1); }
+  .np-play svg { fill: #fff; width: 14px; height: 14px; margin-left: 2px; }
+  .np-progress { position: absolute; bottom: 0; left: 1rem; right: 1rem; height: 2px; background: var(--player-surface); border-radius: 1px; }
+  .np-progress-fill { height: 100%; width: 35%; background: var(--accent); border-radius: 1px; }
+  .np-time { font-size: 0.65rem; color: #7a6c58; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .np-ai {
+    padding: 0.35rem 0.6rem; border: 1px solid var(--player-surface); border-radius: 4px;
+    background: transparent; color: #a89882; font-size: 0.68rem; font-weight: 600;
+    cursor: pointer; letter-spacing: 0.04em; text-transform: uppercase; transition: all 0.15s; white-space: nowrap;
+  }
+  .np-ai:hover { border-color: #7a6c58; color: #f0ebe3; }
+  .np-ai.active { border-color: var(--accent); color: #f59e0b; }
+
+  .spacer { height: 120px; }
+
+  /* ========== FULLSCREEN MOBILE PLAYER ========== */
+  .mobile-player {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: var(--player-bg); color: #f0ebe3;
+    flex-direction: column; overflow: hidden;
+  }
+  .mobile-player.open { display: flex; }
+
+  .mp-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.25rem; flex-shrink: 0;
+  }
+  .mp-back {
+    background: none; border: none; color: #a89882; cursor: pointer;
+    font-family: inherit; font-size: 0.8rem; font-weight: 500;
+    display: flex; align-items: center; gap: 0.4rem; transition: color 0.15s;
+  }
+  .mp-back:hover { color: #f0ebe3; }
+  .mp-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #7a6c58; }
+
+  .mp-body {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 2rem 2rem 1rem; gap: 2rem;
+  }
+  .mp-artwork {
+    width: min(280px, 65vw); aspect-ratio: 1; border-radius: 14px;
+    background: var(--player-surface);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Newsreader', serif; font-size: 4rem; font-style: italic; color: #6b5d4d;
+  }
+  .mp-info-center { text-align: center; }
+  .mp-ep-title { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; }
+  .mp-ep-artist { font-size: 0.85rem; color: #a89882; margin-top: 0.3rem; }
+  .mp-ep-desc { font-size: 0.78rem; color: #7a6c58; margin-top: 0.5rem; line-height: 1.5; max-width: 320px; }
+
+  .mp-progress-area { width: 100%; max-width: 360px; }
+  .mp-bar { width: 100%; height: 4px; background: var(--player-surface); border-radius: 2px; cursor: pointer; }
+  .mp-bar-fill { height: 100%; width: 35%; background: var(--accent); border-radius: 2px; }
+  .mp-times { display: flex; justify-content: space-between; margin-top: 0.4rem; font-size: 0.68rem; color: #7a6c58; font-variant-numeric: tabular-nums; }
+
+  .mp-controls { display: flex; align-items: center; gap: 2rem; padding-bottom: 1rem; }
+  .mp-ctrl-btn { background: none; border: none; color: #a89882; cursor: pointer; display: flex; align-items: center; transition: color 0.15s; }
+  .mp-ctrl-btn:hover { color: #f0ebe3; }
+  .mp-play-btn {
+    width: 56px; height: 56px; border-radius: 50%; background: var(--accent);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.12s;
+  }
+  .mp-play-btn:hover { transform: scale(1.08); }
+  .mp-play-btn svg { fill: #fff; width: 22px; height: 22px; margin-left: 3px; }
+
+  .mp-bottom { padding: 1rem 1.25rem 2rem; display: flex; justify-content: center; flex-shrink: 0; }
+  .mp-ai-btn {
+    padding: 0.6rem 1.25rem; border: 1px solid var(--player-surface); border-radius: 8px;
+    background: transparent; color: #a89882; font-family: inherit;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    letter-spacing: 0.04em; text-transform: uppercase; transition: all 0.15s;
+  }
+  .mp-ai-btn:hover { border-color: #7a6c58; color: #f0ebe3; }
+  .mp-ai-btn.active { border-color: var(--accent); color: #f59e0b; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 700px) {
+    .two-panel { grid-template-columns: 1fr; border-top: none; }
+    .panel-left {
+      position: static; border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 0;
+      display: grid; grid-template-columns: 64px 1fr; gap: 0 0.85rem; align-items: start;
+    }
+    .podcaster-img { margin-bottom: 0; font-size: 1.8rem; border-radius: 4px; }
+    .podcaster-bio { display: none; }
+    .ep-count { grid-column: 1 / -1; margin-top: 0.75rem; }
+    .ep-header { display: none; }
+    .ep-row { grid-template-columns: 1fr 48px; padding: 0.85rem 0; gap: 0.75rem; }
+    .ep-row-num, .ep-row-dur, .ep-row-desc { display: none; }
+    .ep-row-title { font-size: 0.85rem; }
+    .now-playing { display: none; }
+    .spacer { height: 20px; }
+  }
+  @media (min-width: 701px) { .mobile-player { display: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wordmark">ECHO <span>— Podcasts</span></div>
+  <div class="topbar-right">
+    <a href="#">Browse</a>
+    <a href="#">Library</a>
+  </div>
+</header>
+
+<main class="main">
+  <div class="two-panel">
+    <aside class="panel-left">
+      <div class="podcaster-img">AH</div>
+      <div class="podcaster-name">Andrew Huberman</div>
+      <div class="podcaster-tag">Neuroscience &middot; Health</div>
+      <div class="podcaster-bio">Stanford neuroscientist exploring how our brain and body work, with practical tools for everyday life.</div>
+      <div class="ep-count">6 episodes</div>
+    </aside>
+    <div class="panel-right">
+      <div class="ep-header"><span>#</span><span>Title</span><span>Duration</span><span></span></div>
+      <div class="ep-row active" onclick="pickRow(this)" data-title="The Science of Sleep" data-dur="42:10" data-desc="Why sleep matters more than diet and exercise combined">
+        <span class="ep-row-num">01</span>
+        <div class="ep-row-info"><div class="ep-row-title">The Science of Sleep</div><div class="ep-row-desc">Why sleep matters more than diet and exercise combined</div></div>
+        <span class="ep-row-dur">42:10</span>
+        <button class="ep-row-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+      <div class="ep-row" onclick="pickRow(this)" data-title="Dopamine & Motivation" data-dur="38:24" data-desc="The real science behind motivation and reward systems">
+        <span class="ep-row-num">02</span>
+        <div class="ep-row-info"><div class="ep-row-title">Dopamine & Motivation</div><div class="ep-row-desc">The real science behind motivation and reward systems</div></div>
+        <span class="ep-row-dur">38:24</span>
+        <button class="ep-row-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+      <div class="ep-row" onclick="pickRow(this)" data-title="Focus & Deep Work" data-dur="51:05" data-desc="Neuroplasticity-based protocols for sustained attention">
+        <span class="ep-row-num">03</span>
+        <div class="ep-row-info"><div class="ep-row-title">Focus & Deep Work</div><div class="ep-row-desc">Neuroplasticity-based protocols for sustained attention</div></div>
+        <span class="ep-row-dur">51:05</span>
+        <button class="ep-row-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+      <div class="ep-row" onclick="pickRow(this)" data-title="Stress Resilience" data-dur="45:30" data-desc="Tools for real-time stress management from neuroscience">
+        <span class="ep-row-num">04</span>
+        <div class="ep-row-info"><div class="ep-row-title">Stress Resilience</div><div class="ep-row-desc">Tools for real-time stress management from neuroscience</div></div>
+        <span class="ep-row-dur">45:30</span>
+        <button class="ep-row-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+      <div class="ep-row" onclick="pickRow(this)" data-title="Exercise & the Brain" data-dur="36:15" data-desc="How movement reshapes your neural circuitry">
+        <span class="ep-row-num">05</span>
+        <div class="ep-row-info"><div class="ep-row-title">Exercise & the Brain</div><div class="ep-row-desc">How movement reshapes your neural circuitry</div></div>
+        <span class="ep-row-dur">36:15</span>
+        <button class="ep-row-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+      <div class="ep-row" onclick="pickRow(this)" data-title="Cold Exposure" data-dur="29:48" data-desc="Deliberate cold as a tool for dopamine and resilience">
+        <span class="ep-row-num">06</span>
+        <div class="ep-row-info"><div class="ep-row-title">Cold Exposure</div><div class="ep-row-desc">Deliberate cold as a tool for dopamine and resilience</div></div>
+        <span class="ep-row-dur">29:48</span>
+        <button class="ep-row-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="spacer"></div>
+
+<div class="now-playing">
+  <div class="np-info"><div class="np-title">The Science of Sleep</div><div class="np-artist">Andrew Huberman</div></div>
+  <span class="np-time">14:32 / 42:10</span>
+  <div class="np-controls">
+    <button class="np-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+    <button class="np-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="np-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+  </div>
+  <button class="np-ai active" onclick="this.classList.toggle('active')">Ask AI</button>
+  <div class="np-progress"><div class="np-progress-fill"></div></div>
+</div>
+
+<div class="mobile-player" id="mobilePlayer">
+  <div class="mp-topbar">
+    <button class="mp-back" onclick="closeMobilePlayer()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      Back
+    </button>
+    <span class="mp-label">Now Playing</span>
+  </div>
+  <div class="mp-body">
+    <div class="mp-artwork">AH</div>
+    <div class="mp-info-center">
+      <div class="mp-ep-title" id="mpTitle">The Science of Sleep</div>
+      <div class="mp-ep-artist">Andrew Huberman</div>
+      <div class="mp-ep-desc" id="mpDesc">Why sleep matters more than diet and exercise combined</div>
+    </div>
+    <div class="mp-progress-area">
+      <div class="mp-bar"><div class="mp-bar-fill"></div></div>
+      <div class="mp-times"><span>14:32</span><span id="mpDur">42:10</span></div>
+    </div>
+    <div class="mp-controls">
+      <button class="mp-ctrl-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+      <button class="mp-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      <button class="mp-ctrl-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+    </div>
+  </div>
+  <div class="mp-bottom">
+    <button class="mp-ai-btn active" onclick="this.classList.toggle('active')">Ask AI Assistant</button>
+  </div>
+</div>
+
+<script>
+const isMobile = () => window.innerWidth <= 700;
+function pickRow(el) {
+  document.querySelectorAll('.ep-row').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  if (isMobile()) {
+    document.getElementById('mpTitle').textContent = el.dataset.title;
+    document.getElementById('mpDur').textContent = el.dataset.dur;
+    document.getElementById('mpDesc').textContent = el.dataset.desc;
+    document.getElementById('mobilePlayer').classList.add('open');
+  }
+}
+function closeMobilePlayer() { document.getElementById('mobilePlayer').classList.remove('open'); }
+</script>
+</body>
+</html>
