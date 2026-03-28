@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     VAPI_API_KEY: str = ""
     VAPI_PHONE_NUMBER_ID: str = ""
 
-    DATABASE_URL: str = "postgresql://admin:hackathonpassword@192.168.10.191:5432/vectordb"
+    HOST_IP: str = "192.168.10.191"
     QDRANT_URL: str = "http://192.168.10.191:6333"
 
     model_config = {"env_file": ".env", "extra": "ignore"}
