@@ -1,0 +1,13 @@
+services:
+  db:
+    # This image has Postgres 16 and pgvector pre-installed!
+    image: pgvector/pgvector:pg16
+    container_name: hackathon_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: hackathonpassword
+      POSTGRES_DB: vectordb
+    ports:
+      # Exposes the database to your local network
+      - "0.0.0.0:5432:5432"
+    restart: unless-stopped
