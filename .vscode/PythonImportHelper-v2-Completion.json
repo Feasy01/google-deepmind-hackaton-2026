@@ -1,0 +1,885 @@
+[
+    {
+        "label": "runpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "runpy",
+        "description": "runpy",
+        "detail": "runpy",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "ChatRequest",
+        "importPath": "app.models.chat",
+        "description": "app.models.chat",
+        "isExtraImport": true,
+        "detail": "app.models.chat",
+        "documentation": {}
+    },
+    {
+        "label": "ChatResponse",
+        "importPath": "app.models.chat",
+        "description": "app.models.chat",
+        "isExtraImport": true,
+        "detail": "app.models.chat",
+        "documentation": {}
+    },
+    {
+        "label": "ChatMessage",
+        "importPath": "app.models.chat",
+        "description": "app.models.chat",
+        "isExtraImport": true,
+        "detail": "app.models.chat",
+        "documentation": {}
+    },
+    {
+        "label": "deepmind_service",
+        "importPath": "app.services.deepmind",
+        "description": "app.services.deepmind",
+        "isExtraImport": true,
+        "detail": "app.services.deepmind",
+        "documentation": {}
+    },
+    {
+        "label": "deepmind_service",
+        "importPath": "app.services.deepmind",
+        "description": "app.services.deepmind",
+        "isExtraImport": true,
+        "detail": "app.services.deepmind",
+        "documentation": {}
+    },
+    {
+        "label": "pathlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "FileResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "vapi_service",
+        "importPath": "app.services.vapi",
+        "description": "app.services.vapi",
+        "isExtraImport": true,
+        "detail": "app.services.vapi",
+        "documentation": {}
+    },
+    {
+        "label": "health",
+        "importPath": "app.api.endpoints",
+        "description": "app.api.endpoints",
+        "isExtraImport": true,
+        "detail": "app.api.endpoints",
+        "documentation": {}
+    },
+    {
+        "label": "chat",
+        "importPath": "app.api.endpoints",
+        "description": "app.api.endpoints",
+        "isExtraImport": true,
+        "detail": "app.api.endpoints",
+        "documentation": {}
+    },
+    {
+        "label": "vapi_webhook",
+        "importPath": "app.api.endpoints",
+        "description": "app.api.endpoints",
+        "isExtraImport": true,
+        "detail": "app.api.endpoints",
+        "documentation": {}
+    },
+    {
+        "label": "podcast",
+        "importPath": "app.api.endpoints",
+        "description": "app.api.endpoints",
+        "isExtraImport": true,
+        "detail": "app.api.endpoints",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "psycopg2",
+        "description": "psycopg2",
+        "detail": "psycopg2",
+        "documentation": {}
+    },
+    {
+        "label": "RealDictCursor",
+        "importPath": "psycopg2.extras",
+        "description": "psycopg2.extras",
+        "isExtraImport": true,
+        "detail": "psycopg2.extras",
+        "documentation": {}
+    },
+    {
+        "label": "get_connection",
+        "importPath": "app.db.connection",
+        "description": "app.db.connection",
+        "isExtraImport": true,
+        "detail": "app.db.connection",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "genai",
+        "importPath": "google",
+        "description": "google",
+        "isExtraImport": true,
+        "detail": "google",
+        "documentation": {}
+    },
+    {
+        "label": "httpx",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "httpx",
+        "description": "httpx",
+        "detail": "httpx",
+        "documentation": {}
+    },
+    {
+        "label": "rag_client",
+        "importPath": "app.services.rag",
+        "description": "app.services.rag",
+        "isExtraImport": true,
+        "detail": "app.services.rag",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "api_router",
+        "importPath": "app.api.router",
+        "description": "app.api.router",
+        "isExtraImport": true,
+        "detail": "app.api.router",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "urlparse",
+        "importPath": "urllib.parse",
+        "description": "urllib.parse",
+        "isExtraImport": true,
+        "detail": "urllib.parse",
+        "documentation": {}
+    },
+    {
+        "label": "HTMLParser",
+        "importPath": "html.parser",
+        "description": "html.parser",
+        "isExtraImport": true,
+        "detail": "html.parser",
+        "documentation": {}
+    },
+    {
+        "label": "bin_dir",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len(\"bin\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"backend\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.13/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "base = bin_dir[: -len(\"bin\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"backend\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.13/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"PATH\"]",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"backend\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.13/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV\"]",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"backend\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.13/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = \"backend\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.13/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "prev_length",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "prev_length = len(sys.path)\nfor lib in \"../lib/python3.13/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.path[:]",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.real_prefix",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.prefix",
+        "kind": 5,
+        "importPath": "backend..venv.bin.activate_this",
+        "description": "backend..venv.bin.activate_this",
+        "peekOfCode": "sys.prefix = base",
+        "detail": "backend..venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.app.api.endpoints.chat",
+        "description": "backend.app.api.endpoints.chat",
+        "peekOfCode": "router = APIRouter()\n@router.post(\"\", response_model=ChatResponse)\nasync def send_message(request: ChatRequest):\n    reply = await deepmind_service.generate_response(\n        message=request.message,\n        conversation_history=request.history,\n    )\n    return ChatResponse(reply=reply)",
+        "detail": "backend.app.api.endpoints.chat",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.app.api.endpoints.health",
+        "description": "backend.app.api.endpoints.health",
+        "peekOfCode": "router = APIRouter()\n@router.get(\"\")\nasync def health_check():\n    return {\"status\": \"ok\"}",
+        "detail": "backend.app.api.endpoints.health",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.app.api.endpoints.podcast",
+        "description": "backend.app.api.endpoints.podcast",
+        "peekOfCode": "router = APIRouter()\ndef _media_dir() -> pathlib.Path:\n    return pathlib.Path(settings.MEDIA_DIR)\n@router.get(\"/\")\nasync def list_podcasts():\n    \"\"\"List available podcasts by scanning MEDIA_DIR for .mp3 files.\"\"\"\n    media = _media_dir()\n    if not media.exists():\n        return []\n    podcasts = []",
+        "detail": "backend.app.api.endpoints.podcast",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "backend.app.api.endpoints.vapi_webhook",
+        "description": "backend.app.api.endpoints.vapi_webhook",
+        "peekOfCode": "logger = logging.getLogger(\"vapi_webhook\")\nrouter = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    logger.info(\"Webhook received: type=%s\", message_type)\n    logger.debug(\"Webhook payload: %s\", json.dumps(payload, indent=2, default=str))\n    if message_type == \"assistant-request\":",
+        "detail": "backend.app.api.endpoints.vapi_webhook",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.app.api.endpoints.vapi_webhook",
+        "description": "backend.app.api.endpoints.vapi_webhook",
+        "peekOfCode": "router = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    logger.info(\"Webhook received: type=%s\", message_type)\n    logger.debug(\"Webhook payload: %s\", json.dumps(payload, indent=2, default=str))\n    if message_type == \"assistant-request\":\n        # Check if this is a podcast-mode call",
+        "detail": "backend.app.api.endpoints.vapi_webhook",
+        "documentation": {}
+    },
+    {
+        "label": "api_router",
+        "kind": 5,
+        "importPath": "backend.app.api.router",
+        "description": "backend.app.api.router",
+        "peekOfCode": "api_router = APIRouter()\napi_router.include_router(health.router, prefix=\"/health\", tags=[\"health\"])\napi_router.include_router(chat.router, prefix=\"/chat\", tags=[\"chat\"])\napi_router.include_router(vapi_webhook.router, prefix=\"/vapi\", tags=[\"vapi\"])\napi_router.include_router(podcast.router, prefix=\"/podcast\", tags=[\"podcast\"])",
+        "detail": "backend.app.api.router",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "kind": 6,
+        "importPath": "backend.app.core.config",
+        "description": "backend.app.core.config",
+        "peekOfCode": "class Settings(BaseSettings):\n    PROJECT_NAME: str = \"DeepMind Hackathon API\"\n    CORS_ORIGINS: list[str] = [\"http://localhost:5173\"]\n    GOOGLE_API_KEY: str = \"\"\n    VAPI_API_KEY: str = \"\"\n    VAPI_PHONE_NUMBER_ID: str = \"\"\n    DATABASE_URL: str = \"postgresql://admin:hackathonpassword@192.168.10.191:5432/vectordb\"\n    MEDIA_DIR: str = \"./assets\"\n    VAPI_WEBHOOK_URL: str = \"\"  # Public URL for Vapi to reach backend (ngrok in dev)\n    model_config = {\"env_file\": \".env\", \"extra\": \"ignore\"}",
+        "detail": "backend.app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "kind": 5,
+        "importPath": "backend.app.core.config",
+        "description": "backend.app.core.config",
+        "peekOfCode": "settings = Settings()",
+        "detail": "backend.app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_connection",
+        "kind": 2,
+        "importPath": "backend.app.db.connection",
+        "description": "backend.app.db.connection",
+        "peekOfCode": "def get_connection():\n    global _conn\n    if _conn is None or _conn.closed:\n        _conn = psycopg2.connect(settings.DATABASE_URL)\n        _conn.autocommit = True\n    return _conn\ndef query(sql: str, params: tuple | None = None) -> list[dict]:\n    conn = get_connection()\n    with conn.cursor(cursor_factory=RealDictCursor) as cur:\n        cur.execute(sql, params)",
+        "detail": "backend.app.db.connection",
+        "documentation": {}
+    },
+    {
+        "label": "query",
+        "kind": 2,
+        "importPath": "backend.app.db.connection",
+        "description": "backend.app.db.connection",
+        "peekOfCode": "def query(sql: str, params: tuple | None = None) -> list[dict]:\n    conn = get_connection()\n    with conn.cursor(cursor_factory=RealDictCursor) as cur:\n        cur.execute(sql, params)\n        return [dict(row) for row in cur.fetchall()]\ndef execute(sql: str, params: tuple | None = None) -> None:\n    conn = get_connection()\n    with conn.cursor() as cur:\n        cur.execute(sql, params)",
+        "detail": "backend.app.db.connection",
+        "documentation": {}
+    },
+    {
+        "label": "execute",
+        "kind": 2,
+        "importPath": "backend.app.db.connection",
+        "description": "backend.app.db.connection",
+        "peekOfCode": "def execute(sql: str, params: tuple | None = None) -> None:\n    conn = get_connection()\n    with conn.cursor() as cur:\n        cur.execute(sql, params)",
+        "detail": "backend.app.db.connection",
+        "documentation": {}
+    },
+    {
+        "label": "_conn",
+        "kind": 5,
+        "importPath": "backend.app.db.connection",
+        "description": "backend.app.db.connection",
+        "peekOfCode": "_conn = None\ndef get_connection():\n    global _conn\n    if _conn is None or _conn.closed:\n        _conn = psycopg2.connect(settings.DATABASE_URL)\n        _conn.autocommit = True\n    return _conn\ndef query(sql: str, params: tuple | None = None) -> list[dict]:\n    conn = get_connection()\n    with conn.cursor(cursor_factory=RealDictCursor) as cur:",
+        "detail": "backend.app.db.connection",
+        "documentation": {}
+    },
+    {
+        "label": "run_migrations",
+        "kind": 2,
+        "importPath": "backend.app.db.migrate",
+        "description": "backend.app.db.migrate",
+        "peekOfCode": "def run_migrations():\n    conn = get_connection()\n    with conn.cursor() as cur:\n        cur.execute(\"\"\"\n            CREATE TABLE IF NOT EXISTS _migrations (\n                id SERIAL PRIMARY KEY,\n                filename TEXT UNIQUE NOT NULL,\n                applied_at TIMESTAMPTZ DEFAULT NOW()\n            )\n        \"\"\")",
+        "detail": "backend.app.db.migrate",
+        "documentation": {}
+    },
+    {
+        "label": "MIGRATIONS_DIR",
+        "kind": 5,
+        "importPath": "backend.app.db.migrate",
+        "description": "backend.app.db.migrate",
+        "peekOfCode": "MIGRATIONS_DIR = pathlib.Path(__file__).parent / \"migrations\"\ndef run_migrations():\n    conn = get_connection()\n    with conn.cursor() as cur:\n        cur.execute(\"\"\"\n            CREATE TABLE IF NOT EXISTS _migrations (\n                id SERIAL PRIMARY KEY,\n                filename TEXT UNIQUE NOT NULL,\n                applied_at TIMESTAMPTZ DEFAULT NOW()\n            )",
+        "detail": "backend.app.db.migrate",
+        "documentation": {}
+    },
+    {
+        "label": "ChatMessage",
+        "kind": 6,
+        "importPath": "backend.app.models.chat",
+        "description": "backend.app.models.chat",
+        "peekOfCode": "class ChatMessage(BaseModel):\n    role: str  # \"user\" | \"assistant\"\n    content: str\nclass ChatRequest(BaseModel):\n    message: str\n    history: list[ChatMessage] = []\nclass ChatResponse(BaseModel):\n    reply: str",
+        "detail": "backend.app.models.chat",
+        "documentation": {}
+    },
+    {
+        "label": "ChatRequest",
+        "kind": 6,
+        "importPath": "backend.app.models.chat",
+        "description": "backend.app.models.chat",
+        "peekOfCode": "class ChatRequest(BaseModel):\n    message: str\n    history: list[ChatMessage] = []\nclass ChatResponse(BaseModel):\n    reply: str",
+        "detail": "backend.app.models.chat",
+        "documentation": {}
+    },
+    {
+        "label": "ChatResponse",
+        "kind": 6,
+        "importPath": "backend.app.models.chat",
+        "description": "backend.app.models.chat",
+        "peekOfCode": "class ChatResponse(BaseModel):\n    reply: str",
+        "detail": "backend.app.models.chat",
+        "documentation": {}
+    },
+    {
+        "label": "DeepMindService",
+        "kind": 6,
+        "importPath": "backend.app.services.deepmind",
+        "description": "backend.app.services.deepmind",
+        "peekOfCode": "class DeepMindService:\n    def __init__(self):\n        self._client: genai.Client | None = None\n    @property\n    def client(self) -> genai.Client:\n        if self._client is None:\n            self._client = genai.Client(api_key=settings.GOOGLE_API_KEY)\n        return self._client\n    async def generate_response(\n        self,",
+        "detail": "backend.app.services.deepmind",
+        "documentation": {}
+    },
+    {
+        "label": "deepmind_service",
+        "kind": 5,
+        "importPath": "backend.app.services.deepmind",
+        "description": "backend.app.services.deepmind",
+        "peekOfCode": "deepmind_service = DeepMindService()",
+        "detail": "backend.app.services.deepmind",
+        "documentation": {}
+    },
+    {
+        "label": "RAGClient",
+        "kind": 6,
+        "importPath": "backend.app.services.rag",
+        "description": "backend.app.services.rag",
+        "peekOfCode": "class RAGClient:\n    \"\"\"Retrieve and answer questions using podcast transcript context.\"\"\"\n    async def retrieve(\n        self, query: str, podcast_id: str, timestamp_seconds: int = 0\n    ) -> list[str]:\n        \"\"\"Retrieve relevant transcript chunks near the given timestamp.\n        Args:\n            query: The user's question.\n            podcast_id: Identifier for the podcast episode.\n            timestamp_seconds: Position in the podcast where the user paused.",
+        "detail": "backend.app.services.rag",
+        "documentation": {}
+    },
+    {
+        "label": "rag_client",
+        "kind": 5,
+        "importPath": "backend.app.services.rag",
+        "description": "backend.app.services.rag",
+        "peekOfCode": "rag_client = RAGClient()",
+        "detail": "backend.app.services.rag",
+        "documentation": {}
+    },
+    {
+        "label": "VapiService",
+        "kind": 6,
+        "importPath": "backend.app.services.vapi",
+        "description": "backend.app.services.vapi",
+        "peekOfCode": "class VapiService:\n    \"\"\"Bootstrap service for Vapi voice chatbot integration.\"\"\"\n    def get_assistant_config(self) -> dict:\n        \"\"\"Return the assistant configuration for Vapi assistant-request webhooks.\"\"\"\n        return {\n            \"assistant\": {\n                \"firstMessage\": \"Hi! I'm your DeepMind assistant. How can I help you today?\",\n                \"model\": {\n                    \"provider\": \"custom-llm\",\n                    \"url\": \"\",  # Set to your deployed server URL + /api/vapi/chat",
+        "detail": "backend.app.services.vapi",
+        "documentation": {}
+    },
+    {
+        "label": "VAPI_BASE_URL",
+        "kind": 5,
+        "importPath": "backend.app.services.vapi",
+        "description": "backend.app.services.vapi",
+        "peekOfCode": "VAPI_BASE_URL = \"https://api.vapi.ai\"\nclass VapiService:\n    \"\"\"Bootstrap service for Vapi voice chatbot integration.\"\"\"\n    def get_assistant_config(self) -> dict:\n        \"\"\"Return the assistant configuration for Vapi assistant-request webhooks.\"\"\"\n        return {\n            \"assistant\": {\n                \"firstMessage\": \"Hi! I'm your DeepMind assistant. How can I help you today?\",\n                \"model\": {\n                    \"provider\": \"custom-llm\",",
+        "detail": "backend.app.services.vapi",
+        "documentation": {}
+    },
+    {
+        "label": "vapi_service",
+        "kind": 5,
+        "importPath": "backend.app.services.vapi",
+        "description": "backend.app.services.vapi",
+        "peekOfCode": "vapi_service = VapiService()",
+        "detail": "backend.app.services.vapi",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend.app.main",
+        "description": "backend.app.main",
+        "peekOfCode": "app = FastAPI(\n    title=settings.PROJECT_NAME,\n    version=\"0.1.0\",\n    openapi_url=\"/api/openapi.json\",\n    docs_url=\"/api/docs\",\n)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=settings.CORS_ORIGINS,\n    allow_credentials=True,",
+        "detail": "backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "script_dir",
+        "kind": 5,
+        "importPath": "backend.assets.parse_transcript",
+        "description": "backend.assets.parse_transcript",
+        "peekOfCode": "script_dir = os.path.dirname(os.path.abspath(__file__))\nfile_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.txt')\noutput_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.json')\nwith open(file_path, 'r', encoding='utf-8') as f:\n    lines = [l.rstrip('\\n') for l in f.readlines()]\ntimestamp_re = re.compile(r'^\\d+:\\d{2}(:\\d{2})?$')\ntranscript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]",
+        "detail": "backend.assets.parse_transcript",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "backend.assets.parse_transcript",
+        "description": "backend.assets.parse_transcript",
+        "peekOfCode": "file_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.txt')\noutput_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.json')\nwith open(file_path, 'r', encoding='utf-8') as f:\n    lines = [l.rstrip('\\n') for l in f.readlines()]\ntimestamp_re = re.compile(r'^\\d+:\\d{2}(:\\d{2})?$')\ntranscript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):",
+        "detail": "backend.assets.parse_transcript",
+        "documentation": {}
+    },
+    {
+        "label": "output_path",
+        "kind": 5,
+        "importPath": "backend.assets.parse_transcript",
+        "description": "backend.assets.parse_transcript",
+        "peekOfCode": "output_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.json')\nwith open(file_path, 'r', encoding='utf-8') as f:\n    lines = [l.rstrip('\\n') for l in f.readlines()]\ntimestamp_re = re.compile(r'^\\d+:\\d{2}(:\\d{2})?$')\ntranscript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):\n        ts = line.strip()",
+        "detail": "backend.assets.parse_transcript",
+        "documentation": {}
+    },
+    {
+        "label": "timestamp_re",
+        "kind": 5,
+        "importPath": "backend.assets.parse_transcript",
+        "description": "backend.assets.parse_transcript",
+        "peekOfCode": "timestamp_re = re.compile(r'^\\d+:\\d{2}(:\\d{2})?$')\ntranscript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):\n        ts = line.strip()\n        # Collect all text lines until next timestamp or section header\n        text_parts = []\n        i += 1",
+        "detail": "backend.assets.parse_transcript",
+        "documentation": {}
+    },
+    {
+        "label": "transcript",
+        "kind": 5,
+        "importPath": "backend.assets.parse_transcript",
+        "description": "backend.assets.parse_transcript",
+        "peekOfCode": "transcript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):\n        ts = line.strip()\n        # Collect all text lines until next timestamp or section header\n        text_parts = []\n        i += 1\n        while i < len(lines):",
+        "detail": "backend.assets.parse_transcript",
+        "documentation": {}
+    },
+    {
+        "label": "i",
+        "kind": 5,
+        "importPath": "backend.assets.parse_transcript",
+        "description": "backend.assets.parse_transcript",
+        "peekOfCode": "i = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):\n        ts = line.strip()\n        # Collect all text lines until next timestamp or section header\n        text_parts = []\n        i += 1\n        while i < len(lines):\n            cur = lines[i]",
+        "detail": "backend.assets.parse_transcript",
+        "documentation": {}
+    },
+    {
+        "label": "data",
+        "kind": 5,
+        "importPath": "backend.assets.parse_transcript",
+        "description": "backend.assets.parse_transcript",
+        "peekOfCode": "data = {\n    \"title\": \"Improve Your Lymphatic System for Overall Health & Appearance\",\n    \"speaker\": \"Andrew Huberman\",\n    \"source\": \"Huberman Lab Podcast\",\n    \"transcript\": transcript\n}\nwith open(output_path, 'w', encoding='utf-8') as f:\n    json.dump(data, f, indent=2, ensure_ascii=False)\nprint(f\"Wrote {len(transcript)} segments to {output_path}\")",
+        "detail": "backend.assets.parse_transcript",
+        "documentation": {}
+    },
+    {
+        "label": "_HTMLToMarkdown",
+        "kind": 6,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "class _HTMLToMarkdown(HTMLParser):\n    \"\"\"Very small HTML→Markdown converter focused on article body text.\"\"\"\n    BLOCK_TAGS = {\n        \"p\", \"div\", \"section\", \"article\", \"main\",\n        \"blockquote\", \"li\", \"tr\", \"figcaption\", \"pre\",\n    }\n    SKIP_TAGS = {\n        \"script\", \"style\", \"nav\", \"footer\", \"header\", \"noscript\",\n        \"svg\", \"form\", \"button\", \"iframe\", \"aside\", \"menu\",\n    }",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "html_to_markdown",
+        "kind": 2,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "def html_to_markdown(html: str) -> str:\n    parser = _HTMLToMarkdown()\n    parser.feed(html)\n    return parser.get_markdown()\n# ---------------------------------------------------------------------------\n# Post-processing: strip reference noise from scraped article markdown\n# ---------------------------------------------------------------------------\ndef clean_article_content(md: str) -> str:\n    \"\"\"Strip out reference/citation noise and keep only core article text.\"\"\"\n    # Remove [Google Scholar](…) and [Crossref](…) links (with optional brackets)",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "clean_article_content",
+        "kind": 2,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "def clean_article_content(md: str) -> str:\n    \"\"\"Strip out reference/citation noise and keep only core article text.\"\"\"\n    # Remove [Google Scholar](…) and [Crossref](…) links (with optional brackets)\n    md = re.sub(r\"\\[?\\[Google Scholar\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[Crossref\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[PubMed\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[Abstract\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[Full Text\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[PDF\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[Web of Science\\]\\]\\([^)]*\\)\\]?\", \"\", md)",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "extract_article_links",
+        "kind": 2,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "def extract_article_links(page_markdown: str) -> list[dict]:\n    \"\"\"Return list of {title, url} for academic article links on the page.\"\"\"\n    seen_urls: set[str] = set()\n    articles: list[dict] = []\n    for m in _ARTICLE_LINK_RE.finditer(page_markdown):\n        title = m.group(1).strip()\n        url = m.group(2).strip()\n        if url in seen_urls:\n            continue\n        if not _is_academic_url(url):",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "fetch_crossref_abstract",
+        "kind": 2,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "def fetch_crossref_abstract(url: str, client: httpx.Client) -> dict | None:\n    \"\"\"\n    Query CrossRef API using the DOI extracted from the URL.\n    Returns dict with 'abstract', 'authors', 'journal' or None.\n    \"\"\"\n    doi = _extract_doi(url)\n    if not doi:\n        return None\n    try:\n        api_url = f\"https://api.crossref.org/works/{doi}\"",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "scrape_article",
+        "kind": 2,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "def scrape_article(url: str, client: httpx.Client) -> tuple[str | None, str | None]:\n    \"\"\"\n    Attempt to fetch and convert an article to markdown.\n    Returns (markdown_content, error_message).\n    \"\"\"\n    try:\n        resp = client.get(url, follow_redirects=True, timeout=30)\n        if resp.status_code == 403:\n            return None, \"Access denied (HTTP 403). Article may require institutional access.\"\n        if resp.status_code == 451:",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "save_article_md",
+        "kind": 2,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "def save_article_md(\n    out_dir: str,\n    title: str,\n    url: str,\n    content: str | None,\n    error: str | None,\n    crossref: dict | None = None,\n) -> str:\n    \"\"\"Write an .md file for the article and return the path.\"\"\"\n    filename = _slugify(title) + \".md\"",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "def main():\n    if len(sys.argv) < 2:\n        print(__doc__)\n        sys.exit(1)\n    episode_url = sys.argv[1]\n    script_dir = os.path.dirname(os.path.abspath(__file__))\n    out_dir = os.path.join(script_dir, \"articles\")\n    os.makedirs(out_dir, exist_ok=True)\n    print(f\"📡  Fetching episode page: {episode_url}\")\n    with httpx.Client(headers=_HEADERS) as client:",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "_ARTICLE_LINK_RE",
+        "kind": 5,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "_ARTICLE_LINK_RE = re.compile(\n    r\"\\[([^\\]]+)\\]\\((https?://[^)]+)\\)\"\n)\n# Domains that host academic articles\n_ACADEMIC_DOMAINS = {\n    \"onlinelibrary.wiley.com\",\n    \"journals.physiology.org\",\n    \"www.sciencedirect.com\",\n    \"www.nature.com\",\n    \"pmc.ncbi.nlm.nih.gov\",",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "_ACADEMIC_DOMAINS",
+        "kind": 5,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "_ACADEMIC_DOMAINS = {\n    \"onlinelibrary.wiley.com\",\n    \"journals.physiology.org\",\n    \"www.sciencedirect.com\",\n    \"www.nature.com\",\n    \"pmc.ncbi.nlm.nih.gov\",\n    \"pubmed.ncbi.nlm.nih.gov\",\n    \"www.jneurosci.org\",\n    \"link.springer.com\",\n    \"www.annualreviews.org\",",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "_HEADERS",
+        "kind": 5,
+        "importPath": "backend.assets.scrape_articles",
+        "description": "backend.assets.scrape_articles",
+        "peekOfCode": "_HEADERS = {\n    \"User-Agent\": (\n        \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) \"\n        \"AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\"\n    ),\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n    \"Accept-Language\": \"en-US,en;q=0.9\",\n}\ndef scrape_article(url: str, client: httpx.Client) -> tuple[str | None, str | None]:\n    \"\"\"",
+        "detail": "backend.assets.scrape_articles",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "frontend.node_modules.flatted.python.flatted",
+        "description": "frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    for i in range(len(value)):\n        yield i",
+        "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "frontend.node_modules.flatted.python.flatted",
+        "description": "frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    for i in range(len(value)):\n        yield i\ndef _object_keys(value):\n    for key in value:\n        yield key\ndef _is_array(value):",
+        "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "frontend.node_modules.flatted.python.flatted",
+        "description": "frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "frontend.node_modules.flatted.python.flatted",
+        "description": "frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    }
+]

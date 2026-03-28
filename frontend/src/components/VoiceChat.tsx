@@ -1,5 +1,8 @@
 import { useState, useRef, useCallback } from 'react'
-import Vapi from '@vapi-ai/web'
+import VapiModule from '@vapi-ai/web'
+
+// Handle CJS default export interop
+const Vapi = (VapiModule as any).default ?? VapiModule
 
 const VAPI_PUBLIC_KEY = import.meta.env.VITE_VAPI_PUBLIC_KEY || ''
 
