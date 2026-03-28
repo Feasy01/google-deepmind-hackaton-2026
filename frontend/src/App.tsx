@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchPodcasters, getPodcastAudioUrl } from './api/podcast'
+import { fetchPodcasters, getPodcastAudioUrl, getPodcastImageUrl } from './api/podcast'
 import type { Episode } from './api/podcast'
 import { useAudioPlayer } from './hooks/useAudioPlayer'
 import { usePodcastVapi } from './hooks/usePodcastVapi'
@@ -12,6 +12,7 @@ interface SelectedEpisode {
   podcaster: string
   episodeId: string
   episodeName: string
+  imageUrl: string | null
 }
 
 function getInitials(name: string): string {
@@ -73,10 +74,17 @@ function App() {
       vapi.endCall()
       vapi.clearTranscript()
 
+      // Find the podcaster's cover image to use as default
+      const podcasterData = podcasters.find((p) => p.podcaster === podcasterName)
+      const coverUrl = podcasterData?.cover
+        ? getPodcastImageUrl(podcasterName, podcasterData.cover)
+        : null
+
       setSelected({
         podcaster: podcasterName,
         episodeId: episode.id,
         episodeName: episode.name,
+        imageUrl: coverUrl,
       })
 
       // Start audio + auto-arm Vapi
@@ -188,6 +196,7 @@ function App() {
         <PlayerBar
           episodeName={selected.episodeName}
           podcasterName={selected.podcaster}
+          imageUrl={selected.imageUrl}
           isPlaying={audio.isPlaying}
           currentTime={audio.currentTime}
           duration={audio.duration}
@@ -205,6 +214,7 @@ function App() {
           episodeName={selected.episodeName}
           podcasterName={selected.podcaster}
           initials={getInitials(selected.podcaster)}
+          imageUrl={selected.imageUrl}
           isPlaying={audio.isPlaying}
           currentTime={audio.currentTime}
           duration={audio.duration}

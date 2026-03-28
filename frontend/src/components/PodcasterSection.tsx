@@ -1,4 +1,5 @@
 import type { Podcaster, Episode } from '../api/podcast'
+import { getPodcastImageUrl } from '../api/podcast'
 import { EpisodeRow } from './EpisodeRow'
 
 interface PodcasterSectionProps {
@@ -82,21 +83,36 @@ export function PodcasterSection({
       <section className="podcaster-grid">
         {/* Left panel */}
         <aside className="podcaster-sidebar">
-          <div
-            className="podcaster-avatar-mobile flex items-center justify-center w-full"
-            style={{
-              aspectRatio: '1',
-              background: 'var(--surface)',
-              fontFamily: "'Newsreader', serif",
-              fontSize: '3.5rem',
-              fontStyle: 'italic',
-              color: 'var(--ink-3)',
-              borderRadius: 6,
-              marginBottom: '1rem',
-            }}
-          >
-            {getInitials(podcaster.podcaster)}
-          </div>
+          {podcaster.cover ? (
+            <img
+              src={getPodcastImageUrl(podcaster.podcaster, podcaster.cover)}
+              alt={podcaster.podcaster}
+              className="podcaster-avatar-mobile w-full"
+              style={{
+                aspectRatio: '1',
+                objectFit: 'cover',
+                borderRadius: 6,
+                marginBottom: '1rem',
+                background: 'var(--surface)',
+              }}
+            />
+          ) : (
+            <div
+              className="podcaster-avatar-mobile flex items-center justify-center w-full"
+              style={{
+                aspectRatio: '1',
+                background: 'var(--surface)',
+                fontFamily: "'Newsreader', serif",
+                fontSize: '3.5rem',
+                fontStyle: 'italic',
+                color: 'var(--ink-3)',
+                borderRadius: 6,
+                marginBottom: '1rem',
+              }}
+            >
+              {getInitials(podcaster.podcaster)}
+            </div>
+          )}
 
           <div>
             <div className="font-bold" style={{ fontSize: '1rem', letterSpacing: '-0.02em' }}>

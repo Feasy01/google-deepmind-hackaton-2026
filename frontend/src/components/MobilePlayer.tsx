@@ -4,6 +4,7 @@ interface MobilePlayerProps {
   episodeName: string
   podcasterName: string
   initials: string
+  imageUrl: string | null
   isPlaying: boolean
   currentTime: number
   duration: number
@@ -25,6 +26,7 @@ export function MobilePlayer({
   episodeName,
   podcasterName,
   initials,
+  imageUrl,
   isPlaying,
   currentTime,
   duration,
@@ -71,21 +73,35 @@ export function MobilePlayer({
       {/* Body */}
       <div className="flex-1 flex flex-col items-center justify-center gap-8" style={{ padding: '2rem 2rem 1rem' }}>
         {/* Artwork */}
-        <div
-          className="flex items-center justify-center"
-          style={{
-            width: 'min(280px, 65vw)',
-            aspectRatio: '1',
-            borderRadius: 14,
-            background: 'var(--player-surface)',
-            fontFamily: "'Newsreader', serif",
-            fontSize: '4rem',
-            fontStyle: 'italic',
-            color: '#6b5d4d',
-          }}
-        >
-          {initials}
-        </div>
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={episodeName}
+            style={{
+              width: 'min(280px, 65vw)',
+              aspectRatio: '1',
+              objectFit: 'cover',
+              borderRadius: 14,
+              background: 'var(--player-surface)',
+            }}
+          />
+        ) : (
+          <div
+            className="flex items-center justify-center"
+            style={{
+              width: 'min(280px, 65vw)',
+              aspectRatio: '1',
+              borderRadius: 14,
+              background: 'var(--player-surface)',
+              fontFamily: "'Newsreader', serif",
+              fontSize: '4rem',
+              fontStyle: 'italic',
+              color: '#6b5d4d',
+            }}
+          >
+            {initials}
+          </div>
+        )}
 
         {/* Info */}
         <div className="text-center">

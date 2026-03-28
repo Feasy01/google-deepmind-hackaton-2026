@@ -1,6 +1,7 @@
 interface PlayerBarProps {
   episodeName: string
   podcasterName: string
+  imageUrl: string | null
   isPlaying: boolean
   currentTime: number
   duration: number
@@ -19,6 +20,7 @@ function formatTime(seconds: number): string {
 export function PlayerBar({
   episodeName,
   podcasterName,
+  imageUrl,
   isPlaying,
   currentTime,
   duration,
@@ -41,7 +43,20 @@ export function PlayerBar({
         zIndex: 200,
       }}
     >
-      {/* Episode info */}
+      {/* Thumbnail + Episode info */}
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={episodeName}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 6,
+            objectFit: 'cover',
+            flexShrink: 0,
+          }}
+        />
+      )}
       <div className="flex-1 min-w-0">
         <div className="text-sm font-medium truncate" style={{ fontSize: '0.82rem' }}>
           {episodeName}
