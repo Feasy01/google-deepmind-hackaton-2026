@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import VapiModule from '@vapi-ai/web'
 
 // Handle CJS default export interop
@@ -29,6 +29,13 @@ export function usePodcastVapi({
   const [status, setStatus] = useState<'idle' | 'connecting' | 'active'>('idle')
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
   const vapiRef = useRef<Vapi | null>(null)
+  const podcastPlayingRef = useRef(false)
+
+  // Keep refs to always call the latest callbacks (avoids stale closures in Vapi event handlers)
+  const onStopPlayerRef = useRef(onStopPlayer)
+  const onStartPlayerRef = useRef(onStartPlayer)
+  useEffect(() => { onStopPlayerRef.current = onStopPlayer }, [onStopPlayer])
+  useEffect(() => { onStartPlayerRef.current = onStartPlayer }, [onStartPlayer])
 
   const startCall = useCallback(() => {
     if (!VAPI_PUBLIC_KEY) {
@@ -50,32 +57,65 @@ export function usePodcastVapi({
     })
 
     vapi.on('message', (msg: any) => {
-      console.log('[Vapi message]', msg)
+      console.log('[Vapi] message:', msg.type, msg)
       // Handle tool calls from the assistant
       if (msg.type === 'tool-calls') {
+        const toolCallResults: any[] = []
+        let shouldClearContext = false
         for (const toolCall of msg.toolCalls || []) {
           const fnName = toolCall.function?.name
+          let result = 'ok'
           if (fnName === 'stop_player') {
-            const seconds = onStopPlayer()
+            podcastPlayingRef.current = false
+            // Unmute Vapi output so assistant answer is audible
+            document.querySelectorAll('audio').forEach(el => { (el as HTMLAudioElement).volume = 1 })
+            const seconds = onStopPlayerRef.current()
             const minutes = Math.floor(seconds / 60)
             const secs = Math.floor(seconds % 60)
             const timeStr = `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
-            // Inject timestamp as system message so the model knows the position
-            vapi.send({
-              type: 'add-message',
-              message: {
-                role: 'system',
-                content: `Podcast paused at ${timeStr} (${Math.floor(seconds)} seconds). Use this as timestamp_seconds when calling search_knowledge or search_previous_episodes.`,
-              },
-            })
+            result = `Podcast paused at ${timeStr}. timestamp_seconds=${Math.floor(seconds)}`
+            console.log(`[Vapi] stop_player @ ${timeStr}`)
           } else if (fnName === 'start_player') {
-            onStartPlayer()
+            podcastPlayingRef.current = true
+            onStartPlayerRef.current()
+            result = 'Podcast resumed. Do not say anything.'
+            // Mute Vapi output so assistant voice doesn't talk over podcast
+            document.querySelectorAll('audio').forEach(el => { (el as HTMLAudioElement).volume = 0 })
+            shouldClearContext = true
+            console.log('[Vapi] start_player')
           }
+          toolCallResults.push({
+            toolCallId: toolCall.id,
+            result,
+          })
         }
+        vapi.send({
+          type: 'tool-calls-result',
+          toolCallResults,
+        })
+        if (shouldClearContext) {
+          vapi.send({
+            type: 'add-message',
+            message: {
+              role: 'system',
+              content: 'The user is done with their question and the podcast has resumed. Forget the previous question and answer exchange. When the user asks a new question, treat it as a fresh conversation. Do not reference previous questions or answers.',
+            },
+            triggerResponseEnabled: false,
+          })
+          console.log('[Vapi] sent context-clearing system message')
+        }
+      }
+
+      // Auto-pause podcast when assistant starts speaking
+      if (msg.type === 'transcript' && msg.role === 'assistant' && msg.transcriptType === 'partial' && !podcastPlayingRef.current) {
+        onStopPlayerRef.current()
       }
 
       // Handle transcript updates
       if (msg.type === 'transcript' && msg.transcriptType === 'final') {
+        if (msg.role === 'user') {
+          console.log(`[Vapi] user: "${msg.transcript}"`)
+        }
         setTranscript((prev) => [
           ...prev,
           {
@@ -107,15 +147,16 @@ export function usePodcastVapi({
             content: `You are an interactive podcast assistant. You should respond in a way a real podcaster would respond, in this case Andrew Huberman The user is listening to a podcast and may ask questions about what they're hearing.
 
 IMPORTANT RULES:
-1. When the user asks ANY question or says something that sounds like a question (e.g., "hey andrew, what is HRV?", "what did he mean by that?"), IMMEDIATELY call the stop_player tool to pause the podcast, then call search_knowledge or search_previous_episodes with their question and the timestamp_seconds from the system message.
+1. When the user asks ANY question or sbased on the search results, and if you don't have enough information, give a generic but helpful answer. For example, if the user asks "what's HRV?" and you don't have good search results, you  ays something that sounds like a question (e.g., "hey andrew, what is HRV?", "what did he mean by that?"), IMMEDIATELY call the stop_player tool to pause the podcast, then call search_knowledge or search_previous_episodes with their question and the timestamp_seconds from the stop_player tool result.
+2. Don't answer if the user is just making a comment or saying something that doesn't sound like a question. For example, if the user says "wow, that's interesting", you should not call stop_player or search_knowledge. You should only call stop_player and search_knowledge if the user is asking a question or explicitly asking for more information about something they heard in the podcast.
 2. Don't start talking until you get the answer back from the stop_player call, which will include the current timestamp_seconds. This is crucial so that your voice and the podcast don't talk over each other. If you start talking before the podcast is paused, it will create a bad user experience.
 3. Use search_knowledge for factual questions about topics. Use search_previous_episodes for questions about what was discussed in the podcast.
 4. When the user says something like "thank you", "thanks", "got it", "resume", "continue", "play", or any dismissal phrase, call start_player to resume the podcast.
 5. After getting the answer, speak it naturally to the user.
 6. Keep your answers concise and conversational.
 7. CRITICAL: never talk over the podcast audio. Always pause the podcast first before responding, and only respond after you get the signal that the podcast is paused. The user should always be able to listen to the podcast without your voice talking over it.
-9. Never tell the user you can't find the answer, if the tool call didn't return anything. Just answer to the best of your ability based on your knowledge
-8. The podcast_id for this session is: ${podcastId}
+8. Never tell the user you can't find the answer, if the tool call didn't return anything. Just answer to the best of your ability based on your knowledge
+9. The podcast_id for this session is: ${podcastId}
 `,
           },
         ],
@@ -170,7 +211,7 @@ IMPORTANT RULES:
                   timestamp_seconds: {
                     type: 'integer',
                     description:
-                      'The podcast playback position in seconds when the user asked. Get this from the system message.',
+                      'The podcast playback position in seconds when the user asked. Get this from the stop_player tool result.',
                   },
                 },
                 required: ['query'],
@@ -202,7 +243,7 @@ IMPORTANT RULES:
                   timestamp_seconds: {
                     type: 'integer',
                     description:
-                      'The podcast playback position in seconds when the user asked. Get this from the system message.',
+                      'The podcast playback position in seconds when the user asked. Get this from the stop_player tool result.',
                   },
                 },
                 required: ['query'],
@@ -231,7 +272,7 @@ IMPORTANT RULES:
         podcast_id: podcastId,
       },
     } as any)
-  }, [podcastId, onStopPlayer, onStartPlayer])
+  }, [podcastId])
 
   const endCall = useCallback(() => {
     vapiRef.current?.stop()

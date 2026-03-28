@@ -15,13 +15,8 @@ async def vapi_webhook(request: Request):
     payload = await request.json()
     message_type = payload.get("message", {}).get("type")
 
-    logger.info("Webhook received: type=%s", message_type)
-    logger.debug("Webhook payload: %s", json.dumps(payload, indent=2, default=str))
-
     if message_type == "tool-calls":
         tool_calls = payload.get("message", {}).get("toolCallList", [])
-        logger.info("tool-calls: %d calls, raw keys: %s", len(tool_calls),
-                    [tc.get("function", {}).get("name") for tc in tool_calls])
         results = []
         for tc in tool_calls:
             tool_call_id = tc.get("id", "")
@@ -36,7 +31,8 @@ async def vapi_webhook(request: Request):
                     params = {}
             else:
                 params = raw_args  # already a dict (defensive)
-            logger.info("  tool-call: id=%s name=%s params=%s", tool_call_id, name, params)
+            logger.info("tool-call: %s | query=%s ts=%s",
+                        name, params.get("query", "-"), params.get("timestamp_seconds", "-"))
             compat_payload = {
                 "message": {
                     **payload.get("message", {}),
@@ -47,13 +43,10 @@ async def vapi_webhook(request: Request):
                 }
             }
             result = await vapi_service.handle_function_call(compat_payload)
-            logger.info("  tool-call result: %s", result)
             results.append({
                 "toolCallId": tool_call_id,
                 "name": name,
                 "result": result.get("result", ""),
             })
         return {"results": results}
-
-    logger.info("Unhandled webhook type: %s", message_type)
     return {"ok": True}

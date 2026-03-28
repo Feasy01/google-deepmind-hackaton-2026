@@ -514,7 +514,7 @@
         "kind": 5,
         "importPath": "backend.app.api.endpoints.vapi_webhook",
         "description": "backend.app.api.endpoints.vapi_webhook",
-        "peekOfCode": "logger = logging.getLogger(\"vapi_webhook\")\nrouter = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    logger.info(\"Webhook received: type=%s\", message_type)\n    logger.debug(\"Webhook payload: %s\", json.dumps(payload, indent=2, default=str))\n    if message_type == \"tool-calls\":",
+        "peekOfCode": "logger = logging.getLogger(\"vapi_webhook\")\nrouter = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    if message_type == \"tool-calls\":\n        tool_calls = payload.get(\"message\", {}).get(\"toolCallList\", [])\n        results = []",
         "detail": "backend.app.api.endpoints.vapi_webhook",
         "documentation": {}
     },
@@ -523,7 +523,7 @@
         "kind": 5,
         "importPath": "backend.app.api.endpoints.vapi_webhook",
         "description": "backend.app.api.endpoints.vapi_webhook",
-        "peekOfCode": "router = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    logger.info(\"Webhook received: type=%s\", message_type)\n    logger.debug(\"Webhook payload: %s\", json.dumps(payload, indent=2, default=str))\n    if message_type == \"tool-calls\":\n        tool_calls = payload.get(\"message\", {}).get(\"toolCallList\", [])",
+        "peekOfCode": "router = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    if message_type == \"tool-calls\":\n        tool_calls = payload.get(\"message\", {}).get(\"toolCallList\", [])\n        results = []\n        for tc in tool_calls:",
         "detail": "backend.app.api.endpoints.vapi_webhook",
         "documentation": {}
     },
