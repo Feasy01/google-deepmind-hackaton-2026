@@ -180,18 +180,75 @@ function App() {
         }}
       >
         {isLoading && (
-          <p style={{ color: 'var(--ink-3)', fontSize: '0.85rem' }}>Loading podcasts...</p>
+          <>
+            <style>{`
+              .skeleton-section {
+                display: grid;
+                grid-template-columns: 280px 1fr;
+                border-top: 2px solid var(--border-heavy);
+                min-height: 400px;
+                animation: fade-in 400ms var(--ease-out-quart) both;
+              }
+              .skeleton-sidebar {
+                padding: 1.5rem 1.5rem 1.5rem 0;
+                border-right: 1px solid var(--border);
+              }
+              .skeleton-bone {
+                background: linear-gradient(90deg, var(--surface) 25%, #e8e0d5 50%, var(--surface) 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1.5s infinite;
+                border-radius: 4px;
+              }
+              .skeleton-row {
+                display: grid;
+                grid-template-columns: 48px 1fr 48px;
+                gap: 1rem;
+                padding: 1rem 1rem 1rem 1.5rem;
+                border-bottom: 1px solid var(--border);
+              }
+              @media (max-width: 700px) {
+                .skeleton-section { grid-template-columns: 1fr; min-height: auto; }
+                .skeleton-sidebar { border-right: none; border-bottom: 1px solid var(--border); padding: 1.25rem 0; display: grid; grid-template-columns: 64px 1fr; gap: 0 0.85rem; }
+              }
+            `}</style>
+            {[0, 1].map((i) => (
+              <div key={i} className="skeleton-section" style={{ animationDelay: `${i * 120}ms` }}>
+                <div className="skeleton-sidebar">
+                  <div className="skeleton-bone" style={{ aspectRatio: '1', width: '100%', marginBottom: '1rem', borderRadius: 6 }} />
+                  <div>
+                    <div className="skeleton-bone" style={{ height: 16, width: '70%', marginBottom: '0.5rem' }} />
+                    <div className="skeleton-bone" style={{ height: 12, width: '50%' }} />
+                  </div>
+                </div>
+                <div>
+                  {[0, 1, 2, 3, 4].map((j) => (
+                    <div key={j} className="skeleton-row">
+                      <div className="skeleton-bone" style={{ height: 12, width: 24 }} />
+                      <div className="skeleton-bone" style={{ height: 14, width: `${60 + j * 8}%` }} />
+                      <div className="skeleton-bone" style={{ height: 32, width: 32, borderRadius: '50%' }} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
         )}
 
-        {podcasters.map((p) => (
-          <PodcasterSection
+        {podcasters.map((p, i) => (
+          <div
             key={p.podcaster}
-            podcaster={p}
-            selectedEpisodeId={
-              selected?.podcaster === p.podcaster ? selected.episodeId : null
-            }
-            onSelectEpisode={(ep) => selectEpisode(p.podcaster, ep)}
-          />
+            style={{
+              animation: `fade-in-up 500ms var(--ease-out-expo) ${i * 150}ms both`,
+            }}
+          >
+            <PodcasterSection
+              podcaster={p}
+              selectedEpisodeId={
+                selected?.podcaster === p.podcaster ? selected.episodeId : null
+              }
+              onSelectEpisode={(ep) => selectEpisode(p.podcaster, ep)}
+            />
+          </div>
         ))}
       </main>
 

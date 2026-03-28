@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo — Your podcast, talking back.</title>
+<link rel="icon" href="../frontend/public/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#faf7f2;--surface:#f0ebe3;--ink:#2c2418;--ink-2:#6b5d4d;--ink-3:#a89882;
+--accent:#b45309;--accent-bg:#fef3c7;--border:#e2d9cc;
+--player-bg:#2c2418;--player-surface:#3d3226;
+--sans:'Space Grotesk',system-ui,sans-serif;
+--serif:'Newsreader',Georgia,serif;
+}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* Grain overlay */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.025}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── NAVBAR ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;transition:background 0.3s,border-color 0.3s,backdrop-filter 0.3s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(250,247,242,0.85);backdrop-filter:blur(12px);border-bottom-color:var(--border)}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo svg{width:24px;height:23px;flex-shrink:0}
+.nav-logo span{font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--ink)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-size:0.85rem;font-weight:500;color:var(--ink-2);transition:color 0.2s}
+.nav-links a:hover{color:var(--ink)}
+
+/* ── WRAP ── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px}
+
+/* ── SECTION LABEL ── */
+.section-label{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+
+/* ── HERO ── */
+.hero{padding:140px 0 100px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.hero-text{max-width:480px}
+.hero-text .section-label{margin-bottom:16px}
+.hero-text h1{font-family:var(--serif);font-size:clamp(2.5rem,5vw,3.5rem);font-weight:500;line-height:1.12;color:var(--ink);margin-bottom:20px}
+.hero-text p{font-size:1.05rem;color:var(--ink-2);line-height:1.65;margin-bottom:28px;max-width:420px}
+.hero-text a.cta-link{font-size:0.95rem;font-weight:500;color:var(--accent);transition:opacity 0.2s}
+.hero-text a.cta-link:hover{opacity:0.7}
+
+/* Hero device */
+.hero-device-wrap{position:relative;display:flex;justify-content:center}
+.hero-device{width:400px;height:420px;background:var(--player-bg);border-radius:24px;position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06);flex-shrink:0;display:flex;flex-direction:column}
+
+/* Flanking labels */
+.flank-label{position:absolute;top:50%;font-size:0.78rem;font-weight:500;color:var(--ink-2);padding:6px 14px;border-radius:999px;border:1px solid var(--border);background:var(--surface);box-shadow:0 2px 8px rgba(0,0,0,0.06);white-space:nowrap}
+.flank-left{right:calc(100% + 16px);transform:translateY(-50%)}
+.flank-right{left:calc(100% + 16px);transform:translateY(-50%)}
+
+/* ── Conversation top bar ── */
+.conv-topbar{height:40px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.conv-topbar-title{font-family:var(--serif);font-size:12px;font-weight:500;color:rgba(255,255,255,0.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-topbar-status{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.conv-topbar-dot{width:6px;height:6px;border-radius:50%;background:#d4944a;animation:convDotPulse 2s ease-in-out infinite}
+@keyframes convDotPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.conv-topbar-status span{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.5px}
+
+/* ── Conversation moments area ── */
+.conv-area{flex:1;padding:16px 0 20px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start}
+
+/* Moment row */
+.conv-moment{padding:10px 20px;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(12px);transition:opacity 0.5s ease,transform 0.5s ease}
+.conv-moment.visible{opacity:1;transform:translateY(0)}
+.conv-moment-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.conv-moment-dot.listener{background:#d4944a}
+.conv-moment-dot.echo{background:linear-gradient(135deg,#b45309,#d4944a)}
+.conv-moment-name{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5);white-space:nowrap;flex-shrink:0}
+.conv-moment-tag{font-size:9px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:#d4944a;background:rgba(212,148,74,0.15);padding:2px 6px;border-radius:999px;flex-shrink:0;line-height:1.3}
+.conv-moment-wave{display:inline-flex;align-items:center;gap:2px;flex-shrink:0}
+.conv-moment-wave span{display:block;width:2px;border-radius:1px;background:#d4944a}
+.conv-moment-text{font-family:var(--serif);font-style:italic;font-size:13px;color:rgba(255,255,255,0.85);line-height:1.45;flex:1;min-width:0}
+
+/* Citation row */
+.conv-citation{padding:4px 20px 4px 38px;opacity:0;transform:translateY(8px);transition:opacity 0.5s ease,transform 0.5s ease;font-size:11px;color:#d4944a;display:flex;align-items:center;gap:4px}
+.conv-citation.visible{opacity:1;transform:translateY(0)}
+
+/* ── HOW IT WORKS ── */
+.how{background:var(--surface);padding:100px 0}
+.how h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:500;color:var(--ink);margin-bottom:56px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.steps::before{content:'';position:absolute;top:18px;left:calc(12.5% + 18px);right:calc(12.5% + 18px);height:1px;background:var(--border)}
+.step{text-align:center;padding:0 16px;position:relative}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-size:0.85rem;font-weight:600;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;z-index:1}
+.step-name{font-weight:600;font-size:0.95rem;margin-bottom:6px;color:var(--ink)}
+.step-desc{font-size:0.85rem;color:var(--ink-2);line-height:1.55;margin-bottom:12px}
+.step-visual{display:flex;align-items:center;justify-content:center;gap:8px;height:28px}
+.step-visual svg{width:20px;height:20px}
+.step-visual .platform-icon{width:20px;height:20px;border-radius:4px;background:var(--border);display:flex;align-items:center;justify-content:center}
+.step-visual .platform-icon svg{width:12px;height:12px;fill:var(--ink-3)}
+.step-progress{width:80px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;position:relative}
+.step-progress::after{content:'';position:absolute;left:0;top:0;bottom:0;width:65%;background:var(--accent);border-radius:2px;animation:vizProgress 2s ease-in-out infinite alternate}
+@keyframes vizProgress{0%{width:30%}100%{width:85%}}
+.step-mic-visual{display:flex;align-items:center;gap:4px}
+.step-mic-visual svg{width:16px;height:16px;fill:var(--accent)}
+.step-mic-wave{display:flex;gap:2px;align-items:center}
+.step-mic-wave span{width:2px;height:8px;background:var(--accent);border-radius:1px;opacity:0.5}
+.step-mic-wave span:nth-child(2){height:14px;opacity:0.7}
+.step-mic-wave span:nth-child(3){height:10px;opacity:0.6}
+.step-mic-wave span:nth-child(4){height:16px;opacity:0.8}
+.step-mic-wave span:nth-child(5){height:6px;opacity:0.4}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;animation:vizLivePulse 2s ease-in-out infinite}
+@keyframes vizLivePulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* ── FOR PODCASTERS ── */
+.podcasters{padding:100px 0}
+.podcasters h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:500;color:var(--ink);margin-bottom:48px}
+.podcasters-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.podcasters-list{list-style:none}
+.podcasters-list li{font-size:0.95rem;color:var(--ink-2);line-height:2.2;display:flex;align-items:center;gap:10px}
+.podcasters-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.dash-card{background:var(--player-bg);border-radius:20px;padding:24px;color:rgba(255,255,255,0.9)}
+.dash-card h3{font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:16px}
+.dash-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.dash-row:last-child{border-bottom:none}
+.dash-rank{font-family:var(--serif);font-size:1.1rem;color:var(--accent);width:24px;text-align:center;flex-shrink:0}
+.dash-q{flex:1;font-size:0.85rem;color:rgba(255,255,255,0.75);line-height:1.4}
+.dash-count{font-size:0.8rem;color:rgba(255,255,255,0.3);font-variant-numeric:tabular-nums;flex-shrink:0}
+
+/* ── TRACTION ── */
+.traction{background:var(--surface);padding:80px 0}
+.traction-row{display:flex;justify-content:center}
+.stat{flex:1;text-align:center;padding:0 32px;position:relative}
+.stat+.stat::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:48px;background:var(--border)}
+.stat-num{font-family:var(--serif);font-size:clamp(2rem,3vw,2.5rem);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat-label{font-size:0.85rem;color:var(--ink-3);margin-top:2px}
+
+/* ── SESSION REPLAY ── */
+.session{padding:100px 0}
+.session h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:500;color:var(--ink);margin-bottom:12px}
+.session>p,.session .wrap>p{font-size:1rem;color:var(--ink-2);margin-bottom:40px;max-width:540px}
+.session-card{max-width:700px;margin:0 auto;background:var(--player-bg);border-radius:20px;padding:24px;color:rgba(255,255,255,0.9)}
+.session-ep{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.session-art{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,#5a3a1a,#b45309);flex-shrink:0}
+.session-ep-text .title{font-size:0.9rem;font-weight:500;color:rgba(255,255,255,0.9)}
+.session-ep-text .show{font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:2px}
+.session-scrubber{height:4px;background:rgba(255,255,255,0.08);border-radius:2px;position:relative;margin-bottom:16px}
+.session-dot{position:absolute;width:8px;height:8px;border-radius:50%;top:50%;transform:translate(-50%,-50%)}
+.session-dot.amber{background:var(--accent)}
+.session-dot.green{background:#22c55e}
+.session-share{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.session-url{flex:1;font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--sans);letter-spacing:0.02em}
+.session-copy{font-size:0.75rem;font-weight:600;color:var(--accent);background:rgba(180,83,9,0.15);padding:5px 12px;border-radius:6px;border:none;cursor:pointer}
+.session-meta{font-size:0.8rem;color:rgba(255,255,255,0.3)}
+
+/* ── EMBED SECTION ── */
+.embed{padding:100px 0}
+.embed h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:500;color:var(--ink);margin-bottom:12px}
+.embed>p,.embed .wrap>p{font-size:1rem;color:var(--ink-2);margin-bottom:40px;max-width:540px}
+.embed-code{max-width:600px;margin:0 auto;background:#2c2418;border-radius:20px;padding:24px;overflow-x:auto}
+.embed-code pre{font-family:'SF Mono',Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;line-height:1.7;white-space:pre;margin:0}
+.embed-code .kw{color:#d4944a}
+.embed-code .str{color:#a7c080}
+.embed-code .tag{color:rgba(255,255,255,0.9)}
+.embed-code .prop{color:#7daea3}
+.embed-code .punc{color:rgba(255,255,255,0.4)}
+.embed-code .fn{color:#d4944a}
+.embed-code .arrow{color:rgba(255,255,255,0.6)}
+.embed-code .obj{color:rgba(255,255,255,0.7)}
+.embed-npm{max-width:600px;margin:20px auto 0;text-align:center}
+.embed-npm code{font-family:'SF Mono',Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;color:var(--ink-2);background:var(--surface);padding:8px 20px;border-radius:999px;border:1px solid var(--border);display:inline-block}
+
+/* ── FOOTER ── */
+.footer{padding:48px 0;border-top:1px solid var(--border);text-align:center}
+.footer-inner{display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.85rem;color:var(--ink-3)}
+.footer-inner svg{width:18px;height:17px;flex-shrink:0}
+.footer-inner span.logo-text{font-family:var(--serif);font-weight:500;color:var(--ink-2)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+.hero-grid{grid-template-columns:1fr;gap:48px}
+.hero-text{max-width:100%}
+.hero-device-wrap{justify-content:center}
+.hero-device{width:100%;max-width:400px;height:auto;min-height:420px}
+.flank-label{display:none}
+.podcasters-grid{grid-template-columns:1fr;gap:40px}
+}
+@media(max-width:768px){
+.steps{grid-template-columns:1fr;gap:32px;padding-left:28px}
+.steps::before{top:0;bottom:0;left:17px;width:1px;height:auto;right:auto}
+.step{text-align:left;display:grid;grid-template-columns:auto 1fr;gap:0 14px;padding:0}
+.step-num{grid-row:1/3;align-self:start}
+.step-name{grid-column:2}
+.step-desc{grid-column:2}
+.step-visual{grid-column:2;justify-content:flex-start}
+}
+@media(max-width:640px){
+.traction-row{flex-wrap:wrap}
+.stat{flex:0 0 50%;padding:16px 0}
+.stat+.stat::before{display:none}
+.wrap{padding:0 20px}
+.nav{padding:0 20px}
+.embed-code{margin:0 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain" width="100%" height="100%"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#grain)"/></svg>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 48 46" fill="none"><path d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" fill="#b45309"/></svg>
+    <span>Echo</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#podcasters">For podcasters</a>
+    <a href="#traction">Traction</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-text reveal">
+        <div class="section-label">Voice AI for podcasts</div>
+        <h1>Your podcast, talking&nbsp;back.</h1>
+        <p>Listeners ask questions aloud. Echo answers in your voice &mdash; citing the exact episode and timestamp.</p>
+        <a href="#how" class="cta-link">See how it works &darr;</a>
+      </div>
+      <div class="hero-device-wrap">
+        <span class="flank-label flank-left">Deep Dive</span>
+        <span class="flank-label flank-right">Episode Followup</span>
+        <div class="hero-device" id="vizDevice">
+          <!-- Top bar -->
+          <div class="conv-topbar">
+            <div class="conv-topbar-title">How AI Will Change Creative Work</div>
+            <div class="conv-topbar-status">
+              <div class="conv-topbar-dot"></div>
+              <span>Playing</span>
+            </div>
+          </div>
+
+          <!-- Conversation area -->
+          <div class="conv-area" id="convArea">
+            <!-- Moment 1: Listener -->
+            <div class="conv-moment" id="moment1">
+              <div class="conv-moment-dot listener"></div>
+              <div class="conv-moment-name">You</div>
+              <div class="conv-moment-wave">
+                <span style="height:4px"></span><span style="height:8px"></span><span style="height:6px"></span><span style="height:3px"></span>
+              </div>
+              <div class="conv-moment-text">&ldquo;How does AI affect graphic designers?&rdquo;</div>
+            </div>
+
+            <!-- Moment 2: Echo -->
+            <div class="conv-moment" id="moment2">
+              <div class="conv-moment-dot echo"></div>
+              <div class="conv-moment-name">Sarah Chen</div>
+              <div class="conv-moment-tag">AI Voice</div>
+              <div class="conv-moment-wave">
+                <span style="height:4px"></span><span style="height:8px"></span><span style="height:6px"></span><span style="height:3px"></span>
+              </div>
+              <div class="conv-moment-text">&ldquo;AI won&rsquo;t replace creatives &mdash; it becomes their most powerful collaborator.&rdquo;</div>
+            </div>
+
+            <!-- Citation 1 -->
+            <div class="conv-citation" id="citation1">&nearr; Ep. 142 &middot; 23:14</div>
+
+            <!-- Moment 3: Listener -->
+            <div class="conv-moment" id="moment3">
+              <div class="conv-moment-dot listener"></div>
+              <div class="conv-moment-name">You</div>
+              <div class="conv-moment-wave">
+                <span style="height:4px"></span><span style="height:8px"></span><span style="height:6px"></span><span style="height:3px"></span>
+              </div>
+              <div class="conv-moment-text">&ldquo;What about musicians specifically?&rdquo;</div>
+            </div>
+
+            <!-- Moment 4: Echo -->
+            <div class="conv-moment" id="moment4">
+              <div class="conv-moment-dot echo"></div>
+              <div class="conv-moment-name">Sarah Chen</div>
+              <div class="conv-moment-tag">AI Voice</div>
+              <div class="conv-moment-wave">
+                <span style="height:4px"></span><span style="height:8px"></span><span style="height:6px"></span><span style="height:3px"></span>
+              </div>
+              <div class="conv-moment-text">&ldquo;Grimes said it perfectly &mdash; AI lets solo artists sound like a full orchestra.&rdquo;</div>
+            </div>
+
+            <!-- Citation 2 -->
+            <div class="conv-citation" id="citation2">&nearr; Ep. 89 &middot; 34:07 &middot; Cross-episode</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-label">How it works</div>
+      <h2>Four steps to your AI voice</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-name">Import</div>
+        <div class="step-desc">Paste your Spotify, Apple, or RSS feed URL.</div>
+        <div class="step-visual">
+          <div class="platform-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 15s1.5-2 4-2 4 2 4 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7 12s2-2.5 5-2.5 5 2.5 5 2.5" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".6"/><path d="M6 9s2.5-3 6-3 6 3 6 3" fill="none" stroke="currentColor" stroke-width="1" opacity=".4"/></svg></div>
+          <div class="platform-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="platform-icon"><svg viewBox="0 0 24 24"><path d="M6.18 15.64a2.18 2.18 0 1 1 0 4.36 2.18 2.18 0 0 1 0-4.36zM4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44zm0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z" fill="currentColor"/></svg></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-name">Process</div>
+        <div class="step-desc">We transcribe, index, and build your knowledge graph.</div>
+        <div class="step-visual">
+          <div class="step-progress"></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-name">Voice</div>
+        <div class="step-desc">Record a 30-second sample. We clone your voice.</div>
+        <div class="step-visual">
+          <div class="step-mic-visual">
+            <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+            <div class="step-mic-wave"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-name">Go Live</div>
+        <div class="step-desc">Embed the player. Your podcast talks back.</div>
+        <div class="step-visual">
+          <span class="live-dot"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR PODCASTERS -->
+<section class="podcasters" id="podcasters">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-label">For podcasters</div>
+      <h2>Know what your audience really&nbsp;wants</h2>
+    </div>
+    <div class="podcasters-grid reveal">
+      <ul class="podcasters-list">
+        <li>See the questions listeners ask most</li>
+        <li>Discover topics your library doesn't cover yet</li>
+        <li>Get AI-generated episode review notes</li>
+        <li>Understand listener personas and patterns</li>
+        <li>Convert engaged listeners into patrons</li>
+      </ul>
+      <div class="dash-card">
+        <h3>Top Questions</h3>
+        <div class="dash-row">
+          <div class="dash-rank">1</div>
+          <div class="dash-q">How will AI affect freelance designers?</div>
+          <div class="dash-count">142</div>
+        </div>
+        <div class="dash-row">
+          <div class="dash-rank">2</div>
+          <div class="dash-q">What tools do you recommend for beginners?</div>
+          <div class="dash-count">98</div>
+        </div>
+        <div class="dash-row">
+          <div class="dash-rank">3</div>
+          <div class="dash-q">Can you do a deep dive on prompt engineering?</div>
+          <div class="dash-count">76</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACTION -->
+<section class="traction" id="traction">
+  <div class="wrap">
+    <div class="traction-row reveal" id="tractionRow">
+      <div class="stat">
+        <div class="stat-num" data-target="2847">0</div>
+        <div class="stat-label">questions answered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="94" data-suffix="%">0%</div>
+        <div class="stat-label">satisfaction</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="12">0</div>
+        <div class="stat-label">podcasters</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="247">0</div>
+        <div class="stat-label">episodes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION REPLAY -->
+<section class="session" id="session">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-label">Session replay</div>
+      <h2>Your curiosity, shared.</h2>
+      <p>Share voice interaction sessions &mdash; questions, answers, and cross-episode journeys.</p>
+    </div>
+    <div class="session-card reveal">
+      <div class="session-ep">
+        <div class="session-art"></div>
+        <div class="session-ep-text">
+          <div class="title">How AI Will Change Creative Work</div>
+          <div class="show">The Future Pod &middot; Sarah Chen</div>
+        </div>
+      </div>
+      <div class="session-scrubber">
+        <div class="session-dot amber" style="left:30%"></div>
+        <div class="session-dot green" style="left:48%"></div>
+        <div class="session-dot amber" style="left:65%"></div>
+      </div>
+      <div class="session-share">
+        <div class="session-url">echo.fm/session/a3f8k2</div>
+        <button class="session-copy">Copy</button>
+      </div>
+      <div class="session-meta">3 questions &middot; 1 followup &middot; 47 listeners</div>
+    </div>
+  </div>
+</section>
+
+<!-- EMBED / INTEGRATE -->
+<section class="embed" id="embed">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-label">Integrate</div>
+      <h2>One component. Your website.</h2>
+      <p>Drop the Echo player into any React app.</p>
+    </div>
+    <div class="embed-code reveal">
+      <pre><span class="kw">import</span> <span class="punc">{</span> <span class="tag">EchoPlayer</span> <span class="punc">}</span> <span class="kw">from</span> <span class="str">'@echo-ai/react'</span>
+
+<span class="punc">&lt;</span><span class="tag">EchoPlayer</span>
+  <span class="prop">podcastId</span><span class="punc">=</span><span class="str">"the-future-pod"</span>
+  <span class="prop">theme</span><span class="punc">=</span><span class="str">"warm"</span>
+  <span class="prop">position</span><span class="punc">=</span><span class="str">"bottom-right"</span>
+  <span class="prop">voice</span><span class="punc">={</span><span class="punc">{</span> <span class="prop">name</span><span class="punc">:</span> <span class="str">"Sarah Chen"</span><span class="punc">,</span> <span class="prop">model</span><span class="punc">:</span> <span class="str">"v2"</span> <span class="punc">}</span><span class="punc">}</span>
+  <span class="prop">onQuestion</span><span class="punc">={</span><span class="punc">(</span><span class="obj">q</span><span class="punc">)</span> <span class="arrow">=&gt;</span> <span class="obj">analytics</span><span class="punc">.</span><span class="fn">track</span><span class="punc">(</span><span class="obj">q</span><span class="punc">)</span><span class="punc">}</span>
+<span class="punc">/&gt;</span></pre>
+    </div>
+    <div class="embed-npm reveal">
+      <code>npm install @echo-ai/react</code>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <svg viewBox="0 0 48 46" fill="none"><path d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" fill="#b45309"/></svg>
+      <span class="logo-text">Echo</span>
+      <span>&middot;</span>
+      <span>Built for podcasters who want to be heard.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+/* ── NAV SCROLL ── */
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function(){
+  nav.classList.toggle('scrolled', window.scrollY > 32);
+}, {passive:true});
+
+/* ── SCROLL REVEAL ── */
+var revealEls = document.querySelectorAll('.reveal');
+var revealObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target)}
+  });
+},{threshold:0.15});
+revealEls.forEach(function(el){revealObs.observe(el)});
+
+/* ── TRACTION COUNT UP ── */
+var tractionRow = document.getElementById('tractionRow');
+var tractionCounted = false;
+var tractionObs = new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting && !tractionCounted){
+    tractionCounted = true;
+    document.querySelectorAll('.stat-num[data-target]').forEach(function(el){
+      var target = parseInt(el.dataset.target);
+      var suffix = el.dataset.suffix || '';
+      var start = performance.now();
+      var duration = 1800;
+      function tick(now){
+        var t = Math.min((now - start) / duration, 1);
+        var ease = 1 - Math.pow(1 - t, 3);
+        var val = Math.round(ease * target);
+        el.textContent = val.toLocaleString() + suffix;
+        if(t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+},{threshold:0.3});
+tractionObs.observe(tractionRow);
+
+/* ── HERO STACKED CONVERSATION ANIMATION ── */
+var vizDevice = document.getElementById('vizDevice');
+var moment1 = document.getElementById('moment1');
+var moment2 = document.getElementById('moment2');
+var citation1 = document.getElementById('citation1');
+var moment3 = document.getElementById('moment3');
+var moment4 = document.getElementById('moment4');
+var citation2 = document.getElementById('citation2');
+
+var convElements = [
+  {el: moment1,   showAt: 2000},
+  {el: moment2,   showAt: 4000},
+  {el: citation1, showAt: 7000},
+  {el: moment3,   showAt: 9000},
+  {el: moment4,   showAt: 11000},
+  {el: citation2, showAt: 14000}
+];
+
+var cycleDuration = 18000; // 18s total: 16s content + 2s blank before restart
+var convStartTime = 0;
+var convRunning = false;
+var convRafId;
+
+function convReset(){
+  convElements.forEach(function(item){
+    item.el.classList.remove('visible');
+  });
+}
+
+function convTick(now){
+  if(!convRunning) return;
+  var elapsed = now - convStartTime;
+  var cycleElapsed = elapsed % cycleDuration;
+
+  // At 16000ms, fade everything out (they lose .visible, transition handles fade)
+  if(cycleElapsed < 200 && elapsed > 1000){
+    // Just restarted cycle - reset
+    convReset();
+  }
+
+  // Show elements at their scheduled times
+  convElements.forEach(function(item){
+    if(cycleElapsed >= item.showAt && cycleElapsed < 16000){
+      if(!item.el.classList.contains('visible')){
+        item.el.classList.add('visible');
+      }
+    }
+    if(cycleElapsed >= 16000){
+      item.el.classList.remove('visible');
+    }
+  });
+
+  convRafId = requestAnimationFrame(convTick);
+}
+
+// Start when device is in view
+var vizObs = new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting && !convRunning){
+    convRunning = true;
+    convStartTime = performance.now();
+    convReset();
+    convRafId = requestAnimationFrame(convTick);
+  }
+},{threshold:0.2});
+vizObs.observe(vizDevice);
+
+// Pause/resume for performance
+var vizVisObs = new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting){
+    if(!convRunning){
+      convRunning = true;
+      convStartTime = performance.now();
+      convReset();
+      convRafId = requestAnimationFrame(convTick);
+    }
+  } else {
+    convRunning = false;
+    if(convRafId) cancelAnimationFrame(convRafId);
+  }
+},{threshold:0.05});
+vizVisObs.observe(vizDevice);
+
+})();
+</script>
+</body>
+</html>
