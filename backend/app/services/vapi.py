@@ -38,18 +38,13 @@ class VapiService:
 
     @staticmethod
     def _get_transcript_context(payload: dict) -> str:
-        """Extract podcast_id and timestamp from tool parameters (preferred)
-        or call metadata, then fetch the ~30s transcript window around that moment."""
+        """Extract podcast_id and timestamp from the call metadata,
+        then fetch the ~30s transcript window around that moment."""
         call = payload.get("message", {}).get("call", {})
         metadata = call.get("metadata", {})
         overrides_meta = call.get("assistantOverrides", {}).get("metadata", {})
-        parameters = payload.get("message", {}).get("functionCall", {}).get("parameters", {})
-        podcast_id = (
-            parameters.get("podcast_id")
-            or overrides_meta.get("podcast_id")
-            or metadata.get("podcast_id")
-        )
-        timestamp = parameters.get("timestamp_seconds")
+        podcast_id = overrides_meta.get("podcast_id") or metadata.get("podcast_id")
+        timestamp = payload.get("message", {}).get("functionCall", {}).get("parameters", {}).get("timestamp_seconds")
         if not podcast_id or timestamp is None:
             return ""
         return rag_service.get_transcript_context(podcast_id, int(timestamp))

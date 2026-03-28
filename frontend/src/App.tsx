@@ -53,6 +53,7 @@ function App() {
   }, [audio])
 
   const vapi = usePodcastVapi({
+    podcastId: selected?.episodeId ?? '',
     mode: 'always-listening',
     onStopPlayer,
     onStartPlayer,
@@ -68,13 +69,7 @@ function App() {
         } else if (audio.currentTime > 0) {
           audio.resume()
         } else {
-          // First play of already-selected episode — gate on Vapi
-          const url = getPodcastAudioUrl(podcasterName, episode.id)
-          if (vapi.status === 'active') {
-            audio.play(url)
-          } else {
-            pendingAudioUrlRef.current = url
-          }
+          audio.play(getPodcastAudioUrl(podcasterName, episode.id))
         }
         // Open mobile player on tap
         if (window.innerWidth <= 700) {
@@ -83,8 +78,9 @@ function App() {
         return
       }
 
-      // Different episode — stop audio, update context, but do NOT auto-play
+      // Different episode — stop everything, start fresh
       audio.stop()
+      vapi.endCall()
       vapi.clearTranscript()
 
       // Find the podcaster's cover image to use as default
@@ -100,33 +96,25 @@ function App() {
         imageUrl: coverUrl,
       })
 
-      // Update Vapi assistant context with the new podcast
-      vapi.setPodcast(episode.id)
+      // Defer audio until Vapi is connected
+      pendingAudioUrlRef.current = getPodcastAudioUrl(podcasterName, episode.id)
+      vapi.startCall()
 
       // Open mobile player on mobile
       if (window.innerWidth <= 700) {
         setMobilePlayerOpen(true)
       }
     },
-    [selected, audio, vapi, podcasters],
+    [selected, audio, vapi],
   )
 
   const togglePlayPause = useCallback(() => {
     if (audio.isPlaying) {
       audio.pause()
-    } else if (audio.currentTime > 0) {
-      // Resuming — Vapi is already connected at this point
+    } else {
       audio.resume()
-    } else if (selected) {
-      // Starting playback for the first time — gate on Vapi connection
-      const url = getPodcastAudioUrl(selected.podcaster, selected.episodeId)
-      if (vapi.status === 'active') {
-        audio.play(url)
-      } else {
-        pendingAudioUrlRef.current = url
-      }
     }
-  }, [audio, selected, vapi.status])
+  }, [audio])
 
   const handleSeek = useCallback(
     (time: number) => {

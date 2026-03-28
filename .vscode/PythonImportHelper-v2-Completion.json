@@ -158,6 +158,14 @@
         "documentation": {}
     },
     {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
         "label": "FileResponse",
         "importPath": "fastapi.responses",
         "description": "fastapi.responses",
@@ -279,12 +287,28 @@
         "documentation": {}
     },
     {
+        "label": "genai",
+        "importPath": "google",
+        "description": "google",
+        "isExtraImport": true,
+        "detail": "google",
+        "documentation": {}
+    },
+    {
         "label": "time",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "time",
         "description": "time",
         "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantClient",
+        "importPath": "qdrant_client",
+        "description": "qdrant_client",
+        "isExtraImport": true,
+        "detail": "qdrant_client",
         "documentation": {}
     },
     {
@@ -344,6 +368,30 @@
         "documentation": {}
     },
     {
+        "label": "Distance",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "PointStruct",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "VectorParams",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
         "label": "rag_service",
         "importPath": "app.services.rag",
         "description": "app.services.rag",
@@ -365,6 +413,56 @@
         "description": "app.api.router",
         "isExtraImport": true,
         "detail": "app.api.router",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
         "documentation": {}
     },
     {
@@ -651,7 +749,7 @@
         "kind": 6,
         "importPath": "backend.app.services.vapi",
         "description": "backend.app.services.vapi",
-        "peekOfCode": "class VapiService:\n    \"\"\"Webhook handler for Vapi voice chatbot function calls.\"\"\"\n    @staticmethod\n    def _get_transcript_context(payload: dict) -> str:\n        \"\"\"Extract podcast_id and timestamp from tool parameters (preferred)\n        or call metadata, then fetch the ~30s transcript window around that moment.\"\"\"\n        call = payload.get(\"message\", {}).get(\"call\", {})\n        metadata = call.get(\"metadata\", {})\n        overrides_meta = call.get(\"assistantOverrides\", {}).get(\"metadata\", {})\n        parameters = payload.get(\"message\", {}).get(\"functionCall\", {}).get(\"parameters\", {})",
+        "peekOfCode": "class VapiService:\n    \"\"\"Webhook handler for Vapi voice chatbot function calls.\"\"\"\n    @staticmethod\n    def _get_transcript_context(payload: dict) -> str:\n        \"\"\"Extract podcast_id and timestamp from the call metadata,\n        then fetch the ~30s transcript window around that moment.\"\"\"\n        call = payload.get(\"message\", {}).get(\"call\", {})\n        metadata = call.get(\"metadata\", {})\n        overrides_meta = call.get(\"assistantOverrides\", {}).get(\"metadata\", {})\n        podcast_id = overrides_meta.get(\"podcast_id\") or metadata.get(\"podcast_id\")",
         "detail": "backend.app.services.vapi",
         "documentation": {}
     },
@@ -689,6 +787,177 @@
         "description": "backend.app.main",
         "peekOfCode": "app = FastAPI(\n    title=settings.PROJECT_NAME,\n    version=\"0.1.0\",\n    openapi_url=\"/api/openapi.json\",\n    docs_url=\"/api/docs\",\n)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=settings.CORS_ORIGINS,\n    allow_credentials=True,",
         "detail": "backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "TranscriptSegment",
+        "kind": 6,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "class TranscriptSegment:\n    timestamp: str\n    seconds: int\n    text: str\nclass TranscriptParser(ABC):\n    @abstractmethod\n    def parse(self, content: str) -> list[TranscriptSegment]:\n        ...\nclass TimestampNewlineParser(TranscriptParser):\n    TIMESTAMP_RE = re.compile(r\"^(\\d{1,2}:\\d{2}(?::\\d{2})?)$\")",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "TranscriptParser",
+        "kind": 6,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "class TranscriptParser(ABC):\n    @abstractmethod\n    def parse(self, content: str) -> list[TranscriptSegment]:\n        ...\nclass TimestampNewlineParser(TranscriptParser):\n    TIMESTAMP_RE = re.compile(r\"^(\\d{1,2}:\\d{2}(?::\\d{2})?)$\")\n    @staticmethod\n    def _ts_to_seconds(ts: str) -> int:\n        parts = list(map(int, ts.split(\":\")))\n        if len(parts) == 2:",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "TimestampNewlineParser",
+        "kind": 6,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "class TimestampNewlineParser(TranscriptParser):\n    TIMESTAMP_RE = re.compile(r\"^(\\d{1,2}:\\d{2}(?::\\d{2})?)$\")\n    @staticmethod\n    def _ts_to_seconds(ts: str) -> int:\n        parts = list(map(int, ts.split(\":\")))\n        if len(parts) == 2:\n            return parts[0] * 60 + parts[1]\n        return parts[0] * 3600 + parts[1] * 60 + parts[2]\n    def parse(self, content: str) -> list[TranscriptSegment]:\n        lines = [l.rstrip() for l in content.splitlines()]",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "embed_texts",
+        "kind": 2,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "def embed_texts(texts: list[str]) -> list[list[float]]:\n    \"\"\"Embed a batch of texts. Handles batching for large lists.\"\"\"\n    all_embeddings = []\n    batch_size = 100\n    for i in range(0, len(texts), batch_size):\n        batch = texts[i : i + batch_size]\n        response = genai_client.models.embed_content(\n            model=EMBEDDING_MODEL,\n            contents=batch,\n        )",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "build_sliding_windows",
+        "kind": 2,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "def build_sliding_windows(\n    segments: list[TranscriptSegment],\n    window_seconds: int = 30,\n    overlap_seconds: int = 10,\n) -> list[dict]:\n    if not segments:\n        return []\n    windows = []\n    start_idx = 0\n    while start_idx < len(segments):",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "chunk_article",
+        "kind": 2,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "def chunk_article(text: str, max_tokens: int = 500, min_tokens: int = 100) -> list[str]:\n    raw_chunks = re.split(r\"\\n\\s*\\n|(?=^#{1,3}\\s)\", text.strip(), flags=re.MULTILINE)\n    raw_chunks = [c.strip() for c in raw_chunks if c.strip()]\n    merged: list[str] = []\n    buffer = \"\"\n    for chunk in raw_chunks:\n        word_count = len(chunk.split())\n        if word_count > max_tokens:\n            if buffer:\n                merged.append(buffer.strip())",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "parse_episode_filename",
+        "kind": 2,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "def parse_episode_filename(stem: str) -> dict:\n    dash_idx = stem.find(\"-\")\n    if dash_idx == -1:\n        return {\"episode_id\": stem, \"name\": stem}\n    name = stem[dash_idx + 1:].replace(\"-\", \" \").title()\n    return {\"episode_id\": stem, \"name\": name}\n# --- Main ---\ndef main():\n    # Create or recreate collections\n    for name in [ARTICLES_COLLECTION, PODCASTS_COLLECTION]:",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "def main():\n    # Create or recreate collections\n    for name in [ARTICLES_COLLECTION, PODCASTS_COLLECTION]:\n        existing = [c.name for c in qdrant.get_collections().collections]\n        if name in existing:\n            qdrant.delete_collection(name)\n            print(f\"Deleted existing collection: {name}\")\n        qdrant.create_collection(\n            collection_name=name,\n            vectors_config=VectorParams(size=EMBEDDING_DIM, distance=Distance.COSINE),",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "QDRANT_URL",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "QDRANT_URL = os.environ.get(\"QDRANT_URL\", \"http://192.168.10.191:6333\")\nGOOGLE_API_KEY = os.environ.get(\"GOOGLE_API_KEY\", \"\")\nEMBEDDING_MODEL = \"gemini-embedding-001\"\nEMBEDDING_DIM = 3072\nARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nASSETS_DIR = Path(__file__).parent / \"assets\"\nARTICLES_DIRS = [Path(__file__).parent.parent / \"data\" / \"articles\"]\n# Clients\nqdrant = QdrantClient(url=QDRANT_URL)",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "GOOGLE_API_KEY",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "GOOGLE_API_KEY = os.environ.get(\"GOOGLE_API_KEY\", \"\")\nEMBEDDING_MODEL = \"gemini-embedding-001\"\nEMBEDDING_DIM = 3072\nARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nASSETS_DIR = Path(__file__).parent / \"assets\"\nARTICLES_DIRS = [Path(__file__).parent.parent / \"data\" / \"articles\"]\n# Clients\nqdrant = QdrantClient(url=QDRANT_URL)\ngenai_client = genai.Client(api_key=GOOGLE_API_KEY)",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "EMBEDDING_MODEL",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "EMBEDDING_MODEL = \"gemini-embedding-001\"\nEMBEDDING_DIM = 3072\nARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nASSETS_DIR = Path(__file__).parent / \"assets\"\nARTICLES_DIRS = [Path(__file__).parent.parent / \"data\" / \"articles\"]\n# Clients\nqdrant = QdrantClient(url=QDRANT_URL)\ngenai_client = genai.Client(api_key=GOOGLE_API_KEY)\ndef embed_texts(texts: list[str]) -> list[list[float]]:",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "EMBEDDING_DIM",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "EMBEDDING_DIM = 3072\nARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nASSETS_DIR = Path(__file__).parent / \"assets\"\nARTICLES_DIRS = [Path(__file__).parent.parent / \"data\" / \"articles\"]\n# Clients\nqdrant = QdrantClient(url=QDRANT_URL)\ngenai_client = genai.Client(api_key=GOOGLE_API_KEY)\ndef embed_texts(texts: list[str]) -> list[list[float]]:\n    \"\"\"Embed a batch of texts. Handles batching for large lists.\"\"\"",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "ARTICLES_COLLECTION",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "ARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nASSETS_DIR = Path(__file__).parent / \"assets\"\nARTICLES_DIRS = [Path(__file__).parent.parent / \"data\" / \"articles\"]\n# Clients\nqdrant = QdrantClient(url=QDRANT_URL)\ngenai_client = genai.Client(api_key=GOOGLE_API_KEY)\ndef embed_texts(texts: list[str]) -> list[list[float]]:\n    \"\"\"Embed a batch of texts. Handles batching for large lists.\"\"\"\n    all_embeddings = []",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "PODCASTS_COLLECTION",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "PODCASTS_COLLECTION = \"podcast_episodes\"\nASSETS_DIR = Path(__file__).parent / \"assets\"\nARTICLES_DIRS = [Path(__file__).parent.parent / \"data\" / \"articles\"]\n# Clients\nqdrant = QdrantClient(url=QDRANT_URL)\ngenai_client = genai.Client(api_key=GOOGLE_API_KEY)\ndef embed_texts(texts: list[str]) -> list[list[float]]:\n    \"\"\"Embed a batch of texts. Handles batching for large lists.\"\"\"\n    all_embeddings = []\n    batch_size = 100",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "ASSETS_DIR",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "ASSETS_DIR = Path(__file__).parent / \"assets\"\nARTICLES_DIRS = [Path(__file__).parent.parent / \"data\" / \"articles\"]\n# Clients\nqdrant = QdrantClient(url=QDRANT_URL)\ngenai_client = genai.Client(api_key=GOOGLE_API_KEY)\ndef embed_texts(texts: list[str]) -> list[list[float]]:\n    \"\"\"Embed a batch of texts. Handles batching for large lists.\"\"\"\n    all_embeddings = []\n    batch_size = 100\n    for i in range(0, len(texts), batch_size):",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "ARTICLES_DIRS",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "ARTICLES_DIRS = [Path(__file__).parent.parent / \"data\" / \"articles\"]\n# Clients\nqdrant = QdrantClient(url=QDRANT_URL)\ngenai_client = genai.Client(api_key=GOOGLE_API_KEY)\ndef embed_texts(texts: list[str]) -> list[list[float]]:\n    \"\"\"Embed a batch of texts. Handles batching for large lists.\"\"\"\n    all_embeddings = []\n    batch_size = 100\n    for i in range(0, len(texts), batch_size):\n        batch = texts[i : i + batch_size]",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "qdrant",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "qdrant = QdrantClient(url=QDRANT_URL)\ngenai_client = genai.Client(api_key=GOOGLE_API_KEY)\ndef embed_texts(texts: list[str]) -> list[list[float]]:\n    \"\"\"Embed a batch of texts. Handles batching for large lists.\"\"\"\n    all_embeddings = []\n    batch_size = 100\n    for i in range(0, len(texts), batch_size):\n        batch = texts[i : i + batch_size]\n        response = genai_client.models.embed_content(\n            model=EMBEDDING_MODEL,",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "genai_client",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "genai_client = genai.Client(api_key=GOOGLE_API_KEY)\ndef embed_texts(texts: list[str]) -> list[list[float]]:\n    \"\"\"Embed a batch of texts. Handles batching for large lists.\"\"\"\n    all_embeddings = []\n    batch_size = 100\n    for i in range(0, len(texts), batch_size):\n        batch = texts[i : i + batch_size]\n        response = genai_client.models.embed_content(\n            model=EMBEDDING_MODEL,\n            contents=batch,",
+        "detail": "backend.ingest",
+        "documentation": {}
+    },
+    {
+        "label": "parser",
+        "kind": 5,
+        "importPath": "backend.ingest",
+        "description": "backend.ingest",
+        "peekOfCode": "parser = TimestampNewlineParser()\n# --- Article chunking ---\ndef chunk_article(text: str, max_tokens: int = 500, min_tokens: int = 100) -> list[str]:\n    raw_chunks = re.split(r\"\\n\\s*\\n|(?=^#{1,3}\\s)\", text.strip(), flags=re.MULTILINE)\n    raw_chunks = [c.strip() for c in raw_chunks if c.strip()]\n    merged: list[str] = []\n    buffer = \"\"\n    for chunk in raw_chunks:\n        word_count = len(chunk.split())\n        if word_count > max_tokens:",
+        "detail": "backend.ingest",
         "documentation": {}
     },
     {
