@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+:root {
+  --bg: #faf7f2;
+  --surface: #f0ebe3;
+  --ink: #2c2418;
+  --ink-2: #6b5d4d;
+  --ink-3: #a89882;
+  --accent: #b45309;
+  --accent-bg: #fef3c7;
+  --border: #e2d9cc;
+  --border-heavy: #2c2418;
+  --player-bg: #2c2418;
+  --player-surface: #3d3226;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
