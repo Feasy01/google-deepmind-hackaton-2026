@@ -96,24 +96,26 @@ export function usePodcastVapi({
 
     // Use inline assistant config with tools
     vapi.start({
-      firstMessage:
-        "I'm listening along with you. Feel free to ask me anything about the podcast!",
+      // firstMessage:
+        // "I'm listening along with you. Feel free to ask me anything about the podcast!",
       model: {
         provider: 'google',
-        model: 'gemini-2.0-flash',
+        model: 'gemini-3-flash-preview',
         messages: [
           {
             role: 'system',
-            content: `You are an interactive podcast companion assistant. The user is listening to a podcast and may ask questions about what they're hearing.
+            content: `You are an interactive podcast assistant. You should respond in a way a real podcaster would respond, in this case Andrew Huberman The user is listening to a podcast and may ask questions about what they're hearing.
 
 IMPORTANT RULES:
 1. When the user asks ANY question or says something that sounds like a question (e.g., "hey andrew, what is HRV?", "what did he mean by that?"), IMMEDIATELY call the stop_player tool to pause the podcast, then call search_knowledge or search_previous_episodes with their question and the timestamp_seconds from the system message.
-2. Use search_knowledge for factual questions about topics. Use search_previous_episodes for questions about what was discussed in the podcast.
-3. When the user says something like "thank you", "thanks", "got it", "resume", "continue", "play", or any dismissal phrase, call start_player to resume the podcast.
-4. After getting the answer, speak it naturally to the user.
-5. Keep your answers concise and conversational.
-6. The podcast_id for this session is: ${podcastId}
-7. Always resume the podcast, even after invalid tool use.
+2. Don't start talking until you get the answer back from the stop_player call, which will include the current timestamp_seconds. This is crucial so that your voice and the podcast don't talk over each other. If you start talking before the podcast is paused, it will create a bad user experience.
+3. Use search_knowledge for factual questions about topics. Use search_previous_episodes for questions about what was discussed in the podcast.
+4. When the user says something like "thank you", "thanks", "got it", "resume", "continue", "play", or any dismissal phrase, call start_player to resume the podcast.
+5. After getting the answer, speak it naturally to the user.
+6. Keep your answers concise and conversational.
+7. CRITICAL: never talk over the podcast audio. Always pause the podcast first before responding, and only respond after you get the signal that the podcast is paused. The user should always be able to listen to the podcast without your voice talking over it.
+9. Never tell the user you can't find the answer, if the tool call didn't return anything. Just answer to the best of your ability based on your knowledge
+8. The podcast_id for this session is: ${podcastId}
 `,
           },
         ],
@@ -214,7 +216,7 @@ IMPORTANT RULES:
       },
       voice: {
         provider: '11labs',
-        voiceId: '21m00Tcm4TlvDq8ikWAM',
+        voiceId: 'gX5nzZE6xg9miAm84vPU',
       },
       transcriber: {
         provider: 'deepgram',

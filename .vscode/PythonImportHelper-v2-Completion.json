@@ -140,14 +140,6 @@
         "documentation": {}
     },
     {
-        "label": "deepmind_service",
-        "importPath": "app.services.deepmind",
-        "description": "app.services.deepmind",
-        "isExtraImport": true,
-        "detail": "app.services.deepmind",
-        "documentation": {}
-    },
-    {
         "label": "pathlib",
         "kind": 6,
         "isExtraImport": true,
@@ -162,14 +154,6 @@
         "description": "fastapi.responses",
         "isExtraImport": true,
         "detail": "fastapi.responses",
-        "documentation": {}
-    },
-    {
-        "label": "settings",
-        "importPath": "app.core.config",
-        "description": "app.core.config",
-        "isExtraImport": true,
-        "detail": "app.core.config",
         "documentation": {}
     },
     {
@@ -271,31 +255,6 @@
         "documentation": {}
     },
     {
-        "label": "psycopg2",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "psycopg2",
-        "description": "psycopg2",
-        "detail": "psycopg2",
-        "documentation": {}
-    },
-    {
-        "label": "RealDictCursor",
-        "importPath": "psycopg2.extras",
-        "description": "psycopg2.extras",
-        "isExtraImport": true,
-        "detail": "psycopg2.extras",
-        "documentation": {}
-    },
-    {
-        "label": "get_connection",
-        "importPath": "app.db.connection",
-        "description": "app.db.connection",
-        "isExtraImport": true,
-        "detail": "app.db.connection",
-        "documentation": {}
-    },
-    {
         "label": "BaseModel",
         "importPath": "pydantic",
         "description": "pydantic",
@@ -312,16 +271,71 @@
         "documentation": {}
     },
     {
-        "label": "httpx",
-        "kind": 6,
+        "label": "genai",
+        "importPath": "google",
+        "description": "google",
         "isExtraImport": true,
-        "importPath": "httpx",
-        "description": "httpx",
-        "detail": "httpx",
+        "detail": "google",
         "documentation": {}
     },
     {
-        "label": "rag_client",
+        "label": "QdrantClient",
+        "importPath": "qdrant_client",
+        "description": "qdrant_client",
+        "isExtraImport": true,
+        "detail": "qdrant_client",
+        "documentation": {}
+    },
+    {
+        "label": "Distance",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "FieldCondition",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "Filter",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "MatchValue",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "PointStruct",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "VectorParams",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "rag_service",
         "importPath": "app.services.rag",
         "description": "app.services.rag",
         "isExtraImport": true,
@@ -360,6 +374,15 @@
         "importPath": "time",
         "description": "time",
         "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "httpx",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "httpx",
+        "description": "httpx",
+        "detail": "httpx",
         "documentation": {}
     },
     {
@@ -491,7 +514,7 @@
         "kind": 5,
         "importPath": "backend.app.api.endpoints.vapi_webhook",
         "description": "backend.app.api.endpoints.vapi_webhook",
-        "peekOfCode": "logger = logging.getLogger(\"vapi_webhook\")\nrouter = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    logger.info(\"Webhook received: type=%s\", message_type)\n    logger.debug(\"Webhook payload: %s\", json.dumps(payload, indent=2, default=str))\n    if message_type == \"assistant-request\":",
+        "peekOfCode": "logger = logging.getLogger(\"vapi_webhook\")\nrouter = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    logger.info(\"Webhook received: type=%s\", message_type)\n    logger.debug(\"Webhook payload: %s\", json.dumps(payload, indent=2, default=str))\n    if message_type == \"tool-calls\":",
         "detail": "backend.app.api.endpoints.vapi_webhook",
         "documentation": {}
     },
@@ -500,7 +523,7 @@
         "kind": 5,
         "importPath": "backend.app.api.endpoints.vapi_webhook",
         "description": "backend.app.api.endpoints.vapi_webhook",
-        "peekOfCode": "router = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    logger.info(\"Webhook received: type=%s\", message_type)\n    logger.debug(\"Webhook payload: %s\", json.dumps(payload, indent=2, default=str))\n    if message_type == \"assistant-request\":\n        # Check if this is a podcast-mode call",
+        "peekOfCode": "router = APIRouter()\n@router.post(\"/webhook\")\nasync def vapi_webhook(request: Request):\n    \"\"\"Handle incoming Vapi webhook events (assistant-request, function-call, etc.).\"\"\"\n    payload = await request.json()\n    message_type = payload.get(\"message\", {}).get(\"type\")\n    logger.info(\"Webhook received: type=%s\", message_type)\n    logger.debug(\"Webhook payload: %s\", json.dumps(payload, indent=2, default=str))\n    if message_type == \"tool-calls\":\n        tool_calls = payload.get(\"message\", {}).get(\"toolCallList\", [])",
         "detail": "backend.app.api.endpoints.vapi_webhook",
         "documentation": {}
     },
@@ -518,7 +541,7 @@
         "kind": 6,
         "importPath": "backend.app.core.config",
         "description": "backend.app.core.config",
-        "peekOfCode": "class Settings(BaseSettings):\n    PROJECT_NAME: str = \"DeepMind Hackathon API\"\n    CORS_ORIGINS: list[str] = [\"http://localhost:5173\"]\n    GOOGLE_API_KEY: str = \"\"\n    VAPI_API_KEY: str = \"\"\n    VAPI_PHONE_NUMBER_ID: str = \"\"\n    DATABASE_URL: str = \"postgresql://admin:hackathonpassword@192.168.10.191:5432/vectordb\"\n    MEDIA_DIR: str = \"./assets\"\n    VAPI_WEBHOOK_URL: str = \"\"  # Public URL for Vapi to reach backend (ngrok in dev)\n    model_config = {\"env_file\": \".env\", \"extra\": \"ignore\"}",
+        "peekOfCode": "class Settings(BaseSettings):\n    PROJECT_NAME: str = \"DeepMind Hackathon API\"\n    CORS_ORIGINS: list[str] = [\"http://localhost:5173\"]\n    GOOGLE_API_KEY: str = \"\"\n    HOST_IP: str = \"192.168.10.191\"\n    QDRANT_URL: str = \"http://192.168.10.191:6333\"\n    MEDIA_DIR: str = \"./assets\"\n    model_config = {\"env_file\": \".env\", \"extra\": \"ignore\"}\nsettings = Settings()",
         "detail": "backend.app.core.config",
         "documentation": {}
     },
@@ -529,60 +552,6 @@
         "description": "backend.app.core.config",
         "peekOfCode": "settings = Settings()",
         "detail": "backend.app.core.config",
-        "documentation": {}
-    },
-    {
-        "label": "get_connection",
-        "kind": 2,
-        "importPath": "backend.app.db.connection",
-        "description": "backend.app.db.connection",
-        "peekOfCode": "def get_connection():\n    global _conn\n    if _conn is None or _conn.closed:\n        _conn = psycopg2.connect(settings.DATABASE_URL)\n        _conn.autocommit = True\n    return _conn\ndef query(sql: str, params: tuple | None = None) -> list[dict]:\n    conn = get_connection()\n    with conn.cursor(cursor_factory=RealDictCursor) as cur:\n        cur.execute(sql, params)",
-        "detail": "backend.app.db.connection",
-        "documentation": {}
-    },
-    {
-        "label": "query",
-        "kind": 2,
-        "importPath": "backend.app.db.connection",
-        "description": "backend.app.db.connection",
-        "peekOfCode": "def query(sql: str, params: tuple | None = None) -> list[dict]:\n    conn = get_connection()\n    with conn.cursor(cursor_factory=RealDictCursor) as cur:\n        cur.execute(sql, params)\n        return [dict(row) for row in cur.fetchall()]\ndef execute(sql: str, params: tuple | None = None) -> None:\n    conn = get_connection()\n    with conn.cursor() as cur:\n        cur.execute(sql, params)",
-        "detail": "backend.app.db.connection",
-        "documentation": {}
-    },
-    {
-        "label": "execute",
-        "kind": 2,
-        "importPath": "backend.app.db.connection",
-        "description": "backend.app.db.connection",
-        "peekOfCode": "def execute(sql: str, params: tuple | None = None) -> None:\n    conn = get_connection()\n    with conn.cursor() as cur:\n        cur.execute(sql, params)",
-        "detail": "backend.app.db.connection",
-        "documentation": {}
-    },
-    {
-        "label": "_conn",
-        "kind": 5,
-        "importPath": "backend.app.db.connection",
-        "description": "backend.app.db.connection",
-        "peekOfCode": "_conn = None\ndef get_connection():\n    global _conn\n    if _conn is None or _conn.closed:\n        _conn = psycopg2.connect(settings.DATABASE_URL)\n        _conn.autocommit = True\n    return _conn\ndef query(sql: str, params: tuple | None = None) -> list[dict]:\n    conn = get_connection()\n    with conn.cursor(cursor_factory=RealDictCursor) as cur:",
-        "detail": "backend.app.db.connection",
-        "documentation": {}
-    },
-    {
-        "label": "run_migrations",
-        "kind": 2,
-        "importPath": "backend.app.db.migrate",
-        "description": "backend.app.db.migrate",
-        "peekOfCode": "def run_migrations():\n    conn = get_connection()\n    with conn.cursor() as cur:\n        cur.execute(\"\"\"\n            CREATE TABLE IF NOT EXISTS _migrations (\n                id SERIAL PRIMARY KEY,\n                filename TEXT UNIQUE NOT NULL,\n                applied_at TIMESTAMPTZ DEFAULT NOW()\n            )\n        \"\"\")",
-        "detail": "backend.app.db.migrate",
-        "documentation": {}
-    },
-    {
-        "label": "MIGRATIONS_DIR",
-        "kind": 5,
-        "importPath": "backend.app.db.migrate",
-        "description": "backend.app.db.migrate",
-        "peekOfCode": "MIGRATIONS_DIR = pathlib.Path(__file__).parent / \"migrations\"\ndef run_migrations():\n    conn = get_connection()\n    with conn.cursor() as cur:\n        cur.execute(\"\"\"\n            CREATE TABLE IF NOT EXISTS _migrations (\n                id SERIAL PRIMARY KEY,\n                filename TEXT UNIQUE NOT NULL,\n                applied_at TIMESTAMPTZ DEFAULT NOW()\n            )",
-        "detail": "backend.app.db.migrate",
         "documentation": {}
     },
     {
@@ -631,20 +600,65 @@
         "documentation": {}
     },
     {
-        "label": "RAGClient",
+        "label": "RagService",
         "kind": 6,
         "importPath": "backend.app.services.rag",
         "description": "backend.app.services.rag",
-        "peekOfCode": "class RAGClient:\n    \"\"\"Retrieve and answer questions using podcast transcript context.\"\"\"\n    async def retrieve(\n        self, query: str, podcast_id: str, timestamp_seconds: int = 0\n    ) -> list[str]:\n        \"\"\"Retrieve relevant transcript chunks near the given timestamp.\n        Args:\n            query: The user's question.\n            podcast_id: Identifier for the podcast episode.\n            timestamp_seconds: Position in the podcast where the user paused.",
+        "peekOfCode": "class RagService:\n    def __init__(self):\n        self._qdrant: QdrantClient | None = None\n        self._genai: genai.Client | None = None\n    @property\n    def qdrant(self) -> QdrantClient:\n        if self._qdrant is None:\n            self._qdrant = QdrantClient(url=settings.QDRANT_URL)\n        return self._qdrant\n    @property",
         "detail": "backend.app.services.rag",
         "documentation": {}
     },
     {
-        "label": "rag_client",
+        "label": "EMBEDDING_MODEL",
         "kind": 5,
         "importPath": "backend.app.services.rag",
         "description": "backend.app.services.rag",
-        "peekOfCode": "rag_client = RAGClient()",
+        "peekOfCode": "EMBEDDING_MODEL = \"gemini-embedding-001\"\nEMBEDDING_DIM = 3072\nARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nSCORE_THRESHOLD = 0.35\nclass RagService:\n    def __init__(self):\n        self._qdrant: QdrantClient | None = None\n        self._genai: genai.Client | None = None\n    @property",
+        "detail": "backend.app.services.rag",
+        "documentation": {}
+    },
+    {
+        "label": "EMBEDDING_DIM",
+        "kind": 5,
+        "importPath": "backend.app.services.rag",
+        "description": "backend.app.services.rag",
+        "peekOfCode": "EMBEDDING_DIM = 3072\nARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nSCORE_THRESHOLD = 0.35\nclass RagService:\n    def __init__(self):\n        self._qdrant: QdrantClient | None = None\n        self._genai: genai.Client | None = None\n    @property\n    def qdrant(self) -> QdrantClient:",
+        "detail": "backend.app.services.rag",
+        "documentation": {}
+    },
+    {
+        "label": "ARTICLES_COLLECTION",
+        "kind": 5,
+        "importPath": "backend.app.services.rag",
+        "description": "backend.app.services.rag",
+        "peekOfCode": "ARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nSCORE_THRESHOLD = 0.35\nclass RagService:\n    def __init__(self):\n        self._qdrant: QdrantClient | None = None\n        self._genai: genai.Client | None = None\n    @property\n    def qdrant(self) -> QdrantClient:\n        if self._qdrant is None:",
+        "detail": "backend.app.services.rag",
+        "documentation": {}
+    },
+    {
+        "label": "PODCASTS_COLLECTION",
+        "kind": 5,
+        "importPath": "backend.app.services.rag",
+        "description": "backend.app.services.rag",
+        "peekOfCode": "PODCASTS_COLLECTION = \"podcast_episodes\"\nSCORE_THRESHOLD = 0.35\nclass RagService:\n    def __init__(self):\n        self._qdrant: QdrantClient | None = None\n        self._genai: genai.Client | None = None\n    @property\n    def qdrant(self) -> QdrantClient:\n        if self._qdrant is None:\n            self._qdrant = QdrantClient(url=settings.QDRANT_URL)",
+        "detail": "backend.app.services.rag",
+        "documentation": {}
+    },
+    {
+        "label": "SCORE_THRESHOLD",
+        "kind": 5,
+        "importPath": "backend.app.services.rag",
+        "description": "backend.app.services.rag",
+        "peekOfCode": "SCORE_THRESHOLD = 0.35\nclass RagService:\n    def __init__(self):\n        self._qdrant: QdrantClient | None = None\n        self._genai: genai.Client | None = None\n    @property\n    def qdrant(self) -> QdrantClient:\n        if self._qdrant is None:\n            self._qdrant = QdrantClient(url=settings.QDRANT_URL)\n        return self._qdrant",
+        "detail": "backend.app.services.rag",
+        "documentation": {}
+    },
+    {
+        "label": "rag_service",
+        "kind": 5,
+        "importPath": "backend.app.services.rag",
+        "description": "backend.app.services.rag",
+        "peekOfCode": "rag_service = RagService()",
         "detail": "backend.app.services.rag",
         "documentation": {}
     },
@@ -653,16 +667,16 @@
         "kind": 6,
         "importPath": "backend.app.services.vapi",
         "description": "backend.app.services.vapi",
-        "peekOfCode": "class VapiService:\n    \"\"\"Bootstrap service for Vapi voice chatbot integration.\"\"\"\n    def get_assistant_config(self) -> dict:\n        \"\"\"Return the assistant configuration for Vapi assistant-request webhooks.\"\"\"\n        return {\n            \"assistant\": {\n                \"firstMessage\": \"Hi! I'm your DeepMind assistant. How can I help you today?\",\n                \"model\": {\n                    \"provider\": \"custom-llm\",\n                    \"url\": \"\",  # Set to your deployed server URL + /api/vapi/chat",
+        "peekOfCode": "class VapiService:\n    \"\"\"Webhook handler for Vapi voice chatbot function calls.\"\"\"\n    @staticmethod\n    def _get_transcript_context(payload: dict) -> str:\n        \"\"\"Extract podcast_id and timestamp from the call metadata,\n        then fetch the ~30s transcript window around that moment.\"\"\"\n        call = payload.get(\"message\", {}).get(\"call\", {})\n        metadata = call.get(\"metadata\", {})\n        overrides_meta = call.get(\"assistantOverrides\", {}).get(\"metadata\", {})\n        podcast_id = overrides_meta.get(\"podcast_id\") or metadata.get(\"podcast_id\")",
         "detail": "backend.app.services.vapi",
         "documentation": {}
     },
     {
-        "label": "VAPI_BASE_URL",
+        "label": "NO_MATCH_FALLBACK",
         "kind": 5,
         "importPath": "backend.app.services.vapi",
         "description": "backend.app.services.vapi",
-        "peekOfCode": "VAPI_BASE_URL = \"https://api.vapi.ai\"\nclass VapiService:\n    \"\"\"Bootstrap service for Vapi voice chatbot integration.\"\"\"\n    def get_assistant_config(self) -> dict:\n        \"\"\"Return the assistant configuration for Vapi assistant-request webhooks.\"\"\"\n        return {\n            \"assistant\": {\n                \"firstMessage\": \"Hi! I'm your DeepMind assistant. How can I help you today?\",\n                \"model\": {\n                    \"provider\": \"custom-llm\",",
+        "peekOfCode": "NO_MATCH_FALLBACK = (\n    \"No confident match found in the knowledge base. \"\n    \"Please answer from your general knowledge and let the user know \"\n    \"the answer is not based on a specific source.\"\n)\ndef _format_article_results(results: list[dict]) -> str:\n    \"\"\"Format article search results for the voice agent.\"\"\"\n    if not results:\n        return NO_MATCH_FALLBACK\n    parts = []",
         "detail": "backend.app.services.vapi",
         "documentation": {}
     },

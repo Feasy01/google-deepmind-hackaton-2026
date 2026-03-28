@@ -13,7 +13,7 @@ function formatTime(seconds: number): string {
 
 export function PodcastPlayer() {
   const [selectedPodcast, setSelectedPodcast] = useState<string>('')
-  const [mode, setMode] = useState<PodcastMode>('button')
+  const [mode, setMode] = useState<PodcastMode>('always-listening')
   const audio = useAudioPlayer()
 
   const { data: podcasts = [], isLoading: loadingPodcasts } = useQuery({
