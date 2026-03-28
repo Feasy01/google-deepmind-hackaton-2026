@@ -1,13 +1,14 @@
 from google import genai
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, PointStruct, VectorParams
+from qdrant_client.models import Distance, FieldCondition, Filter, MatchValue, PointStruct, VectorParams
 
 from app.core.config import settings
 
-EMBEDDING_MODEL = "text-embedding-004"
-EMBEDDING_DIM = 768
+EMBEDDING_MODEL = "gemini-embedding-001"
+EMBEDDING_DIM = 3072
 ARTICLES_COLLECTION = "articles"
 PODCASTS_COLLECTION = "podcast_episodes"
+SCORE_THRESHOLD = 0.35
 
 
 class RagService:
@@ -52,7 +53,41 @@ class RagService:
         text = f"{query} {context}".strip() if context else query
         return self.embed_texts([text])[0]
 
-    def search_articles(self, query: str, context: str = "", top_k: int = 5) -> list[dict]:
+    @staticmethod
+    def _timestamp_to_seconds(ts: str) -> int:
+        """Convert 'HH:MM:SS' to total seconds."""
+        parts = ts.split(":")
+        if len(parts) == 3:
+            return int(parts[0]) * 3600 + int(parts[1]) * 60 + int(parts[2])
+        return 0
+
+    def get_transcript_context(self, episode_id: str, timestamp_seconds: int) -> str:
+        """Get the transcript window closest to the given timestamp for an episode."""
+        results, _ = self.qdrant.scroll(
+            collection_name=PODCASTS_COLLECTION,
+            scroll_filter=Filter(
+                must=[FieldCondition(key="episode_id", match=MatchValue(value=episode_id))]
+            ),
+            limit=500,
+            with_payload=True,
+        )
+        if not results:
+            return ""
+
+        # Find the window whose midpoint is closest to the requested timestamp
+        best = min(
+            results,
+            key=lambda p: abs(
+                (self._timestamp_to_seconds(p.payload.get("timestamp_start", "00:00:00"))
+                 + self._timestamp_to_seconds(p.payload.get("timestamp_end", "00:00:00"))) / 2
+                - timestamp_seconds
+            ),
+        )
+        return best.payload.get("window_text", "")
+
+    def search_articles(
+        self, query: str, context: str = "", top_k: int = 5, score_threshold: float = SCORE_THRESHOLD
+    ) -> list[dict]:
         """Search the articles collection and return results with source attribution."""
         vector = self.embed_query(query, context)
         results = self.qdrant.query_points(
@@ -60,6 +95,7 @@ class RagService:
             query=vector,
             limit=top_k,
             with_payload=True,
+            score_threshold=score_threshold,
         )
         return [
             {
@@ -71,7 +107,9 @@ class RagService:
             for point in results.points
         ]
 
-    def search_podcasts(self, query: str, context: str = "", top_k: int = 5) -> list[dict]:
+    def search_podcasts(
+        self, query: str, context: str = "", top_k: int = 5, score_threshold: float = SCORE_THRESHOLD
+    ) -> list[dict]:
         """Search the podcast episodes collection and return results with timestamps."""
         vector = self.embed_query(query, context)
         results = self.qdrant.query_points(
@@ -79,6 +117,7 @@ class RagService:
             query=vector,
             limit=top_k,
             with_payload=True,
+            score_threshold=score_threshold,
         )
         return [
             {

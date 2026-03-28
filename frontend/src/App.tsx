@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Chat } from './components/Chat'
 import { VoiceChat } from './components/VoiceChat'
+import { PodcastPlayer } from './components/PodcastPlayer'
 
-type Tab = 'chat' | 'voice'
+type Tab = 'chat' | 'voice' | 'podcast'
 
 function App() {
   const [tab, setTab] = useState<Tab>('chat')
@@ -33,12 +34,24 @@ function App() {
             >
               Voice Chat
             </button>
+            <button
+              onClick={() => setTab('podcast')}
+              className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
+                tab === 'podcast'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
+              }`}
+            >
+              Podcast
+            </button>
           </nav>
         </div>
       </header>
 
       <main className="mx-auto max-w-3xl p-6">
-        {tab === 'chat' ? <Chat /> : <VoiceChat />}
+        {tab === 'chat' && <Chat />}
+        {tab === 'voice' && <VoiceChat />}
+        {tab === 'podcast' && <PodcastPlayer />}
       </main>
     </div>
   )

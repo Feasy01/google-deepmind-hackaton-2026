@@ -12,6 +12,11 @@ class Settings(BaseSettings):
     HOST_IP: str = "192.168.10.191"
     QDRANT_URL: str = "http://192.168.10.191:6333"
 
+    ELEVENLABS_VOICE_ID: str = "gX5nzZE6xg9miAm84vPU"
+
+    MEDIA_DIR: str = "./assets"
+    VAPI_WEBHOOK_URL: str = ""  # Public URL for Vapi to reach backend (ngrok in dev)
+
     model_config = {"env_file": ".env", "extra": "ignore"}
 
 

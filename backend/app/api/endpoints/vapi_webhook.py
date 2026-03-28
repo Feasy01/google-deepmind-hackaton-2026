@@ -1,31 +1,12 @@
+import json
+import logging
+
 from fastapi import APIRouter, Request
 
-from app.services.rag import rag_service
 from app.services.vapi import vapi_service
 
+logger = logging.getLogger("vapi_webhook")
 router = APIRouter()
-
-
-def _format_article_results(results: list[dict]) -> str:
-    """Format article search results for the voice agent."""
-    if not results:
-        return "No relevant articles found."
-    parts = []
-    for r in results:
-        source = f" (source: {r['article_title']})"
-        parts.append(f"{r['chunk_text']}{source}")
-    return "\n\n".join(parts)
-
-
-def _format_podcast_results(results: list[dict]) -> str:
-    """Format podcast search results for the voice agent."""
-    if not results:
-        return "No relevant podcast episodes found."
-    parts = []
-    for r in results:
-        header = f"From episode '{r['episode_title']}' at {r['timestamp_start']}–{r['timestamp_end']}:"
-        parts.append(f"{header}\n{r['window_text']}")
-    return "\n\n".join(parts)
 
 
 @router.post("/webhook")
@@ -34,26 +15,27 @@ async def vapi_webhook(request: Request):
     payload = await request.json()
     message_type = payload.get("message", {}).get("type")
 
+    logger.info("Webhook received: type=%s", message_type)
+    logger.debug("Webhook payload: %s", json.dumps(payload, indent=2, default=str))
+
     if message_type == "assistant-request":
+        # Check if this is a podcast-mode call
+        call = payload.get("message", {}).get("call", {})
+        metadata = call.get("metadata", {})
+        logger.info("assistant-request metadata: %s", metadata)
+        if metadata.get("mode") == "podcast":
+            podcast_id = metadata.get("podcast_id", "unknown")
+            config = vapi_service.get_podcast_assistant_config(podcast_id)
+            logger.info("Returning podcast assistant config for: %s", podcast_id)
+            return config
         return vapi_service.get_assistant_config()
 
     if message_type == "function-call":
         function_call = payload.get("message", {}).get("functionCall", {})
-        name = function_call.get("name")
-        parameters = function_call.get("parameters", {})
+        logger.info("function-call: name=%s params=%s", function_call.get("name"), function_call.get("parameters"))
+        result = await vapi_service.handle_function_call(payload)
+        logger.info("function-call result: %s", result)
+        return result
 
-        if name == "search_knowledge":
-            query = parameters.get("query", "")
-            context = parameters.get("conversation_context", "")
-            results = rag_service.search_articles(query=query, context=context)
-            return {"result": _format_article_results(results)}
-
-        if name == "search_previous_episodes":
-            query = parameters.get("query", "")
-            context = parameters.get("conversation_context", "")
-            results = rag_service.search_podcasts(query=query, context=context)
-            return {"result": _format_podcast_results(results)}
-
-        return {"result": f"Unknown function: {name}"}
-
+    logger.info("Unhandled webhook type: %s", message_type)
     return {"ok": True}
