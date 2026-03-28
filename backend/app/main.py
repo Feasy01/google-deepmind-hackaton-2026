@@ -5,11 +5,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import api_router
 from app.core.config import settings
+from app.services.transcript_store import transcript_store
 
 logging.basicConfig(level=logging.DEBUG)
 logging.getLogger("vapi_webhook").setLevel(logging.DEBUG)
 logging.getLogger("rag").setLevel(logging.DEBUG)
 logging.getLogger("vapi").setLevel(logging.DEBUG)
+logging.getLogger("transcript_store").setLevel(logging.DEBUG)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -27,3 +29,6 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix="/api")
+
+# Load all transcripts into RAM at startup
+transcript_store.load_all()

@@ -1,6 +1,7 @@
 import logging
 
 from app.services.rag import rag_service
+from app.services.transcript_store import transcript_store
 
 logger = logging.getLogger("vapi")
 
@@ -39,7 +40,7 @@ class VapiService:
     @staticmethod
     def _get_transcript_context(payload: dict) -> str:
         """Extract podcast_id and timestamp from the call metadata,
-        then fetch the ~30s transcript window around that moment."""
+        then fetch the ~30s transcript window from in-memory store."""
         call = payload.get("message", {}).get("call", {})
         metadata = call.get("metadata", {})
         overrides_meta = call.get("assistantOverrides", {}).get("metadata", {})
@@ -47,7 +48,7 @@ class VapiService:
         timestamp = payload.get("message", {}).get("functionCall", {}).get("parameters", {}).get("timestamp_seconds")
         if not podcast_id or timestamp is None:
             return ""
-        return rag_service.get_transcript_context(podcast_id, int(timestamp))
+        return transcript_store.get_context(podcast_id, int(timestamp), window_seconds=30)
 
     async def handle_function_call(self, payload: dict) -> dict:
         """Process function calls from Vapi."""
@@ -66,10 +67,16 @@ class VapiService:
         logger.info("handle_function_call: name=%s transcript_ctx_len=%d conv_ctx_len=%d",
                      name, len(transcript_context), len(conversation_context))
 
+        # Prepend transcript context to tool results so the model sees what was
+        # being discussed in the podcast right before the user asked.
+        transcript_prefix = ""
+        if transcript_context:
+            transcript_prefix = f"[Podcast transcript around this moment]: {transcript_context}\n\n"
+
         if name == "search_knowledge":
             query = parameters.get("query", "")
             results = rag_service.search_articles(query=query, context=context)
-            formatted = _format_article_results(results)
+            formatted = transcript_prefix + _format_article_results(results)
             logger.info("search_knowledge response: %d result(s), %d chars", len(results), len(formatted))
             logger.debug("search_knowledge response body: %.500s", formatted)
             return {"result": formatted}
@@ -77,7 +84,7 @@ class VapiService:
         if name == "search_previous_episodes":
             query = parameters.get("query", "")
             results = rag_service.search_podcasts(query=query, context=context)
-            formatted = _format_podcast_results(results)
+            formatted = transcript_prefix + _format_podcast_results(results)
             logger.info("search_previous_episodes response: %d result(s), %d chars", len(results), len(formatted))
             logger.debug("search_previous_episodes response body: %.500s", formatted)
             return {"result": formatted}
