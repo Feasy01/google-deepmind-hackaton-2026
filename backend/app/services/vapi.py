@@ -1,5 +1,8 @@
+import logging
+
 from app.services.rag import rag_service
 
+logger = logging.getLogger("vapi")
 
 NO_MATCH_FALLBACK = (
     "No confident match found in the knowledge base. "
@@ -35,13 +38,18 @@ class VapiService:
 
     @staticmethod
     def _get_transcript_context(payload: dict) -> str:
-        """Extract podcast_id and timestamp from the call metadata,
-        then fetch the ~30s transcript window around that moment."""
+        """Extract podcast_id and timestamp from tool parameters (preferred)
+        or call metadata, then fetch the ~30s transcript window around that moment."""
         call = payload.get("message", {}).get("call", {})
         metadata = call.get("metadata", {})
         overrides_meta = call.get("assistantOverrides", {}).get("metadata", {})
-        podcast_id = overrides_meta.get("podcast_id") or metadata.get("podcast_id")
-        timestamp = payload.get("message", {}).get("functionCall", {}).get("parameters", {}).get("timestamp_seconds")
+        parameters = payload.get("message", {}).get("functionCall", {}).get("parameters", {})
+        podcast_id = (
+            parameters.get("podcast_id")
+            or overrides_meta.get("podcast_id")
+            or metadata.get("podcast_id")
+        )
+        timestamp = parameters.get("timestamp_seconds")
         if not podcast_id or timestamp is None:
             return ""
         return rag_service.get_transcript_context(podcast_id, int(timestamp))
@@ -60,16 +68,26 @@ class VapiService:
         else:
             context = conversation_context
 
+        logger.info("handle_function_call: name=%s transcript_ctx_len=%d conv_ctx_len=%d",
+                     name, len(transcript_context), len(conversation_context))
+
         if name == "search_knowledge":
             query = parameters.get("query", "")
             results = rag_service.search_articles(query=query, context=context)
-            return {"result": _format_article_results(results)}
+            formatted = _format_article_results(results)
+            logger.info("search_knowledge response: %d result(s), %d chars", len(results), len(formatted))
+            logger.debug("search_knowledge response body: %.500s", formatted)
+            return {"result": formatted}
 
         if name == "search_previous_episodes":
             query = parameters.get("query", "")
             results = rag_service.search_podcasts(query=query, context=context)
-            return {"result": _format_podcast_results(results)}
+            formatted = _format_podcast_results(results)
+            logger.info("search_previous_episodes response: %d result(s), %d chars", len(results), len(formatted))
+            logger.debug("search_previous_episodes response body: %.500s", formatted)
+            return {"result": formatted}
 
+        logger.warning("Unknown function call: %s", name)
         return {"result": f"Unknown function: {name}"}
 
 

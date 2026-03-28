@@ -43,10 +43,13 @@ async def vapi_webhook(request: Request):
                 }
             }
             result = await vapi_service.handle_function_call(compat_payload)
+            result_text = result.get("result", "")
+            logger.info("tool-call result: %s | %d chars", name, len(result_text))
+            logger.debug("tool-call result body: %s: %.500s", name, result_text)
             results.append({
                 "toolCallId": tool_call_id,
                 "name": name,
-                "result": result.get("result", ""),
+                "result": result_text,
             })
         return {"results": results}
     return {"ok": True}

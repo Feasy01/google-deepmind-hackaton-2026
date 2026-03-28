@@ -15,33 +15,156 @@ export interface TranscriptEntry {
 }
 
 interface UsePodcastVapiOptions {
-  podcastId: string
   mode: PodcastMode
   onStopPlayer: () => number // returns currentTime in seconds
   onStartPlayer: () => void
+  onConnected?: () => void
+}
+
+const TOOLS = [
+  {
+    type: 'function',
+    function: {
+      name: 'stop_player',
+      description:
+        'Pause the podcast player. Call this immediately when the user asks a question.',
+      parameters: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    async: true,
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'start_player',
+      description:
+        'Resume the podcast player. Call this when the user is done with their question and wants to continue listening.',
+      parameters: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
+    },
+    async: true,
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'search_knowledge',
+      description:
+        'Search articles for factual knowledge about a topic. Use when the caller asks a factual question. IMPORTANT: You MUST call stop_player FIRST and wait for its result before calling this tool, then pass the timestamp_seconds value from the stop_player result.',
+      parameters: {
+        type: 'object',
+        properties: {
+          query: {
+            type: 'string',
+            description:
+              'The search query based on what the user is asking',
+          },
+          conversation_context: {
+            type: 'string',
+            description:
+              'Last 30 seconds of conversation for additional context',
+          },
+          timestamp_seconds: {
+            type: 'integer',
+            description:
+              'REQUIRED. The podcast playback position in seconds from the stop_player tool result. Extract the number after timestamp_seconds= from the stop_player response.',
+          },
+          podcast_id: {
+            type: 'string',
+            description: 'The podcast episode ID for this session.',
+          },
+        },
+        required: ['query', 'timestamp_seconds', 'podcast_id'],
+      },
+    },
+    server: {
+      url: `${VAPI_WEBHOOK_URL}/api/vapi/webhook`,
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'search_previous_episodes',
+      description:
+        'Search previous podcast episodes. Use when the caller asks about something discussed in a past episode. IMPORTANT: You MUST call stop_player FIRST and wait for its result before calling this tool, then pass the timestamp_seconds value from the stop_player result.',
+      parameters: {
+        type: 'object',
+        properties: {
+          query: {
+            type: 'string',
+            description:
+              'The search query based on what the user is asking',
+          },
+          conversation_context: {
+            type: 'string',
+            description:
+              'Last 30 seconds of conversation for additional context',
+          },
+          timestamp_seconds: {
+            type: 'integer',
+            description:
+              'REQUIRED. The podcast playback position in seconds from the stop_player tool result. Extract the number after timestamp_seconds= from the stop_player response.',
+          },
+          podcast_id: {
+            type: 'string',
+            description: 'The podcast episode ID for this session.',
+          },
+        },
+        required: ['query', 'timestamp_seconds', 'podcast_id'],
+      },
+    },
+    server: {
+      url: `${VAPI_WEBHOOK_URL}/api/vapi/webhook`,
+    },
+  },
+]
+
+function buildPodcastSystemPrompt(podcastId: string): string {
+  return `You are an interactive podcast assistant. You should respond in a way a real podcaster would respond, in this case Andrew Huberman The user is listening to a podcast and may ask questions about what they're hearing.
+
+IMPORTANT RULES:
+1. When the user asks ANY question or says something that sounds like a question (e.g., "hey andrew, what is HRV?", "what did he mean by that?"), you MUST follow this exact sequence:
+   a) FIRST call stop_player and WAIT for its result (it returns timestamp_seconds).
+   b) THEN call search_knowledge or search_previous_episodes, passing the timestamp_seconds value from the stop_player result AND podcast_id="${podcastId}".
+   c) NEVER call stop_player and search tools at the same time — stop_player must complete first so you have the timestamp.
+   If search results are insufficient, give a generic but helpful answer based on your knowledge.
+2. Don't answer if the user is just making a comment or saying something that doesn't sound like a question. For example, if the user says "wow, that's interesting", you should not call stop_player or search_knowledge. You should only call stop_player and search_knowledge if the user is asking a question or explicitly asking for more information about something they heard in the podcast.
+2. Don't start talking until you get the answer back from the stop_player call, which will include the current timestamp_seconds. This is crucial so that your voice and the podcast don't talk over each other. If you start talking before the podcast is paused, it will create a bad user experience.
+3. Use search_knowledge for factual questions about topics. Use search_previous_episodes for questions about what was discussed in the podcast.
+4. When the user says something like "thank you", "thanks", "got it", "resume", "continue", "play", or any dismissal phrase, call start_player to resume the podcast.
+5. After getting the answer, speak it naturally to the user.
+6. Keep your answers concise and conversational.
+7. CRITICAL: never talk over the podcast audio. Always pause the podcast first before responding, and only respond after you get the signal that the podcast is paused. The user should always be able to listen to the podcast without your voice talking over it.
+8. Never tell the user you can't find the answer, if the tool call didn't return anything. Just answer to the best of your ability based on your knowledge
+9. The podcast_id for this session is: ${podcastId}. Always pass this as the podcast_id parameter when calling search_knowledge or search_previous_episodes.`
 }
 
 export function usePodcastVapi({
-  podcastId,
   onStopPlayer,
   onStartPlayer,
+  onConnected,
 }: UsePodcastVapiOptions) {
   const [status, setStatus] = useState<'idle' | 'connecting' | 'active'>('idle')
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
-  const vapiRef = useRef<Vapi | null>(null)
+  const vapiRef = useRef<any>(null)
   const podcastPlayingRef = useRef(false)
 
   // Keep refs to always call the latest callbacks (avoids stale closures in Vapi event handlers)
   const onStopPlayerRef = useRef(onStopPlayer)
   const onStartPlayerRef = useRef(onStartPlayer)
+  const onConnectedRef = useRef(onConnected)
   useEffect(() => { onStopPlayerRef.current = onStopPlayer }, [onStopPlayer])
   useEffect(() => { onStartPlayerRef.current = onStartPlayer }, [onStartPlayer])
+  useEffect(() => { onConnectedRef.current = onConnected }, [onConnected])
 
-  const startCall = useCallback(() => {
-    if (!VAPI_PUBLIC_KEY) {
-      alert('Set VITE_VAPI_PUBLIC_KEY in frontend/.env')
-      return
-    }
+  // Create Vapi instance on mount, attach listeners, and auto-start call
+  useEffect(() => {
+    if (!VAPI_PUBLIC_KEY) return
 
     const vapi = new Vapi(VAPI_PUBLIC_KEY)
     vapiRef.current = vapi
@@ -49,11 +172,12 @@ export function usePodcastVapi({
     vapi.on('call-start', () => {
       console.log('[Vapi] call started')
       setStatus('active')
+      onConnectedRef.current?.()
     })
+
     vapi.on('call-end', () => {
       console.log('[Vapi] call ended')
       setStatus('idle')
-      vapiRef.current = null
     })
 
     vapi.on('message', (msg: any) => {
@@ -89,12 +213,12 @@ export function usePodcastVapi({
             result,
           })
         }
-        vapi.send({
+        vapiRef.current?.send({
           type: 'tool-calls-result',
           toolCallResults,
         })
         if (shouldClearContext) {
-          vapi.send({
+          vapiRef.current?.send({
             type: 'add-message',
             message: {
               role: 'system',
@@ -131,133 +255,20 @@ export function usePodcastVapi({
       setStatus('idle')
     })
 
+    // Auto-start call with generic prompt (no podcast selected yet)
     setStatus('connecting')
-    console.log('[Vapi] starting call for podcast:', podcastId)
-
-    // Use inline assistant config with tools
+    console.log('[Vapi] auto-starting call on mount')
     vapi.start({
-      // firstMessage:
-        // "I'm listening along with you. Feel free to ask me anything about the podcast!",
       model: {
         provider: 'google',
         model: 'gemini-3-flash-preview',
         messages: [
           {
             role: 'system',
-            content: `You are an interactive podcast assistant. You should respond in a way a real podcaster would respond, in this case Andrew Huberman The user is listening to a podcast and may ask questions about what they're hearing.
-
-IMPORTANT RULES:
-1. When the user asks ANY question or says something that sounds like a question (e.g., "hey andrew, what is HRV?", "what did he mean by that?"), you MUST follow this exact sequence:
-   a) FIRST call stop_player and WAIT for its result (it returns timestamp_seconds).
-   b) THEN call search_knowledge or search_previous_episodes, passing the timestamp_seconds value from the stop_player result.
-   c) NEVER call stop_player and search tools at the same time — stop_player must complete first so you have the timestamp.
-   If search results are insufficient, give a generic but helpful answer based on your knowledge.
-2. Don't answer if the user is just making a comment or saying something that doesn't sound like a question. For example, if the user says "wow, that's interesting", you should not call stop_player or search_knowledge. You should only call stop_player and search_knowledge if the user is asking a question or explicitly asking for more information about something they heard in the podcast.
-2. Don't start talking until you get the answer back from the stop_player call, which will include the current timestamp_seconds. This is crucial so that your voice and the podcast don't talk over each other. If you start talking before the podcast is paused, it will create a bad user experience.
-3. Use search_knowledge for factual questions about topics. Use search_previous_episodes for questions about what was discussed in the podcast.
-4. When the user says something like "thank you", "thanks", "got it", "resume", "continue", "play", or any dismissal phrase, call start_player to resume the podcast.
-5. After getting the answer, speak it naturally to the user.
-6. Keep your answers concise and conversational.
-7. CRITICAL: never talk over the podcast audio. Always pause the podcast first before responding, and only respond after you get the signal that the podcast is paused. The user should always be able to listen to the podcast without your voice talking over it.
-8. Never tell the user you can't find the answer, if the tool call didn't return anything. Just answer to the best of your ability based on your knowledge
-9. The podcast_id for this session is: ${podcastId}
-`,
+            content: 'You are a podcast assistant. The user hasn\'t selected a podcast yet. Wait for context. Do not speak until the user selects a podcast and asks a question.',
           },
         ],
-        tools: [
-          {
-            type: 'function',
-            function: {
-              name: 'stop_player',
-              description:
-                'Pause the podcast player. Call this immediately when the user asks a question.',
-              parameters: {
-                type: 'object',
-                properties: {},
-                required: [],
-              },
-            },
-            async: true,
-          },
-          {
-            type: 'function',
-            function: {
-              name: 'start_player',
-              description:
-                'Resume the podcast player. Call this when the user is done with their question and wants to continue listening.',
-              parameters: {
-                type: 'object',
-                properties: {},
-                required: [],
-              },
-            },
-            async: true,
-          },
-          {
-            type: 'function',
-            function: {
-              name: 'search_knowledge',
-              description:
-                'Search articles for factual knowledge about a topic. Use when the caller asks a factual question. IMPORTANT: You MUST call stop_player FIRST and wait for its result before calling this tool, then pass the timestamp_seconds value from the stop_player result.',
-              parameters: {
-                type: 'object',
-                properties: {
-                  query: {
-                    type: 'string',
-                    description:
-                      'The search query based on what the user is asking',
-                  },
-                  conversation_context: {
-                    type: 'string',
-                    description:
-                      'Last 30 seconds of conversation for additional context',
-                  },
-                  timestamp_seconds: {
-                    type: 'integer',
-                    description:
-                      'REQUIRED. The podcast playback position in seconds from the stop_player tool result. Extract the number after timestamp_seconds= from the stop_player response.',
-                  },
-                },
-                required: ['query', 'timestamp_seconds'],
-              },
-            },
-            server: {
-              url: `${VAPI_WEBHOOK_URL}/api/vapi/webhook`,
-            },
-          },
-          {
-            type: 'function',
-            function: {
-              name: 'search_previous_episodes',
-              description:
-                'Search previous podcast episodes. Use when the caller asks about something discussed in a past episode. IMPORTANT: You MUST call stop_player FIRST and wait for its result before calling this tool, then pass the timestamp_seconds value from the stop_player result.',
-              parameters: {
-                type: 'object',
-                properties: {
-                  query: {
-                    type: 'string',
-                    description:
-                      'The search query based on what the user is asking',
-                  },
-                  conversation_context: {
-                    type: 'string',
-                    description:
-                      'Last 30 seconds of conversation for additional context',
-                  },
-                  timestamp_seconds: {
-                    type: 'integer',
-                    description:
-                      'REQUIRED. The podcast playback position in seconds from the stop_player tool result. Extract the number after timestamp_seconds= from the stop_player response.',
-                  },
-                },
-                required: ['query', 'timestamp_seconds'],
-              },
-            },
-            server: {
-              url: `${VAPI_WEBHOOK_URL}/api/vapi/webhook`,
-            },
-          },
-        ],
+        tools: TOOLS,
       },
       voice: {
         provider: '11labs',
@@ -273,10 +284,26 @@ IMPORTANT RULES:
       clientMessages: ['tool-calls', 'transcript'],
       metadata: {
         mode: 'podcast',
-        podcast_id: podcastId,
       },
     } as any)
-  }, [podcastId])
+
+    return () => {
+      vapi.stop()
+      vapiRef.current = null
+    }
+  }, [])
+
+  const setPodcast = useCallback((podcastId: string) => {
+    console.log('[Vapi] setPodcast:', podcastId)
+    vapiRef.current?.send({
+      type: 'add-message',
+      message: {
+        role: 'system',
+        content: buildPodcastSystemPrompt(podcastId),
+      },
+      triggerResponseEnabled: false,
+    })
+  }, [])
 
   const endCall = useCallback(() => {
     vapiRef.current?.stop()
@@ -287,5 +314,5 @@ IMPORTANT RULES:
     setTranscript([])
   }, [])
 
-  return { startCall, endCall, clearTranscript, status, transcript }
+  return { setPodcast, endCall, clearTranscript, status, transcript }
 }

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchPodcasters, getPodcastAudioUrl, getPodcastImageUrl } from './api/podcast'
 import type { Episode } from './api/podcast'
@@ -34,6 +34,7 @@ function App() {
   })
 
   const audio = useAudioPlayer()
+  const pendingAudioUrlRef = useRef<string | null>(null)
 
   const onStopPlayer = useCallback(() => {
     audio.pause()
@@ -44,11 +45,18 @@ function App() {
     audio.resume()
   }, [audio])
 
+  const onConnected = useCallback(() => {
+    if (pendingAudioUrlRef.current) {
+      audio.play(pendingAudioUrlRef.current)
+      pendingAudioUrlRef.current = null
+    }
+  }, [audio])
+
   const vapi = usePodcastVapi({
-    podcastId: selected?.episodeId ?? '',
     mode: 'always-listening',
     onStopPlayer,
     onStartPlayer,
+    onConnected,
   })
 
   const selectEpisode = useCallback(
@@ -60,7 +68,13 @@ function App() {
         } else if (audio.currentTime > 0) {
           audio.resume()
         } else {
-          audio.play(getPodcastAudioUrl(podcasterName, episode.id))
+          // First play of already-selected episode — gate on Vapi
+          const url = getPodcastAudioUrl(podcasterName, episode.id)
+          if (vapi.status === 'active') {
+            audio.play(url)
+          } else {
+            pendingAudioUrlRef.current = url
+          }
         }
         // Open mobile player on tap
         if (window.innerWidth <= 700) {
@@ -69,9 +83,8 @@ function App() {
         return
       }
 
-      // Different episode — stop everything, start fresh
+      // Different episode — stop audio, update context, but do NOT auto-play
       audio.stop()
-      vapi.endCall()
       vapi.clearTranscript()
 
       // Find the podcaster's cover image to use as default
@@ -87,30 +100,33 @@ function App() {
         imageUrl: coverUrl,
       })
 
-      // Start audio + auto-arm Vapi
-      const url = getPodcastAudioUrl(podcasterName, episode.id)
-      audio.play(url)
-
-      // Small delay so the podcastId state is set before startCall reads it
-      setTimeout(() => {
-        vapi.startCall()
-      }, 100)
+      // Update Vapi assistant context with the new podcast
+      vapi.setPodcast(episode.id)
 
       // Open mobile player on mobile
       if (window.innerWidth <= 700) {
         setMobilePlayerOpen(true)
       }
     },
-    [selected, audio, vapi],
+    [selected, audio, vapi, podcasters],
   )
 
   const togglePlayPause = useCallback(() => {
     if (audio.isPlaying) {
       audio.pause()
-    } else {
+    } else if (audio.currentTime > 0) {
+      // Resuming — Vapi is already connected at this point
       audio.resume()
+    } else if (selected) {
+      // Starting playback for the first time — gate on Vapi connection
+      const url = getPodcastAudioUrl(selected.podcaster, selected.episodeId)
+      if (vapi.status === 'active') {
+        audio.play(url)
+      } else {
+        pendingAudioUrlRef.current = url
+      }
     }
-  }, [audio])
+  }, [audio, selected, vapi.status])
 
   const handleSeek = useCallback(
     (time: number) => {

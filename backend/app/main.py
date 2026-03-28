@@ -8,6 +8,8 @@ from app.core.config import settings
 
 logging.basicConfig(level=logging.DEBUG)
 logging.getLogger("vapi_webhook").setLevel(logging.DEBUG)
+logging.getLogger("rag").setLevel(logging.DEBUG)
+logging.getLogger("vapi").setLevel(logging.DEBUG)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,

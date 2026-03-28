@@ -140,6 +140,15 @@
         "documentation": {}
     },
     {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "pathlib",
         "kind": 6,
         "isExtraImport": true,
@@ -186,15 +195,6 @@
         "description": "app.core.config",
         "isExtraImport": true,
         "detail": "app.core.config",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
         "documentation": {}
     },
     {
@@ -279,6 +279,15 @@
         "documentation": {}
     },
     {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
         "label": "QdrantClient",
         "importPath": "qdrant_client",
         "description": "qdrant_client",
@@ -356,49 +365,6 @@
         "description": "app.api.router",
         "isExtraImport": true,
         "detail": "app.api.router",
-        "documentation": {}
-    },
-    {
-        "label": "re",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "re",
-        "description": "re",
-        "detail": "re",
-        "documentation": {}
-    },
-    {
-        "label": "time",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "time",
-        "description": "time",
-        "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "httpx",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "httpx",
-        "description": "httpx",
-        "detail": "httpx",
-        "documentation": {}
-    },
-    {
-        "label": "urlparse",
-        "importPath": "urllib.parse",
-        "description": "urllib.parse",
-        "isExtraImport": true,
-        "detail": "urllib.parse",
-        "documentation": {}
-    },
-    {
-        "label": "HTMLParser",
-        "importPath": "html.parser",
-        "description": "html.parser",
-        "isExtraImport": true,
-        "detail": "html.parser",
         "documentation": {}
     },
     {
@@ -505,7 +471,16 @@
         "kind": 5,
         "importPath": "backend.app.api.endpoints.podcast",
         "description": "backend.app.api.endpoints.podcast",
-        "peekOfCode": "router = APIRouter()\ndef _media_dir() -> pathlib.Path:\n    return pathlib.Path(settings.MEDIA_DIR)\n@router.get(\"/\")\nasync def list_podcasts():\n    \"\"\"List available podcasts by scanning MEDIA_DIR for .mp3 files.\"\"\"\n    media = _media_dir()\n    if not media.exists():\n        return []\n    podcasts = []",
+        "peekOfCode": "router = APIRouter()\ndef _media_dir() -> pathlib.Path:\n    return pathlib.Path(settings.MEDIA_DIR)\ndef _parse_podcast_txt(path: pathlib.Path) -> dict:\n    \"\"\"Parse a podcast.txt file: line 1 = display name, line 2 = categories, line 3 = description.\"\"\"\n    if not path.exists():\n        return {\"name\": None, \"categories\": [], \"description\": \"\"}\n    lines = path.read_text().strip().splitlines()\n    name = lines[0].strip() if lines else None\n    categories = [c.strip() for c in lines[1].split(\"·\")] if len(lines) > 1 else []",
+        "detail": "backend.app.api.endpoints.podcast",
+        "documentation": {}
+    },
+    {
+        "label": "_IMAGE_MEDIA_TYPES",
+        "kind": 5,
+        "importPath": "backend.app.api.endpoints.podcast",
+        "description": "backend.app.api.endpoints.podcast",
+        "peekOfCode": "_IMAGE_MEDIA_TYPES = {\n    \".webp\": \"image/webp\",\n    \".png\": \"image/png\",\n    \".jpg\": \"image/jpeg\",\n    \".jpeg\": \"image/jpeg\",\n}\n@router.get(\"/{podcaster}/image/{filename}\")\nasync def get_image(podcaster: str, filename: str):\n    \"\"\"Serve an image file (webp/png/jpg) from a podcaster directory.\"\"\"\n    _validate_path_part(podcaster, filename)",
         "detail": "backend.app.api.endpoints.podcast",
         "documentation": {}
     },
@@ -609,6 +584,15 @@
         "documentation": {}
     },
     {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "backend.app.services.rag",
+        "description": "backend.app.services.rag",
+        "peekOfCode": "logger = logging.getLogger(\"rag\")\nEMBEDDING_MODEL = \"gemini-embedding-001\"\nEMBEDDING_DIM = 3072\nARTICLES_COLLECTION = \"articles\"\nPODCASTS_COLLECTION = \"podcast_episodes\"\nSCORE_THRESHOLD = 0.35\nclass RagService:\n    def __init__(self):\n        self._qdrant: QdrantClient | None = None\n        self._genai: genai.Client | None = None",
+        "detail": "backend.app.services.rag",
+        "documentation": {}
+    },
+    {
         "label": "EMBEDDING_MODEL",
         "kind": 5,
         "importPath": "backend.app.services.rag",
@@ -667,7 +651,16 @@
         "kind": 6,
         "importPath": "backend.app.services.vapi",
         "description": "backend.app.services.vapi",
-        "peekOfCode": "class VapiService:\n    \"\"\"Webhook handler for Vapi voice chatbot function calls.\"\"\"\n    @staticmethod\n    def _get_transcript_context(payload: dict) -> str:\n        \"\"\"Extract podcast_id and timestamp from the call metadata,\n        then fetch the ~30s transcript window around that moment.\"\"\"\n        call = payload.get(\"message\", {}).get(\"call\", {})\n        metadata = call.get(\"metadata\", {})\n        overrides_meta = call.get(\"assistantOverrides\", {}).get(\"metadata\", {})\n        podcast_id = overrides_meta.get(\"podcast_id\") or metadata.get(\"podcast_id\")",
+        "peekOfCode": "class VapiService:\n    \"\"\"Webhook handler for Vapi voice chatbot function calls.\"\"\"\n    @staticmethod\n    def _get_transcript_context(payload: dict) -> str:\n        \"\"\"Extract podcast_id and timestamp from tool parameters (preferred)\n        or call metadata, then fetch the ~30s transcript window around that moment.\"\"\"\n        call = payload.get(\"message\", {}).get(\"call\", {})\n        metadata = call.get(\"metadata\", {})\n        overrides_meta = call.get(\"assistantOverrides\", {}).get(\"metadata\", {})\n        parameters = payload.get(\"message\", {}).get(\"functionCall\", {}).get(\"parameters\", {})",
+        "detail": "backend.app.services.vapi",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "backend.app.services.vapi",
+        "description": "backend.app.services.vapi",
+        "peekOfCode": "logger = logging.getLogger(\"vapi\")\nNO_MATCH_FALLBACK = (\n    \"No confident match found in the knowledge base. \"\n    \"Please answer from your general knowledge and let the user know \"\n    \"the answer is not based on a specific source.\"\n)\ndef _format_article_results(results: list[dict]) -> str:\n    \"\"\"Format article search results for the voice agent.\"\"\"\n    if not results:\n        return NO_MATCH_FALLBACK",
         "detail": "backend.app.services.vapi",
         "documentation": {}
     },
@@ -696,168 +689,6 @@
         "description": "backend.app.main",
         "peekOfCode": "app = FastAPI(\n    title=settings.PROJECT_NAME,\n    version=\"0.1.0\",\n    openapi_url=\"/api/openapi.json\",\n    docs_url=\"/api/docs\",\n)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=settings.CORS_ORIGINS,\n    allow_credentials=True,",
         "detail": "backend.app.main",
-        "documentation": {}
-    },
-    {
-        "label": "script_dir",
-        "kind": 5,
-        "importPath": "backend.assets.parse_transcript",
-        "description": "backend.assets.parse_transcript",
-        "peekOfCode": "script_dir = os.path.dirname(os.path.abspath(__file__))\nfile_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.txt')\noutput_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.json')\nwith open(file_path, 'r', encoding='utf-8') as f:\n    lines = [l.rstrip('\\n') for l in f.readlines()]\ntimestamp_re = re.compile(r'^\\d+:\\d{2}(:\\d{2})?$')\ntranscript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]",
-        "detail": "backend.assets.parse_transcript",
-        "documentation": {}
-    },
-    {
-        "label": "file_path",
-        "kind": 5,
-        "importPath": "backend.assets.parse_transcript",
-        "description": "backend.assets.parse_transcript",
-        "peekOfCode": "file_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.txt')\noutput_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.json')\nwith open(file_path, 'r', encoding='utf-8') as f:\n    lines = [l.rstrip('\\n') for l in f.readlines()]\ntimestamp_re = re.compile(r'^\\d+:\\d{2}(:\\d{2})?$')\ntranscript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):",
-        "detail": "backend.assets.parse_transcript",
-        "documentation": {}
-    },
-    {
-        "label": "output_path",
-        "kind": 5,
-        "importPath": "backend.assets.parse_transcript",
-        "description": "backend.assets.parse_transcript",
-        "peekOfCode": "output_path = os.path.join(script_dir, 'Improve Your Lymphatic System for Overall Health & Appearance.json')\nwith open(file_path, 'r', encoding='utf-8') as f:\n    lines = [l.rstrip('\\n') for l in f.readlines()]\ntimestamp_re = re.compile(r'^\\d+:\\d{2}(:\\d{2})?$')\ntranscript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):\n        ts = line.strip()",
-        "detail": "backend.assets.parse_transcript",
-        "documentation": {}
-    },
-    {
-        "label": "timestamp_re",
-        "kind": 5,
-        "importPath": "backend.assets.parse_transcript",
-        "description": "backend.assets.parse_transcript",
-        "peekOfCode": "timestamp_re = re.compile(r'^\\d+:\\d{2}(:\\d{2})?$')\ntranscript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):\n        ts = line.strip()\n        # Collect all text lines until next timestamp or section header\n        text_parts = []\n        i += 1",
-        "detail": "backend.assets.parse_transcript",
-        "documentation": {}
-    },
-    {
-        "label": "transcript",
-        "kind": 5,
-        "importPath": "backend.assets.parse_transcript",
-        "description": "backend.assets.parse_transcript",
-        "peekOfCode": "transcript = []\ni = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):\n        ts = line.strip()\n        # Collect all text lines until next timestamp or section header\n        text_parts = []\n        i += 1\n        while i < len(lines):",
-        "detail": "backend.assets.parse_transcript",
-        "documentation": {}
-    },
-    {
-        "label": "i",
-        "kind": 5,
-        "importPath": "backend.assets.parse_transcript",
-        "description": "backend.assets.parse_transcript",
-        "peekOfCode": "i = 0\nwhile i < len(lines):\n    line = lines[i]\n    if timestamp_re.match(line.strip()):\n        ts = line.strip()\n        # Collect all text lines until next timestamp or section header\n        text_parts = []\n        i += 1\n        while i < len(lines):\n            cur = lines[i]",
-        "detail": "backend.assets.parse_transcript",
-        "documentation": {}
-    },
-    {
-        "label": "data",
-        "kind": 5,
-        "importPath": "backend.assets.parse_transcript",
-        "description": "backend.assets.parse_transcript",
-        "peekOfCode": "data = {\n    \"title\": \"Improve Your Lymphatic System for Overall Health & Appearance\",\n    \"speaker\": \"Andrew Huberman\",\n    \"source\": \"Huberman Lab Podcast\",\n    \"transcript\": transcript\n}\nwith open(output_path, 'w', encoding='utf-8') as f:\n    json.dump(data, f, indent=2, ensure_ascii=False)\nprint(f\"Wrote {len(transcript)} segments to {output_path}\")",
-        "detail": "backend.assets.parse_transcript",
-        "documentation": {}
-    },
-    {
-        "label": "_HTMLToMarkdown",
-        "kind": 6,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "class _HTMLToMarkdown(HTMLParser):\n    \"\"\"Very small HTML→Markdown converter focused on article body text.\"\"\"\n    BLOCK_TAGS = {\n        \"p\", \"div\", \"section\", \"article\", \"main\",\n        \"blockquote\", \"li\", \"tr\", \"figcaption\", \"pre\",\n    }\n    SKIP_TAGS = {\n        \"script\", \"style\", \"nav\", \"footer\", \"header\", \"noscript\",\n        \"svg\", \"form\", \"button\", \"iframe\", \"aside\", \"menu\",\n    }",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "html_to_markdown",
-        "kind": 2,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "def html_to_markdown(html: str) -> str:\n    parser = _HTMLToMarkdown()\n    parser.feed(html)\n    return parser.get_markdown()\n# ---------------------------------------------------------------------------\n# Post-processing: strip reference noise from scraped article markdown\n# ---------------------------------------------------------------------------\ndef clean_article_content(md: str) -> str:\n    \"\"\"Strip out reference/citation noise and keep only core article text.\"\"\"\n    # Remove [Google Scholar](…) and [Crossref](…) links (with optional brackets)",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "clean_article_content",
-        "kind": 2,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "def clean_article_content(md: str) -> str:\n    \"\"\"Strip out reference/citation noise and keep only core article text.\"\"\"\n    # Remove [Google Scholar](…) and [Crossref](…) links (with optional brackets)\n    md = re.sub(r\"\\[?\\[Google Scholar\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[Crossref\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[PubMed\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[Abstract\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[Full Text\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[PDF\\]\\]\\([^)]*\\)\\]?\", \"\", md)\n    md = re.sub(r\"\\[?\\[Web of Science\\]\\]\\([^)]*\\)\\]?\", \"\", md)",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "extract_article_links",
-        "kind": 2,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "def extract_article_links(page_markdown: str) -> list[dict]:\n    \"\"\"Return list of {title, url} for academic article links on the page.\"\"\"\n    seen_urls: set[str] = set()\n    articles: list[dict] = []\n    for m in _ARTICLE_LINK_RE.finditer(page_markdown):\n        title = m.group(1).strip()\n        url = m.group(2).strip()\n        if url in seen_urls:\n            continue\n        if not _is_academic_url(url):",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "fetch_crossref_abstract",
-        "kind": 2,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "def fetch_crossref_abstract(url: str, client: httpx.Client) -> dict | None:\n    \"\"\"\n    Query CrossRef API using the DOI extracted from the URL.\n    Returns dict with 'abstract', 'authors', 'journal' or None.\n    \"\"\"\n    doi = _extract_doi(url)\n    if not doi:\n        return None\n    try:\n        api_url = f\"https://api.crossref.org/works/{doi}\"",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "scrape_article",
-        "kind": 2,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "def scrape_article(url: str, client: httpx.Client) -> tuple[str | None, str | None]:\n    \"\"\"\n    Attempt to fetch and convert an article to markdown.\n    Returns (markdown_content, error_message).\n    \"\"\"\n    try:\n        resp = client.get(url, follow_redirects=True, timeout=30)\n        if resp.status_code == 403:\n            return None, \"Access denied (HTTP 403). Article may require institutional access.\"\n        if resp.status_code == 451:",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "save_article_md",
-        "kind": 2,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "def save_article_md(\n    out_dir: str,\n    title: str,\n    url: str,\n    content: str | None,\n    error: str | None,\n    crossref: dict | None = None,\n) -> str:\n    \"\"\"Write an .md file for the article and return the path.\"\"\"\n    filename = _slugify(title) + \".md\"",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "main",
-        "kind": 2,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "def main():\n    if len(sys.argv) < 2:\n        print(__doc__)\n        sys.exit(1)\n    episode_url = sys.argv[1]\n    script_dir = os.path.dirname(os.path.abspath(__file__))\n    out_dir = os.path.join(script_dir, \"articles\")\n    os.makedirs(out_dir, exist_ok=True)\n    print(f\"📡  Fetching episode page: {episode_url}\")\n    with httpx.Client(headers=_HEADERS) as client:",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "_ARTICLE_LINK_RE",
-        "kind": 5,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "_ARTICLE_LINK_RE = re.compile(\n    r\"\\[([^\\]]+)\\]\\((https?://[^)]+)\\)\"\n)\n# Domains that host academic articles\n_ACADEMIC_DOMAINS = {\n    \"onlinelibrary.wiley.com\",\n    \"journals.physiology.org\",\n    \"www.sciencedirect.com\",\n    \"www.nature.com\",\n    \"pmc.ncbi.nlm.nih.gov\",",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "_ACADEMIC_DOMAINS",
-        "kind": 5,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "_ACADEMIC_DOMAINS = {\n    \"onlinelibrary.wiley.com\",\n    \"journals.physiology.org\",\n    \"www.sciencedirect.com\",\n    \"www.nature.com\",\n    \"pmc.ncbi.nlm.nih.gov\",\n    \"pubmed.ncbi.nlm.nih.gov\",\n    \"www.jneurosci.org\",\n    \"link.springer.com\",\n    \"www.annualreviews.org\",",
-        "detail": "backend.assets.scrape_articles",
-        "documentation": {}
-    },
-    {
-        "label": "_HEADERS",
-        "kind": 5,
-        "importPath": "backend.assets.scrape_articles",
-        "description": "backend.assets.scrape_articles",
-        "peekOfCode": "_HEADERS = {\n    \"User-Agent\": (\n        \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) \"\n        \"AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\"\n    ),\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n    \"Accept-Language\": \"en-US,en;q=0.9\",\n}\ndef scrape_article(url: str, client: httpx.Client) -> tuple[str | None, str | None]:\n    \"\"\"",
-        "detail": "backend.assets.scrape_articles",
         "documentation": {}
     },
     {
