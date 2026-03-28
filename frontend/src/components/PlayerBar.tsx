@@ -8,6 +8,7 @@ interface PlayerBarProps {
   onTogglePlay: () => void
   onSeek: (time: number) => void
   onSkip: (seconds: number) => void
+  disabled?: boolean
 }
 
 function formatTime(seconds: number): string {
@@ -27,6 +28,7 @@ export function PlayerBar({
   onTogglePlay,
   onSeek,
   onSkip,
+  disabled,
 }: PlayerBarProps) {
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0
 
@@ -92,12 +94,14 @@ export function PlayerBar({
         {/* Play/Pause */}
         <button
           onClick={onTogglePlay}
+          disabled={disabled}
           className="flex items-center justify-center rounded-full cursor-pointer transition-transform duration-100 hover:scale-110"
           style={{
             width: 36,
             height: 36,
             background: 'var(--accent)',
             border: 'none',
+            ...(disabled ? { opacity: 0.5, pointerEvents: 'none' as const } : {}),
           }}
         >
           {isPlaying ? (

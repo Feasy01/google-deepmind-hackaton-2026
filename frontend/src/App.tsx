@@ -62,6 +62,9 @@ function App() {
 
   const selectEpisode = useCallback(
     (podcasterName: string, episode: Episode) => {
+      // Block interaction while Vapi is connecting
+      if (vapi.status === 'connecting') return
+
       // If same episode, just toggle play
       if (selected?.episodeId === episode.id && selected?.podcaster === podcasterName) {
         if (audio.isPlaying) {
@@ -207,6 +210,7 @@ function App() {
           onTogglePlay={togglePlayPause}
           onSeek={handleSeek}
           onSkip={handleSkip}
+          disabled={vapi.status === 'connecting'}
         />
       )}
 
@@ -225,6 +229,7 @@ function App() {
           onTogglePlay={togglePlayPause}
           onSeek={handleSeek}
           onSkip={handleSkip}
+          disabled={vapi.status === 'connecting'}
         />
       )}
     </div>

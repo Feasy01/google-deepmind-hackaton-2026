@@ -11,6 +11,7 @@ interface MobilePlayerProps {
   onTogglePlay: () => void
   onSeek: (time: number) => void
   onSkip: (seconds: number) => void
+  disabled?: boolean
 }
 
 function formatTime(seconds: number): string {
@@ -33,6 +34,7 @@ export function MobilePlayer({
   onTogglePlay,
   onSeek,
   onSkip,
+  disabled,
 }: MobilePlayerProps) {
   if (!isOpen) return null
 
@@ -156,12 +158,14 @@ export function MobilePlayer({
 
           <button
             onClick={onTogglePlay}
+            disabled={disabled}
             className="flex items-center justify-center rounded-full cursor-pointer transition-transform duration-100 hover:scale-105"
             style={{
               width: 56,
               height: 56,
               background: 'var(--accent)',
               border: 'none',
+              ...(disabled ? { opacity: 0.5, pointerEvents: 'none' as const } : {}),
             }}
           >
             {isPlaying ? (
