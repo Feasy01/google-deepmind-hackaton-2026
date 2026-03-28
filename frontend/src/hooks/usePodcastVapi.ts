@@ -28,7 +28,7 @@ export function usePodcastVapi({
 }: UsePodcastVapiOptions) {
   const [status, setStatus] = useState<'idle' | 'connecting' | 'active'>('idle')
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
-  const vapiRef = useRef<Vapi | null>(null)
+  const vapiRef = useRef<InstanceType<typeof Vapi> | null>(null)
 
   const startCall = useCallback(() => {
     if (!VAPI_PUBLIC_KEY) {
