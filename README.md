@@ -39,8 +39,14 @@ Echo is a next-generation podcast web application that leverages Retrieval-Augme
 │   └── podcasts/         # Transcripts and parsed episode data
 ├── db/                   # Docker Compose setup for Qdrant
 ├── notebooks/            # Jupyter notebooks for testing the ingestion pipeline
+├── docs/                 # Project documentation and architectural analysis
+│   └── analysis_results.md  # Detailed RAG and tool execution breakdown
 └── start-dev.sh          # All-in-one local runner script
 ```
+
+## 📖 Deep Dive & Architecture
+
+For a comprehensive explanation of how Echo works—including its RAG system chunking strategy, sliding windows, and step-by-step VAPI tool call sequence diagrams—please refer to the [Echo Project Analysis](docs/analysis_results.md).
 
 ## Getting Started
 
