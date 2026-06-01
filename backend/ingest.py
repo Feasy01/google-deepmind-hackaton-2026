@@ -7,6 +7,7 @@ ingest articles and podcast transcripts.
 
 import os
 import re
+import time
 import uuid
 from pathlib import Path
 from abc import ABC, abstractmethod
@@ -36,16 +37,36 @@ genai_client = genai.Client(api_key=GOOGLE_API_KEY)
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
-    """Embed a batch of texts. Handles batching for large lists."""
+    """Embed a batch of texts. Handles batching for large lists.
+    
+    Uses small batches + exponential backoff to stay within free-tier rate limits
+    (10 RPM for gemini-embedding-001).
+    """
     all_embeddings = []
-    batch_size = 100
+    batch_size = 50  # smaller batches to reduce per-request token load
     for i in range(0, len(texts), batch_size):
         batch = texts[i : i + batch_size]
-        response = genai_client.models.embed_content(
-            model=EMBEDDING_MODEL,
-            contents=batch,
-        )
-        all_embeddings.extend([e.values for e in response.embeddings])
+        # Exponential backoff for 429 rate limit errors
+        for attempt in range(5):
+            try:
+                response = genai_client.models.embed_content(
+                    model=EMBEDDING_MODEL,
+                    contents=batch,
+                )
+                all_embeddings.extend([e.values for e in response.embeddings])
+                break  # success
+            except Exception as e:
+                if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                    wait = 2 ** attempt * 10  # 10s, 20s, 40s, 80s, 160s
+                    print(f"  [rate limit] 429 on batch {i//batch_size + 1}, waiting {wait}s (attempt {attempt+1}/5)...")
+                    time.sleep(wait)
+                else:
+                    raise
+        else:
+            raise RuntimeError(f"Failed to embed batch {i//batch_size + 1} after 5 attempts")
+        # Pause between batches to respect 10 RPM limit (6s = 10 req/min max)
+        if i + batch_size < len(texts):
+            time.sleep(6)
     return all_embeddings
 
 
