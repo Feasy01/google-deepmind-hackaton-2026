@@ -20,6 +20,7 @@ interface UsePodcastVapiOptions {
   onStopPlayer: () => number // returns currentTime in seconds
   onStartPlayer: () => void
   onConnected?: () => void
+  isPlaying: boolean
 }
 
 export function usePodcastVapi({
@@ -27,11 +28,18 @@ export function usePodcastVapi({
   onStopPlayer,
   onStartPlayer,
   onConnected,
+  isPlaying,
 }: UsePodcastVapiOptions) {
   const [status, setStatus] = useState<'idle' | 'connecting' | 'active'>('idle')
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
   const vapiRef = useRef<any>(null)
-  const podcastPlayingRef = useRef(false)
+  const podcastPlayingRef = useRef(isPlaying)
+  const resumeTimerRef = useRef<any>(null)
+  const isResumingRef = useRef(false)
+
+  useEffect(() => {
+    podcastPlayingRef.current = isPlaying
+  }, [isPlaying])
 
   // Keep refs to always call the latest callbacks (avoids stale closures in Vapi event handlers)
   const onStopPlayerRef = useRef(onStopPlayer)
@@ -51,6 +59,7 @@ export function usePodcastVapi({
     vapi.on('call-start', () => {
       console.log('[Vapi] call started')
       setStatus('active')
+      podcastPlayingRef.current = true
       onConnectedRef.current?.()
     })
 
@@ -80,6 +89,7 @@ export function usePodcastVapi({
             console.log(`[Vapi] stop_player @ ${timeStr}`)
           } else if (fnName === 'start_player') {
             podcastPlayingRef.current = true
+            isResumingRef.current = true
             onStartPlayerRef.current()
             result = 'Podcast resumed. Do not say anything.'
             // Mute Vapi output so assistant voice doesn't talk over podcast
@@ -109,9 +119,61 @@ export function usePodcastVapi({
         }
       }
 
-      // Auto-pause podcast when assistant starts speaking
-      if (msg.type === 'transcript' && msg.role === 'assistant' && msg.transcriptType === 'partial' && !podcastPlayingRef.current) {
-        onStopPlayerRef.current()
+      // Auto-pause podcast when the user starts speaking
+      if (msg.type === 'speech-update' && msg.role === 'user' && msg.status === 'started') {
+        isResumingRef.current = false
+        if (resumeTimerRef.current) {
+          clearTimeout(resumeTimerRef.current)
+          resumeTimerRef.current = null
+        }
+        if (podcastPlayingRef.current) {
+          console.log('[Vapi] User started speaking. Auto-pausing podcast...')
+          podcastPlayingRef.current = false
+          onStopPlayerRef.current()
+          // Unmute Vapi output so assistant answer is audible
+          document.querySelectorAll('audio').forEach(el => { (el as HTMLAudioElement).volume = 1 })
+        }
+      }
+
+      // User stopped speaking: wait to see if assistant responds
+      if (msg.type === 'speech-update' && msg.role === 'user' && msg.status === 'stopped') {
+        if (!podcastPlayingRef.current) {
+          console.log('[Vapi] User stopped speaking. Starting 3.5s safety resume timer...')
+          if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+          resumeTimerRef.current = setTimeout(() => {
+            console.log('[Vapi] 3.5s safety timer expired (no assistant response). Auto-resuming podcast...')
+            podcastPlayingRef.current = true
+            isResumingRef.current = true
+            onStartPlayerRef.current()
+            document.querySelectorAll('audio').forEach(el => { (el as HTMLAudioElement).volume = 0 })
+            resumeTimerRef.current = null
+          }, 3500)
+        }
+      }
+
+      // Assistant started speaking: cancel safety resume timer
+      if (msg.type === 'speech-update' && msg.role === 'assistant' && msg.status === 'started') {
+        if (resumeTimerRef.current) {
+          console.log('[Vapi] Assistant started speaking. Cancelling safety resume timer.')
+          clearTimeout(resumeTimerRef.current)
+          resumeTimerRef.current = null
+        }
+        if (podcastPlayingRef.current && !isResumingRef.current) {
+          podcastPlayingRef.current = false
+          onStopPlayerRef.current()
+        }
+        if (!isResumingRef.current) {
+          document.querySelectorAll('audio').forEach(el => { (el as HTMLAudioElement).volume = 1 })
+        }
+      }
+
+      // Clear safety timers when assistant finishes speaking
+      if (msg.type === 'speech-update' && msg.role === 'assistant' && msg.status === 'stopped') {
+        if (resumeTimerRef.current) {
+          clearTimeout(resumeTimerRef.current)
+          resumeTimerRef.current = null
+        }
+        console.log('[Vapi] Assistant finished speaking. Keeping podcast paused for follow-ups.')
       }
 
       // Handle transcript updates
@@ -137,6 +199,7 @@ export function usePodcastVapi({
     return () => {
       vapi.stop()
       vapiRef.current = null
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
     }
   }, [])
 
@@ -272,8 +335,8 @@ IMPORTANT RULES:
         ],
       },
       voice: {
-        provider: '11labs',
-        voiceId: 'gX5nzZE6xg9miAm84vPU',
+        provider: 'vapi',
+        voiceId: 'Nico',
       },
       transcriber: {
         provider: 'deepgram',
@@ -282,7 +345,7 @@ IMPORTANT RULES:
       },
       silenceTimeoutSeconds: 600,
       backgroundDenoisingEnabled: true,
-      clientMessages: ['tool-calls', 'transcript'],
+      clientMessages: ['tool-calls', 'transcript', 'speech-update'],
       metadata: {
         mode: 'podcast',
         podcast_id: podcastId,

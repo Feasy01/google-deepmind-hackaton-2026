@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      '/api': 'https://inflexibly-multidenticulated-ryleigh.ngrok-free.dev',
+      '/api': 'http://localhost:8000',
     },
   },
 })

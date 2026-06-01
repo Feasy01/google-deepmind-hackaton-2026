@@ -84,12 +84,42 @@ fi
 log "ngrok URL: $NGROK_URL"
 
 # Write VAPI_WEBHOOK_URL into backend .env
-if grep -q "^VAPI_WEBHOOK_URL=" "$BACKEND_DIR/.env" 2>/dev/null; then
-    sed -i "s|^VAPI_WEBHOOK_URL=.*|VAPI_WEBHOOK_URL=$NGROK_URL|" "$BACKEND_DIR/.env"
-else
-    echo "VAPI_WEBHOOK_URL=$NGROK_URL" >> "$BACKEND_DIR/.env"
-fi
+python3 -c "
+import os
+path = '$BACKEND_DIR/.env'
+if os.path.exists(path):
+    with open(path, 'r') as f:
+        lines = f.readlines()
+    has_key = any(line.startswith('VAPI_WEBHOOK_URL=') for line in lines)
+    with open(path, 'w') as f:
+        for line in lines:
+            if line.startswith('VAPI_WEBHOOK_URL='):
+                f.write('VAPI_WEBHOOK_URL=$NGROK_URL\n')
+            else:
+                f.write(line)
+        if not has_key:
+            f.write('\nVAPI_WEBHOOK_URL=$NGROK_URL\n')
+"
 log "Set VAPI_WEBHOOK_URL=$NGROK_URL in backend/.env"
+
+# Write VITE_VAPI_WEBHOOK_URL into frontend .env
+python3 -c "
+import os
+path = '$FRONTEND_DIR/.env'
+if os.path.exists(path):
+    with open(path, 'r') as f:
+        lines = f.readlines()
+    has_key = any(line.startswith('VITE_VAPI_WEBHOOK_URL=') for line in lines)
+    with open(path, 'w') as f:
+        for line in lines:
+            if line.startswith('VITE_VAPI_WEBHOOK_URL='):
+                f.write('VITE_VAPI_WEBHOOK_URL=$NGROK_URL\n')
+            else:
+                f.write(line)
+        if not has_key:
+            f.write('\nVITE_VAPI_WEBHOOK_URL=$NGROK_URL\n')
+"
+log "Set VITE_VAPI_WEBHOOK_URL=$NGROK_URL in frontend/.env"
 
 # --- 3. Backend ---
 log "Starting backend..."

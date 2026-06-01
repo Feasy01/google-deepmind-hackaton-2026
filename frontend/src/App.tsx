@@ -58,6 +58,7 @@ function App() {
     onStopPlayer,
     onStartPlayer,
     onConnected,
+    isPlaying: audio.isPlaying,
   })
 
   const selectEpisode = useCallback(
